@@ -1,30 +1,45 @@
+ 
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class ="app">
+    <NavbarComponent></NavbarComponent>
+    <CardContainer></CardContainer>
+    
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
 
-nav {
-  padding: 30px;
-}
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+import { defineComponent } from 'vue'
+import NavbarComponent from './components/NavbarComponent.vue';
+import CardContainer from './components/CardContainer.vue';
 
-nav a.router-link-exact-active {
-  color: #42b983;
+export default defineComponent({
+    setup() {
+      return {
+        };
+        
+    },
+    components: { NavbarComponent, CardContainer }
+
+})
+</script>
+<style scoped>
+.app{
+  width: 100%; 
+  height:  100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+  background-color: var(--background-color);
+  /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+}
+@media (max-width:768px){
+  .app{
+    height: 1440px;
+}
 }
 </style>
