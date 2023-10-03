@@ -2,25 +2,24 @@
 <template>
   <div class ="app">
     <NavbarComponent></NavbarComponent>
+    <HeroComponent></HeroComponent>
     <CardContainer></CardContainer>
-    
   </div>
 </template>
 
 <script lang="ts">
 
-
 import { defineComponent } from 'vue'
 import NavbarComponent from './components/NavbarComponent.vue';
 import CardContainer from './components/CardContainer.vue';
+import HeroComponent from './components/HeroComponent.vue';
 
 export default defineComponent({
     setup() {
       return {
         };
-        
     },
-    components: { NavbarComponent, CardContainer }
+    components: { NavbarComponent, CardContainer, HeroComponent }
 
 })
 </script>
