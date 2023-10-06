@@ -44,8 +44,9 @@ export default defineComponent({
 
 <style scoped>
     .card-container{
+        position: relative;
         width: 96%;
-        height: 100%;
+        height: 1440px;
         display: grid;
         gap: 0.3em;
         grid-template-columns: 2fr 2fr;

@@ -30,9 +30,11 @@ export default defineComponent({
 
 <style scoped>
 .button-wrapper{
-    font-size: 200%;
+    font-size: 3em;
     border: none;
+    margin-left: 5px;
     height: 80%;
+    margin-top: 5px;
 }
 .underline-text:hover{
     text-decoration: underline;

@@ -1,9 +1,13 @@
 <template>
-    <div class="navbar-container">
+    <header class="navbar-container">
         <div class="logo-wrapper" >
             <img class="logo" :src="logo"/>
         </div>
-        <div class="buttons-container"></div>
+        <div class="buttons-container">
+            <ButtonComponent :text="'Home'"></ButtonComponent>
+            <ButtonComponent :text="'Shop'"></ButtonComponent>
+            <ButtonComponent :text="'Account'"></ButtonComponent>
+        </div>
         <ul class="icons-container">
             <li class="icon">
                 <img :src="cart"/>
@@ -15,31 +19,33 @@
                 <img :src="mag"/>
             </li>
         </ul>
-</div>
+    </header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import ButtonComponent from './ButtonComponent.vue';
 export default defineComponent({
-    data(){
-        return{
-            logo:require('@/assets/french-eagle.png'),
-            cart:require('@/assets/icons/cart-shopping-solid.svg'),
-            user:require('@/assets/icons/user-solid.svg'),
-            mag:require('@/assets/icons/magnifying-glass-solid.svg')
-        }
+    data() {
+        return {
+            logo: require('@/assets/french-eagle.png'),
+            cart: require('@/assets/icons/cart-shopping-solid.svg'),
+            user: require('@/assets/icons/user-solid.svg'),
+            mag: require('@/assets/icons/magnifying-glass-solid.svg')
+        };
     },
+    components: { ButtonComponent }
 })
 </script>
 
 <style scoped>
 
 .navbar-container{
-    position:sticky;
+    position:fixed;
     top: 0px;
     z-index: 5;
     width: 100%;
-    height: 5em;
+    height: 76px;
     background-color: var(--secondary-color);
     display: flex;
     flex-direction: row;
@@ -50,7 +56,7 @@ export default defineComponent({
 }
 .logo{
     position: absolute;
-    top: 0.3em;
+    top: 50%;
     left: 1em;
     width: calc(266px/2);
     height: calc(250px/2);
@@ -60,7 +66,7 @@ export default defineComponent({
 @media (max-width:768px)
 {
     .logo{
-        top: 1.5em;
+    top: 50%;
     left: 1em;
     width: calc(266px/4);
     height: calc(250px/4);
@@ -93,6 +99,8 @@ export default defineComponent({
 .buttons-container{
     width: 70%;
     height: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 </style>
