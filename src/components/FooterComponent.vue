@@ -22,6 +22,9 @@ export default defineComponent({
 
 <style scoped>
 .footer-element{
+    z-index: 1;
+    position: absolute;
+    bottom: 0px;
     height: 120px;
     width: 100%;
     background-color: var(--primary-color);

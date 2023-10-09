@@ -1,6 +1,6 @@
 <template>
         <button class="button-wrapper" >
-            <div class="underline-text">{{ text }}</div>
+            <div :class="{'underline-text':true,'underline-text-current':isCurrent}">{{ text }}</div>
         </button>
 </template>
 
@@ -13,30 +13,29 @@ export default defineComponent({
             hovered: false
         }
     },
-    setup () {
-        return {
-        }
-    },
     props: {
         text : {
             type: String,
             default: ''
+        },
+        isCurrent:{
+            type: Boolean,
+            default: false,
         }
-    },
-    methods:{
     },
 })
 </script>
 
 <style scoped>
 .button-wrapper{
-    font-size: 3em;
+    font-size: 25px;
     border: none;
     margin-left: 5px;
     height: 80%;
     margin-top: 5px;
+    background-color: var(--background-color);
 }
-.underline-text:hover{
+.underline-text:hover, .underline-text-current{
     text-decoration: underline;
 }
 </style>

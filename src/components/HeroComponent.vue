@@ -5,7 +5,12 @@
              v-for="image in imgCarousel" 
             :key="image.id"
             :class="{ 'carousel-slide': true, 
-            'selected-slide':(currentSlide===image.id)}">
+            'neutral':(currentSlide===image.id && direction===0),
+            'selected-slide-right':(currentSlide===image.id && direction===1),
+            'prev-slide':(prevSlide===image.id && direction===1),
+            'selected-slide-left': (currentSlide===image.id && direction===-1),
+            'next-slide':(prevSlide===image.id && direction===-1),
+}">
                 <img :src="image.src"/> 
             </li>
         </ul>
@@ -30,25 +35,25 @@ export default defineComponent({
                 {id:3, src:require('@/assets/hero-cookie.jpg'), },
                 {id:4, src:require('@/assets/hero-bread.jpg'), },           
             ],
-            slides:['Slide 1', 'Slide 2', 'Slide 3', 'Slide 4'],
             currentSlide:1,
-            prevSlide: 4,
-            nextSlide:2,
-            slidingDir:0,
+            prevSlide: 0,
+            direction: 0, // 0 neutral 1 right to left -1 left to right
         }
     },
     methods:{
         SlideLeft(){
+            this.prevSlide = this.currentSlide;
             this.currentSlide--;
             if(this.currentSlide <= 0)
                 this.currentSlide=this.imgCarousel.length;
-            console.log(this.currentSlide);
-        },
+            this.direction = 1;
+            },
         SlideRight(){
+            this.prevSlide = this.currentSlide;
             this.currentSlide++;
             if(this.currentSlide>this.imgCarousel.length)
                 this.currentSlide = 1;
-            console.log(this.currentSlide);
+            this.direction = -1;
         }
     }
 })
@@ -61,6 +66,7 @@ export default defineComponent({
     position: relative;
     display: flex;
     flex-direction: row;
+    overflow-x: hidden;
 }
 .carousel{
     height: 70vh;
@@ -68,14 +74,54 @@ export default defineComponent({
     flex-direction: row;
 }
 .carousel-slide{
+    position: absolute;
     height: 100%;
     width: 0;
-    transition: width 1s ease;
 }
-.selected-slide{
+.neutral{
     width: 100vw;
-    transition: width 1s ease;
 }
+.selected-slide-left{
+    z-index: 2;
+    width: 100vw;
+    animation-name: slide-left-curr;
+    animation-duration: 1s;
+}
+.selected-slide-right{
+    z-index: 2;
+    width: 100vw;
+    animation-name: slide-right-curr;
+    animation-duration: 1s;
+}
+.prev-slide{
+    z-index: 1;
+    width: 100vw;
+    animation-name:slide-left-prev;
+    animation-duration: 1s;
+}
+/* .next-slide{
+    z-index: 1;
+    width: 100vw;
+    animation-name:slide-right-prev;
+    animation-duration: 1s;
+} */
+@keyframes slide-left-prev{
+    0% {transform:translateX(0)}
+    100% {transform:translateX(-100vw);}
+}
+/* @keyframes slide-right-prev{
+    0%{transform:translateX(0)}
+    100% {transform:translateX(100vw)}
+} */
+@keyframes slide-left-curr{
+    0% {transform:translateX(100vw);}
+    100% {transform:translateX(0vw);}
+}
+/* @keyframes slide-right-curr{
+    0% {transform:translateX(-100vw);}
+    100% {transform:translateX(0vw)}
+} */
+
 .carousel-slide > img{
     object-fit:cover;
     height: 100%;
@@ -84,7 +130,7 @@ export default defineComponent({
 .arrow{
     position: absolute;
     top: calc(50% - var(--arrow-width));
-    z-index: 1;
+    z-index: 3;
     width:var(--arrow-width);
     background-color: rgba(0,0,0,0.4);
     border:0px;
@@ -100,11 +146,5 @@ export default defineComponent({
 }
 .right-arrow{
     left:0%;
-}
-.slide-right{
-    transform: translateX(100%);
-}
-.slide-left{
-    transform: translateX(-100%);
 }
 </style>
