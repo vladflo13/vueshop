@@ -11,9 +11,13 @@
     margin:0;
     padding: 0;
     color:inherit;
+    box-sizing: border-box;
 }
 
 img,picture{
     max-width: 100%;
     display: block;
+}
+ul {
+    list-style: none;
 }

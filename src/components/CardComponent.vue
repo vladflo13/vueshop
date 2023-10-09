@@ -7,8 +7,8 @@
                 <div class="small-card-container">
                     <div :class="{'small-card':true, 'pop-in':isExpanded,}" v-for="image in childImages" :key="image.id" :style="'background-image:url('+image.src+')'">{{ image.id }}</div>
                 </div>
+                <img src="https://picsum.photos/id/237/600/400" alt="">
         </div>
-
 </template>
 
 <script lang="ts">
@@ -22,13 +22,14 @@ export default defineComponent({
     data(){
         return{
             isExpanded:false,
+            path:'https://picsum.photos/id/1025/600/400',
             childImages: [
-                { id: '1', src: require('@/assets/small.png') },
-                { id: '2', src: require('@/assets/small.png') },
-                { id: '3', src: require('@/assets/small.png') },
-                { id: '4', src: require('@/assets/small.png') },
-                { id: '5', src: require('@/assets/small.png') },
-                { id: '6', src: require('@/assets/small.png') },
+                { id: '1', src: 'https://picsum.photos/id/1025/600/400' },
+                { id: '2', src: 'https://picsum.photos/id/237/600/400' },
+                { id: '3', src: 'https://picsum.photos/id/237/600/400' },
+                { id: '4', src: 'https://picsum.photos/id/1025/600/400' },
+                { id: '5', src: 'https://picsum.photos/id/237/600/400' },
+                { id: '6', src: 'https://picsum.photos/id/1025/600/400' },
             ] as imgObject[],
         }
     },
@@ -38,8 +39,8 @@ export default defineComponent({
         }
     },
     props: {
-        cardText: String,
-        imgSrc: String,
+        cardText: {type:String, default:''},
+        imgSrc: {type:String, default:''}
     }
 })
 </script>
