@@ -1,6 +1,7 @@
  
 <template>
   <div class ="app">
+    <div class="ghost-navbar"></div>
     <NavbarComponent :navState="navState"></NavbarComponent>
     <MainView v-if="navState==='Home'"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
@@ -27,17 +28,20 @@ export default defineComponent({
 </script>
 <style scoped>
 .app{
-  position: relative;
   display: flex;
-  flex-direction: row;
-
+  flex-direction: column;
   --navbar-height:144px;
 
+}
+.ghost-navbar{
+  width: 100%;
+  height: var(--navbar-height);
 }
 @media (max-width:768px){
   .app{
     height: 1440px;
     --navbar-height:72px;
+    font-size: 1em;
 }
 }
 </style>

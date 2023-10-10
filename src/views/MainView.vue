@@ -1,7 +1,6 @@
 <template>
     <div class="main">
         <!-- <PaginationComponent></PaginationComponent> -->
-        <div class="break-space"></div>
         <HeroComponent></HeroComponent>
         <div class="call-to-action">Check out our selection!</div>
         <CardContainer></CardContainer>
@@ -27,8 +26,6 @@ export default defineComponent({
 <style scoped>
 
 .main{
-  position: absolute;
-  top: var(--navbar-height);
   width: 100%;
   display: flex;
   flex-direction: column;

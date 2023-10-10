@@ -1,5 +1,5 @@
 <template>
-        <button class="button-wrapper" >
+        <button class="button-wrapper">
             <div :class="{'underline-text':true,'underline-text-current':isCurrent}">{{ text }}</div>
         </button>
 </template>
@@ -28,12 +28,18 @@ export default defineComponent({
 
 <style scoped>
 .button-wrapper{
-    font-size: 25px;
+    font-size: 2em;
     border: none;
     margin-left: 5px;
     height: 80%;
     margin-top: 5px;
-    background-color: var(--background-color);
+    background-color: transparent;
+}
+@media (max-width: 768px)
+{
+    .button-wrapper{
+    font-size: 1em;
+    }
 }
 .underline-text:hover, .underline-text-current{
     text-decoration: underline;
