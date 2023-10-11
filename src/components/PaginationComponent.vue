@@ -1,9 +1,6 @@
 <template>
     <div class="pagination-container">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+        <div v-for="page in numberOfPages" :key="page" :class="{'dot':true, 'selected':currentPage===page}"></div>
 </div>
 </template>
 
@@ -42,5 +39,8 @@ export default defineComponent({
     width: 1em;
     border: 0.1em solid;
     border-radius: 50%;
+}
+.selected{
+    background-color: var(--secondary-color);
 }
 </style>

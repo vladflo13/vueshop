@@ -5,43 +5,43 @@
                     <div class="text-wrapper">{{ cardText }}</div>
                 </div>
                 <div class="small-card-container">
-                    <div :class="{'small-card':true, 'pop-in':isExpanded,}" v-for="image in childImages" :key="image.id" :style="'background-image:url('+image.src+')'">{{ image.id }}</div>
+                    <SmallCardComponent v-for="image in childImages" :popIn="isExpanded" :key="image.id" :imgSrc="image.src"></SmallCardComponent>
                 </div>
-                <img src="https://picsum.photos/id/237/600/400" alt="">
         </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import SmallCardComponent from './SmallCardComponent.vue';
 interface imgObject{
     id:string,
     src:string
 }
 var children:imgObject;
 export default defineComponent({
-    data(){
-        return{
-            isExpanded:false,
-            path:'https://picsum.photos/id/1025/600/400',
+    data() {
+        return {
+            isExpanded: false,
             childImages: [
-                { id: '1', src: 'https://picsum.photos/id/1025/600/400' },
-                { id: '2', src: 'https://picsum.photos/id/237/600/400' },
-                { id: '3', src: 'https://picsum.photos/id/237/600/400' },
-                { id: '4', src: 'https://picsum.photos/id/1025/600/400' },
-                { id: '5', src: 'https://picsum.photos/id/237/600/400' },
-                { id: '6', src: 'https://picsum.photos/id/1025/600/400' },
+                { id: '1', src: 'https://picsum.photos/id/1025/300/200' },
+                { id: '2', src: 'https://picsum.photos/id/237/300/200' },
+                { id: '3', src: 'https://picsum.photos/id/237/300/200' },
+                { id: '4', src: 'https://picsum.photos/id/1025/300/200' },
+                { id: '5', src: 'https://picsum.photos/id/237/300/200' },
+                { id: '6', src: 'https://picsum.photos/id/1025/300/200' },
             ] as imgObject[],
-        }
+        };
     },
     methods: {
-        toggleExpand(){
-            this.isExpanded = !this.isExpanded
+        toggleExpand() {
+            this.isExpanded = !this.isExpanded;
         }
     },
     props: {
-        cardText: {type:String, default:''},
-        imgSrc: {type:String, default:''}
-    }
+        cardText: { type: String, default: '' },
+        imgSrc: { type: String, default: '' }
+    },
+    components: { SmallCardComponent }
 })
 </script>
 
@@ -78,7 +78,7 @@ export default defineComponent({
         position: relative;
         width: 100%;
         height: 15%;
-        font-size: 3em;
+        font-size: 2rem;
         text-align: center;
         background-color:var(--primary-halfopacity);
         color: var(--font-color);
@@ -94,27 +94,15 @@ export default defineComponent({
         top: 15%;
         height:85%;
         width: 100%;
+        height: 100%;
         display: grid;
-        grid-template-columns: 2fr 2fr 2fr;
-        
+        grid-template-columns: repeat(3, 1fr);
     }
-    .small-card{
-        background-position: center;
-        background-size: cover;
-        border: 0.1em solid;
-        margin: 0.1em;
+
+@media (max-width:768px)
+{
+    .text-wrapper{
+        font-size:1rem;
     }
-    .small-card:hover{
-        transform: scale(1.05);
-    }
-    .small-card.pop-in{
-        animation-name: anim ;
-        animation-duration: 0.5s;
-    }
-    @keyframes anim{
-        0% {opacity: 0;}
-        50%{opacity:1;}
-        75%{transform: scale(1.05);}
-        100%{transform:scale(1);}
 }
 </style>

@@ -39,9 +39,10 @@ export default defineComponent({
 }
 @media (max-width:768px){
   .app{
-    height: 1440px;
     --navbar-height:72px;
-    font-size: 1em;
+  }
+  .ghost-navbar{
+  width: 100%;
 }
 }
 </style>

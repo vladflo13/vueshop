@@ -1,7 +1,7 @@
 <template>
     <div class="card-container">
-        <Transition :key="Card.id" v-for="Card in Cards">
-            <CardComponent  :imgSrc="Card.image" :cardText="Card.text"></CardComponent>
+        <Transition :key="card.id" v-for="card in Cards">
+            <CardComponent  :imgSrc="card.image" :cardText="card.text"></CardComponent>
         </Transition>
     </div>
 </template>
@@ -10,28 +10,29 @@
 import { defineComponent } from 'vue'
 import CardComponent from './CardComponent.vue';
 export default defineComponent({
-    setup() {
+
+    data() {
         return {
             Cards:[
                 {
                     id:1,
-                    image: require('@/assets/medium.png'),
+                    image: 'https://picsum.photos/id/1080/600/400',
                     text : 'Bread'
                 },
                 {
                     id:2,
-                    image: require('@/assets/medium.png'),
+                    image: 'https://picsum.photos/id/1080/600/400',
                     text : 'Cookies',
                 },
                 {
                     id:3,
-                    image: require('@/assets/medium.png'),
+                    image: 'https://picsum.photos/id/1080/600/400',
                     text : 'Tarts',
 
                 },
                 {
                     id:4,
-                    image: require('@/assets/medium.png'),
+                    image: 'https://picsum.photos/id/1080/600/400',
                     text : 'Quiche'
                 }
             ]

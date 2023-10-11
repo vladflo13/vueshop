@@ -31,7 +31,6 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap:10px;
 
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
