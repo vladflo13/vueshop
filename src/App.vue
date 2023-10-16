@@ -31,7 +31,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   --navbar-height:144px;
-
+  background-color: var(--background-color);
 }
 .ghost-navbar{
   width: 100%;

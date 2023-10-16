@@ -50,7 +50,7 @@ export default defineComponent({
         height: 720px;
         display: grid;
         gap: 0.3em;
-        grid-template-columns: 2fr 2fr;
+        grid-template-columns: 1fr 1fr;
     }
     @media (max-width:768px){
         .card-container{

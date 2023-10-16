@@ -13,12 +13,18 @@
     
     --font-size-default:1em;
 }
+@font-face {
+    font-family: 'garamond';
+    src: url('../src/assets//fonts/CormorantGaramond-Regular.ttf');
+}
 *{
     margin:0;
     padding: 0;
 
     color:inherit;
     box-sizing: border-box;
+    font-family: 'garamond', sans-serif;
+
 }
 
 img,picture{
