@@ -24,10 +24,15 @@ export default defineComponent({
 
 <style scoped>
 .section-divider{
+    padding-left: 50px;
+    padding-right: 50px;
 
-  height: 100px;
-  font-size:3em;
-  display: flex;
-  align-items: center;
+    height: 100px;
+    font-size:3em;
+    display: flex;
+    align-items: center;
+    border:3px solid;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 </style>

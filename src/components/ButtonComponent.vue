@@ -34,6 +34,7 @@ export default defineComponent({
     height: 80%;
     margin-top: 5px;
     background-color: transparent;
+    color: inherit;
 }
 @media (max-width: 768px)
 {

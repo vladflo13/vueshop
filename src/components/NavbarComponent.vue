@@ -1,5 +1,6 @@
 <template>
     <header :class="{'navbar-container':true, 'scrolled':isScrolled}">
+        <button class="change-theme" @click="changeTheme"> Change theme</button>
         <div class="navbar-elements">
             <div class="logo-wrapper" >
                 <img class="logo" :src="logo"/>
@@ -38,6 +39,7 @@ export default defineComponent({
             {id:2,text:"Shop"},
             {id:3,text:"Account"},],
             isScrolled: false,
+            lightTheme:false,
         };
     },
     mounted(){
@@ -59,7 +61,24 @@ export default defineComponent({
             else
                 this.isScrolled = false;
         },
+        changeTheme(){
+            const element = document.querySelector(':root') as HTMLElement;
+            this.lightTheme = !this.lightTheme;
+            if(this.lightTheme){
+                element.style.setProperty('--background-color',"rgb(241, 252, 162)")
+                element.style.setProperty('--primary-color',"#000f0b")
+                element.style.setProperty('--primary-font-color', "#000f0b");
+                element.style.setProperty('--primary-halfopacity',"rgba(241, 252, 162, 0.5)");
 
+            }
+            else{
+                element.style.setProperty('--background-color',"#000f0b");
+                element.style.setProperty('--primary-color',"rgb(241, 252, 162)");
+                element.style.setProperty('--primary-font-color', "rgb(241, 252, 162)");
+                element.style.setProperty('--primary-halfopacity',"rgba(0, 15, 11, 0.5)");
+            }
+
+        }
     },
     components: { ButtonComponent }
 })
@@ -84,6 +103,14 @@ export default defineComponent({
 {
     transition: background-color 0.5s ease;
     background-color: var(--primary-color);
+    color: var(--background-color);
+}
+.change-theme{
+    z-index: 6;
+    position: absolute;
+    top: 0px;
+    font-size: 2em;
+    left:90%;
 }
 .navbar-elements{
     position: relative;

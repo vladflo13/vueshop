@@ -21,7 +21,7 @@ export default defineComponent({
     data() {
         return {
           text1:"What would you like to eat today?",
-          text2:"Who we are ? What do we do ?",
+          text2:"Who are we ? What do we do ?",
           text3:"Our Testimonies and Reviews",
           text4:"Follow us at @Vu!",
         };
@@ -41,7 +41,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
 }
 
 .menu-divider{

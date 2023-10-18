@@ -54,6 +54,7 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     border: 0.1em solid;
+    
     background-color: var(--primary-color);
 }
 .text-container{

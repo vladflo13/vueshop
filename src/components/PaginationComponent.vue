@@ -35,12 +35,12 @@ export default defineComponent({
 }
 .dot{
     background-color: var(--primary-color);
-    height: 1em;
-    width: 1em;
-    border: 0.1em solid;
+    height: 10px;
+    width: 10px;
+    border: 0.1em solid var(--background-color);
     border-radius: 50%;
 }
 .selected{
-    background-color: var(--secondary-color);
+    background-color: var(--background-color);
 }
 </style>
