@@ -227,8 +227,8 @@ export default defineComponent({
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
     --flourish-unit: calc(50px);
-    margin-bottom: var(--flourish-unit);
-    margin-top: var(--flourish-unit);
+    margin-bottom: calc(var(--flourish-unit) * 0.75);
+    margin-top: calc(var(--flourish-unit) * 0.75);
 }
 .section-wrapper{
     display: grid;
@@ -282,7 +282,13 @@ export default defineComponent({
         --flourish-unit: calc(25px);
     }
     .text-wrapper{
-        font-size: 1.5em;
+        font-size: 1.5rem;
+    }
+}
+@media (max-width: 380px)
+{
+    .text-wrapper{
+        font-size: 1rem;
     }
 }
 </style>
