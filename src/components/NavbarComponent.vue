@@ -1,12 +1,13 @@
 <template>
     <header :class="{'navbar-container':true, 'scrolled':isScrolled}">
-        <button class="menu-wrapper">
-            <svg :class="{'menu-shine':isScrolled}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="50px" height="50px">
+        <MenuComponent style="z-index:2" :isMenuOpened="isMenuOpened"></MenuComponent>
+        <button :class="{'menu-wrapper':true, 'icon-adjust':isMenuOpened}" @click="OpenMenu">
+            <svg :class="{'menu-shine1':(lightTheme&&isScrolled&&!isMenuOpened),'menu-shine2':(!lightTheme&&!isScrolled&&!isMenuOpened)}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="50px" height="50px">
                 <g fill="#1c274c" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
                     <g transform="scale(5.12,5.12)">
                         <path d="M0,7.5v5h50v-5zM0,22.5v5h50v-5zM0,37.5v5h50v-5z"></path></g></g></svg>
         </button>
-        <button class="change-theme" @click="changeTheme">
+        <button class="change-theme-wrapper" @click="ChangeTheme">
             <p>Change Theme</p>
             <svg :class="{'sun-shine':isScrolled}" v-show="lightTheme" width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z" fill="#1C274C"/>
@@ -40,6 +41,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ButtonComponent from './ButtonComponent.vue';
+import MenuComponent from './MenuComponent.vue';
 export default defineComponent({
     data() {
         return {
@@ -53,13 +55,14 @@ export default defineComponent({
             {id:4,text:"Locations"},],
             isScrolled: false,
             lightTheme: true,
+            isMenuOpened: false,
         };
     },  
     mounted(){
-        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('scroll', this.HandleScroll);
     },
     beforeUnmount(){
-        window.removeEventListener('scroll',this.handleScroll);
+        window.removeEventListener('scroll',this.HandleScroll);
     },
     props:{
         navState:{
@@ -68,19 +71,22 @@ export default defineComponent({
         }
     },
     methods:{
-        handleScroll(){
+        HandleScroll(){
             if(window.scrollY>100)
                 this.isScrolled = true;
             else
                 this.isScrolled = false;
         },
-        changeTheme(){
+        ChangeTheme(){
             this.lightTheme = !this.lightTheme;
             this.$emit('themeChanged');
 
+        },
+        OpenMenu(){
+            this.isMenuOpened = !this.isMenuOpened;
         }
     },
-    components: { ButtonComponent }
+    components: { ButtonComponent, MenuComponent }
 })
 </script>
 
@@ -105,22 +111,31 @@ export default defineComponent({
     background-color: var(--primary-color);
     color: var(--background-color);
 }
-.menu-shine > g{
+.menu-shine1 > g{
     fill:var(--background-color);
 }
+.menu-shine2 > g{
+    fill:var(--color-a)
+}
 .menu-wrapper{
-    z-index: 1;
+    z-index: 3;
     position: absolute;
     top: calc(50% - 25px);
     left: 5%;
+    transition: left 0.5s ease;
 }
-.change-theme{
+.icon-adjust {
+    left: 125px;
+    transition: left 0.5s ease;
+}
+.change-theme-wrapper{
     z-index: 1;
     position: absolute;
     display:flex;
     flex-direction:column-reverse;
     align-items: center;
     font-size: 1em;
+    font-weight: bold;
     right:5%;
     top: 10%;
 }
@@ -152,11 +167,14 @@ export default defineComponent({
 .navbar-section-right{
     display:flex;
     flex-direction: row;
+    gap: 50px;
 }
 .navbar-section-left{
     display: flex;
     flex-direction:row;
     justify-content: flex-end;
+    gap: 50px;
+
 }
 
 @media (max-width:768px)

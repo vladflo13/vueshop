@@ -1,13 +1,11 @@
 :root{
     --background-color: rgb(241, 252, 162);
     --primary-color: #000f0b;
-    --secondary-color: #d3f1ff;
-
-    --primary-font-color: #000f0b;
-    --secondary-font-color:rgb(241, 252, 162);
     --primary-halfopacity:rgba(0, 15, 11, 0.5);
-    --seondary-halfopacity:rgba(172,229,255,0.5);
     
+    --color-a:rgb(241, 252, 162);
+    --color-b: #000f0b;
+
     --font-size-default:1em;
 
 }

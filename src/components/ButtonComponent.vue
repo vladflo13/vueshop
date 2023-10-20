@@ -29,13 +29,6 @@ export default defineComponent({
 <style scoped>
 .button-wrapper{
     font-size: 2em;
-    margin-left: 25px;
-}
-@media (max-width: 768px)
-{
-    .button-wrapper{
-    font-size: 1em;
-    }
 }
 .underline-text:hover, .underline-text-current{
     text-decoration: underline;
