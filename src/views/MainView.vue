@@ -1,12 +1,12 @@
 <template>
     <div class="main">
-      <SectionDividerComponent class="menu-divider" :text="text1"></SectionDividerComponent>
+      <SectionDividerComponent class="divider" :text="text1"></SectionDividerComponent>
       <CardContainer></CardContainer>
-      <SectionDividerComponent :text="text2"></SectionDividerComponent>
+      <SectionDividerComponent class="divider" :text="text2"></SectionDividerComponent>
       <HeroComponent></HeroComponent>
-      <SectionDividerComponent :text="text3"></SectionDividerComponent>
+      <SectionDividerComponent class="divider" :text="text3"></SectionDividerComponent>
       <TestimoniesContainer></TestimoniesContainer>
-      <SectionDividerComponent :text="text4"></SectionDividerComponent>
+      <SectionDividerComponent class="divider" :text="text4"></SectionDividerComponent>
     </div>
 </template>
 
@@ -46,7 +46,7 @@ export default defineComponent({
   /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
 }
 
-.menu-divider{
+.divider{
   animation-name: fade-in-up;
   animation-duration: 0.75s;
 }
