@@ -63,9 +63,10 @@ export default defineComponent({
     display: flex;
     align-items: flex-end;
     flex-direction: column-reverse;
-
     background-position: center;
     background-size: cover;
+    background-color: rgba(0,0,0,0.10);
+    background-blend-mode: multiply;
     transition: transform 0.5s ease;
 }
 .text-container:hover{
@@ -81,7 +82,7 @@ export default defineComponent({
     font-size: 2rem;
     text-align: center;
     background-color:var(--primary-halfopacity);
-    color: var(--font-color);
+    color: var(--primary-color);
 }
 .small-bottom{
     z-index: 0;

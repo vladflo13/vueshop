@@ -24,9 +24,11 @@ export default defineComponent({
           text2:"Who are we ? What do we do ?",
           text3:"Our Testimonies and Reviews",
           text4:"Follow us at @Vu!",
+          lightTheme : true,
         };
     },
     methods:{
+     
     },
     components: { CardContainer, HeroComponent, TestimoniesContainer, SectionDividerComponent}
 })

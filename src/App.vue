@@ -2,7 +2,7 @@
 <template>
   <div class ="app">
     <div class="ghost-navbar"></div>
-    <NavbarComponent :navState="navState"></NavbarComponent>
+    <NavbarComponent :navState="navState" @themeChanged="changeTheme"></NavbarComponent>
     <MainView v-if="navState==='Home'"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
     <!-- <AccountView v-if="navState==='Home'"></AccountView> -->
@@ -18,10 +18,29 @@ import MainView from './views/MainView.vue';
 import NavbarComponent from './components/NavbarComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 export default defineComponent({
-    setup() {
+    data() {
       return {
         navState: 'Home',
+        lightTheme: true,
         };
+    },
+    methods:{
+      changeTheme(){
+        const element = document.querySelector(':root') as HTMLElement;
+            this.lightTheme = !this.lightTheme;
+            if(this.lightTheme){
+                element.style.setProperty('--background-color',"rgb(241, 252, 162)")
+                element.style.setProperty('--primary-color',"#000f0b")
+                element.style.setProperty('--primary-font-color', "#000f0b");
+                element.style.setProperty('--primary-halfopacity',"rgba(241, 252, 162, 0.5)");
+            }
+            else{
+                element.style.setProperty('--background-color',"#000f0b");
+                element.style.setProperty('--primary-color',"rgb(241, 252, 162)");
+                element.style.setProperty('--primary-font-color', "rgb(241, 252, 162)");
+                element.style.setProperty('--primary-halfopacity',"rgba(0, 15, 11, 0.5)");
+            }
+      }
     },
     components:{ MainView, NavbarComponent, FooterComponent }
 })

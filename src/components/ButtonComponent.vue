@@ -30,11 +30,8 @@ export default defineComponent({
 .button-wrapper{
     font-size: 2em;
     border: none;
-    margin-left: 5px;
-    height: 80%;
-    margin-top: 5px;
+    margin-left: 25px;
     background-color: transparent;
-    color: inherit;
 }
 @media (max-width: 768px)
 {

@@ -1,26 +1,32 @@
 <template>
     <header :class="{'navbar-container':true, 'scrolled':isScrolled}">
-        <button class="change-theme" @click="changeTheme"> Change theme</button>
-        <div class="navbar-elements">
-            <div class="logo-wrapper" >
-                <img class="logo" :src="logo"/>
+        <button class="change-theme" @click="changeTheme">
+            <p>Change Theme</p>
+            <svg :class="{'sun-shine':isScrolled}" v-show="lightTheme" width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z" fill="#1C274C"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V4C12.75 4.41421 12.4142 4.75 12 4.75C11.5858 4.75 11.25 4.41421 11.25 4V2C11.25 1.58579 11.5858 1.25 12 1.25ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H4C4.41421 11.25 4.75 11.5858 4.75 12C4.75 12.4142 4.41421 12.75 4 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM19.25 12C19.25 11.5858 19.5858 11.25 20 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H20C19.5858 12.75 19.25 12.4142 19.25 12ZM12 19.25C12.4142 19.25 12.75 19.5858 12.75 20V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V20C11.25 19.5858 11.5858 19.25 12 19.25Z" fill="#1C274C"/>
+                <g opacity="0.5">
+                    <path d="M3.66919 3.7156C3.94869 3.4099 4.42309 3.38867 4.72879 3.66817L6.95081 5.69975C7.25651 5.97925 7.27774 6.45365 6.99824 6.75935C6.71874 7.06505 6.24434 7.08629 5.93865 6.80679L3.71663 4.7752C3.41093 4.4957 3.38969 4.0213 3.66919 3.7156Z" fill="#1C274C"/>
+                    <path d="M20.3319 3.7156C20.6114 4.0213 20.5902 4.4957 20.2845 4.7752L18.0624 6.80679C17.7567 7.08629 17.2823 7.06505 17.0028 6.75935C16.7233 6.45365 16.7446 5.97925 17.0503 5.69975L19.2723 3.66817C19.578 3.38867 20.0524 3.4099 20.3319 3.7156Z" fill="#1C274C"/>
+                    <path d="M17.0261 17.0247C17.319 16.7318 17.7938 16.7319 18.0867 17.0248L20.3087 19.2471C20.6016 19.54 20.6016 20.0148 20.3087 20.3077C20.0158 20.6006 19.5409 20.6006 19.248 20.3076L17.026 18.0854C16.7331 17.7924 16.7332 17.3176 17.0261 17.0247Z" fill="#1C274C"/>
+                    <path d="M6.97521 17.0249C7.2681 17.3177 7.2681 17.7926 6.97521 18.0855L4.75299 20.3077C4.46009 20.6006 3.98522 20.6006 3.69233 20.3077C3.39943 20.0148 3.39943 19.54 3.69233 19.2471L5.91455 17.0248C6.20744 16.732 6.68232 16.732 6.97521 17.0249Z" fill="#1C274C"/>
+                </g>
+            </svg>
+            <svg v-show="!lightTheme" width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M22 12.0004C22 17.5232 17.5228 22.0004 12 22.0004C10.8358 22.0004 9.71801 21.8014 8.67887 21.4357C8.24138 20.3772 8 19.217 8 18.0004C8 15.7792 8.80467 13.7459 10.1384 12.1762C11.31 13.8818 13.2744 15.0004 15.5 15.0004C17.8615 15.0004 19.9289 13.741 21.0672 11.8572C21.3065 11.4612 22 11.5377 22 12.0004Z" fill="#1C274C"/>
+                <path d="M2 12C2 16.3586 4.78852 20.0659 8.67887 21.4353C8.24138 20.3768 8 19.2166 8 18C8 15.7788 8.80467 13.7455 10.1384 12.1758C9.42027 11.1303 9 9.86422 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12Z" fill="#1C274C"/>
+            </svg>
+        </button>
+        <div class="navbar-grid">
+            <div class="left-section">
+                <ButtonComponent v-for="link in LeftLinks" :text="link.text" :key="link.id" :isCurrent="navState===link.text"></ButtonComponent>
             </div>
-            <div class="main-section">
-                <div class="buttons-container">
-                    <ButtonComponent v-for="link in Links" :text="link.text" :key="link.id" :isCurrent="navState===link.text"></ButtonComponent>
-                </div>
+            <div class="logo-wrapper">
+                <div class="logo" :style="'background:url('+logo+')'"></div>
             </div>
-            <ul class="icons-container">
-                <button class="icon-wrapper">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-                </button>
-                <button class="icon-wrapper">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
-                </button>
-                <button class="icon-wrapper">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
-                </button>
-            </ul>
+            <div class="right-section">
+                <ButtonComponent v-for="link in RightLinks" :text="link.text" :key="link.id" :isCurrent="navState===link.text"></ButtonComponent>
+            </div>
         </div>
     </header>
 </template>
@@ -31,17 +37,18 @@ import ButtonComponent from './ButtonComponent.vue';
 export default defineComponent({
     data() {
         return {
-            logo: require('@/assets/french-eagle.png'),
+            logo: require('@/assets/VuLogo.png'),
             cart: require('@/assets/icons/cart-shopping-solid.svg'),
             user: require('@/assets/icons/user-solid.svg'),
             mag: require('@/assets/icons/magnifying-glass-solid.svg'),
-            Links:[{id:1,text:"Home"},
-            {id:2,text:"Shop"},
-            {id:3,text:"Account"},],
+            LeftLinks:[{id:1,text:"Menu"},
+            {id:2,text:"Delivery"}],
+            RightLinks:[{id:3,text:"About us"},
+            {id:4,text:"Locations"},],
             isScrolled: false,
-            lightTheme:false,
+            lightTheme: true,
         };
-    },
+    },  
     mounted(){
         window.addEventListener('scroll', this.handleScroll);
     },
@@ -62,21 +69,8 @@ export default defineComponent({
                 this.isScrolled = false;
         },
         changeTheme(){
-            const element = document.querySelector(':root') as HTMLElement;
             this.lightTheme = !this.lightTheme;
-            if(this.lightTheme){
-                element.style.setProperty('--background-color',"rgb(241, 252, 162)")
-                element.style.setProperty('--primary-color',"#000f0b")
-                element.style.setProperty('--primary-font-color', "#000f0b");
-                element.style.setProperty('--primary-halfopacity',"rgba(241, 252, 162, 0.5)");
-
-            }
-            else{
-                element.style.setProperty('--background-color',"#000f0b");
-                element.style.setProperty('--primary-color',"rgb(241, 252, 162)");
-                element.style.setProperty('--primary-font-color', "rgb(241, 252, 162)");
-                element.style.setProperty('--primary-halfopacity',"rgba(0, 15, 11, 0.5)");
-            }
+            this.$emit('themeChanged');
 
         }
     },
@@ -108,50 +102,46 @@ export default defineComponent({
 .change-theme{
     z-index: 6;
     position: absolute;
+    display:flex;
+    flex-direction:column-reverse;
+    align-items: center;
     top: 0px;
-    font-size: 2em;
+    font-size: 1em;
     left:90%;
+    top: 10%;
+    border: 0px;
+    background-color: transparent;
 }
-.navbar-elements{
+.sun-shine > path, g.path{
+    fill:var(--background-color)
+}
+.navbar-grid{
     position: relative;
-    width: 90%;
+    width: 60%;
     height: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    align-items: center;
+}
+.logo-wrapper{
     display: flex;
-
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
 }
 .logo{
-    width: calc(266px/2);
-    height: calc(250px/2);
     background-position: center;
-    background-size: cover;
+    background-size: 100% 50px;
+    background-repeat: no-repeat;
 }
-.icon-wrapper{
-    background-color: transparent;
-    border:none;
-    margin-left: 5px;
-    
-}
-.icon-wrapper > svg{
-    height:44px;
-}
-.icons-container{
-    width: 10%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-.main-section{
-    height: 100%;
-    width: 70%;
+.right-section{
     display:flex;
+    flex-direction: row;
 }
-.buttons-container{
-    position: absolute;
+.left-section{
     display: flex;
-    align-items: center;
-    width: 100%;
-    height: 100%;
+    flex-direction:row;
+    justify-content: flex-end;
 }
 
 @media (max-width:768px)
@@ -160,8 +150,7 @@ export default defineComponent({
         height: 14px;
     }
     .logo{
-        --logo-w:266px;
-        --logo-h:250px;
+        
         width: calc(var(--logo-w)/4);
         height: calc(var(--logo-h)/4);
         }
