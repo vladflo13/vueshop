@@ -21,6 +21,10 @@
     font-family: inherit;
     color:inherit;
 }
+button{
+    border: 0px;
+    background-color: transparent;
+}
 .app{
 
     color:var(--primary-font-color);

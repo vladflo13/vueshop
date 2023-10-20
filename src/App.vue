@@ -22,9 +22,16 @@ export default defineComponent({
       return {
         navState: 'Home',
         lightTheme: true,
+        number:0,
         };
     },
     methods:{
+      increase(){
+        this.number++;
+      },
+      decrease(){
+        this.number--;
+      },
       changeTheme(){
         const element = document.querySelector(':root') as HTMLElement;
             this.lightTheme = !this.lightTheme;
@@ -49,7 +56,7 @@ export default defineComponent({
 .app{
   display: flex;
   flex-direction: column;
-  --navbar-height:144px;
+  --navbar-height:120px;
   background-color: var(--background-color);
 }
 .ghost-navbar{
@@ -58,7 +65,7 @@ export default defineComponent({
 }
 @media (max-width:768px){
   .app{
-    --navbar-height:72px;
+    --navbar-height:78px;
   }
   .ghost-navbar{
   width: 100%;

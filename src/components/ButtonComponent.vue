@@ -29,9 +29,7 @@ export default defineComponent({
 <style scoped>
 .button-wrapper{
     font-size: 2em;
-    border: none;
     margin-left: 25px;
-    background-color: transparent;
 }
 @media (max-width: 768px)
 {
