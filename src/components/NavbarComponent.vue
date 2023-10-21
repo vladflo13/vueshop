@@ -79,6 +79,7 @@ export default defineComponent({
     justify-content: center;
     display: flex;
     flex-direction: row;
+    pointer-events: none;
 
 }
 

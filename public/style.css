@@ -1,8 +1,10 @@
 :root{
-    --background-color: rgb(241, 252, 162);
     --primary-color: #000f0b;
     --primary-halfopacity:rgba(0, 15, 11, 0.5);
     
+    --background-color: rgb(241, 252, 162);
+    --background-halfopacity: rgb(241, 252, 162, 0.5);
+
     --color-a:rgb(241, 252, 162);
     --color-b: #000f0b;
 

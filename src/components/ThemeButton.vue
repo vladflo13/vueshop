@@ -44,6 +44,8 @@ export default defineComponent({
     --icon-width:65px;
     --icon-height: 79px;
 
+    pointer-events:all;
+
     z-index: 1;
     position: absolute;
     align-items: center;
