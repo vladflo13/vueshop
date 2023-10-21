@@ -1,14 +1,18 @@
 <template>
         <div class="card-wrapper">
                 <div :class="{'text-container':true, 'reveal':isExpanded }"  @click="toggleExpand"
-                :style="'background-image:url('+ imgSrc +')'">
+                :style="'background-image:url('+ card.src +')'">
                     <div class="small-bottom" v-show="!isExpanded"></div>
                     <div class="text-wrapper">
-                        <p>{{ cardText }}</p></div>
+                        <p>{{ card.text }}</p></div>
                 </div>
                 <div class="small-card-container">
-                    <SmallCardComponent :class="{'pop-in':true, 'appear':isExpanded, 'disappear':!isExpanded}"
-                    v-for="image in childCards" :key="image.id" :imgSrc="image.src"></SmallCardComponent>
+                    <div class="card-carousel">
+                        <div v-for="image in card.childCards" :key="image.id">
+                            <SmallCardComponent :class="{'pop-in':true, 'appear':isExpanded, 'disappear':!isExpanded}"
+                            :imgObject="image"></SmallCardComponent>
+                        </div>
+                    </div>
                 </div>
         </div>
 </template>
@@ -16,7 +20,7 @@
 <script lang="ts">
 import { PropType, defineComponent } from 'vue'
 import SmallCardComponent from './SmallCardComponent.vue';
-import {imgObject} from './imgObject';
+import { cardObject } from '../interfaces';
 export default defineComponent({
     data() {
         return {
@@ -30,9 +34,7 @@ export default defineComponent({
         }
     },
     props: {
-        cardText: { type: String, default: '' },
-        imgSrc: { type: String, default: '' },
-        childCards: {type: Object as PropType<imgObject[]>, required:true},
+        card: {type: Object as PropType<cardObject>, default:null}
     },
     components: { SmallCardComponent }
 })
@@ -58,7 +60,7 @@ export default defineComponent({
     flex-direction: column-reverse;
     background-position: center;
     background-size: cover;
-    background-color: rgba(0,0,0,0.20);
+    background-color: rgba(0,0,0,0.10);
     background-blend-mode: multiply;
     transition: transform 0.5s ease;
 }
@@ -89,15 +91,20 @@ export default defineComponent({
 .small-card-container{
     z-index: -1;
     position: absolute;
-    gap: 2px;
     top: 15%;
     height:85%;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
 }
-
+.card-carousel{
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 2px;
+}
 .pop-in.appear{
     animation-name: fadeIn ;
     animation-duration: 0.5s;

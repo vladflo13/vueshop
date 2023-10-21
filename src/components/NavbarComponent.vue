@@ -91,7 +91,7 @@ export default defineComponent({
     display: grid;
     grid-template-columns: 3fr 1fr 3fr;
     align-items: center;
-    border: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
     background-color: var(--background-color);
     transition: transform 0.5s ease;
 

@@ -1,41 +1,44 @@
 <template>
     <div class="card-container">
-        <CardComponent :class="{'item':true,'expanded-item':isExpanded && card.id === expandId}" :key="card.id" 
-        v-for="(card, index) in ParentCards" :imgSrc="card.image" 
-        :cardText="card.text" :childCards="(card.ChildCards as imgObject[])" @childExpanded="expandChild(index)"></CardComponent>
+        <CardComponent v-for="card in ParentCards" :key="card.id" 
+        :card="card"
+        :class="{'item':true,'expanded-item': card.isExpanded}"
+        @childExpanded="expandChild(card.id - 1)"></CardComponent>
+
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CardComponent from './CardComponent.vue';
-import { imgObject } from './imgObject';
+import { imgObject, cardObject } from '../interfaces';
 export default defineComponent({
     data() {
         return {
+            lorem:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam veniam consequuntur provident voluptate? Itaque ipsum excepturi quidem animi provident suscipit aspernatur, perspiciatis autem sapiente doloremque aut voluptate, hic dolores error!",
             ParentCards:[
                 {
                     id:1,
-                    image: require('@/assets/bread.jpg'),
+                    src: require('@/assets/bread.jpg'),
                     text : 'Bread',
-                    ChildCards:[//-460x328.jpg
-                        {id:1, src:require('@/assets/baguette-460x328.jpg')},
-                        {id:2, src:require('@/assets/ciabatta-460x328.jpg')},
-                        {id:3, src:require('@/assets/cranberry-460x328.jpg')},
-                        {id:4, src:require('@/assets/levain-460x328.jpg')},
-                        {id:5, src:require('@/assets/multigrain-460x328.jpg')},
-                        {id:6, src:require('@/assets/olive-460x328.jpg')},
-                        {id:7, src:require('@/assets/rolls-460x328.jpg')},
-                        {id:8, src:require('@/assets/seigle-460x328.jpg')},
-                        {id:9, src:require('@/assets/walnut-460x328.jpg')},
+                    childCards:[
+                        {id:1, title:"baguette", text:'', src:require('@/assets/baguette-460x328.jpg')},
+                        {id:2, title:"ciabatta", text:'', src:require('@/assets/ciabatta-460x328.jpg')},
+                        {id:3, title:"cranberry", text:'', src:require('@/assets/cranberry-460x328.jpg')},
+                        {id:4, title:"levain", text:'', src:require('@/assets/levain-460x328.jpg')},
+                        {id:5, title:"multigrain", text:'', src:require('@/assets/multigrain-460x328.jpg')},
+                        {id:6, title:"olive", text:'', src:require('@/assets/olive-460x328.jpg')},
+                        {id:7, title:"rolls", text:'', src:require('@/assets/rolls-460x328.jpg')},
+                        {id:8, title:"seigle", text:'', src:require('@/assets/seigle-460x328.jpg')},
+                        {id:9, title:"walnut", text:'', src:require('@/assets/walnut-460x328.jpg')},
                     ] as imgObject[],
                     isExpanded: false,
                 },
                 {
                     id:2,
-                    image: 'https://picsum.photos/id/1080/600/400',
+                    src: 'https://picsum.photos/id/1080/600/400',
                     text : 'Cookies',
-                    ChildCards:[//-460x328.jpg
+                    childCards:[
                         {id:1, image:require('@/assets/baguette-460x328.jpg')},
                         {id:2, image:require('@/assets/ciabatta-460x328.jpg')},
                         {id:3, image:require('@/assets/cranberry-460x328.jpg')},
@@ -50,9 +53,9 @@ export default defineComponent({
                     },
                 {
                     id:3,
-                    image: 'https://picsum.photos/id/1080/600/400',
+                    src: 'https://picsum.photos/id/1080/600/400',
                     text : 'Tarts',
-                    ChildCards:[//-460x328.jpg
+                    childCards:[
                         {id:1, image:require('@/assets/baguette-460x328.jpg')},
                         {id:2, image:require('@/assets/ciabatta-460x328.jpg')},
                         {id:3, image:require('@/assets/cranberry-460x328.jpg')},
@@ -67,9 +70,9 @@ export default defineComponent({
                     },
                 {
                     id:4,
-                    image: 'https://picsum.photos/id/1080/600/400',
+                    src: 'https://picsum.photos/id/1080/600/400',
                     text : 'Quiche',
-                    ChildCards:[//-460x328.jpg
+                    childCards:[
                         {id:1, image:require('@/assets/baguette-460x328.jpg')},
                         {id:2, image:require('@/assets/ciabatta-460x328.jpg')},
                         {id:3, image:require('@/assets/cranberry-460x328.jpg')},
@@ -82,28 +85,16 @@ export default defineComponent({
                         ],
                     isExpanded: false,
                     }
-            ],
-            isExpanded:false,
-            expandId:-1,
+            ] as cardObject[],
         };
+    },
+    created(){
+        for (let i = 0; i < this.ParentCards[0].childCards.length;i++)
+            this.ParentCards[0].childCards[i].text = this.lorem;
     },
     methods:{
         expandChild(id:number){
             this.ParentCards[id].isExpanded = !this.ParentCards[id].isExpanded;
-            id++;
-            if(!this.isExpanded){
-            this.isExpanded=true;
-            this.expandId = id;
-            }
-            else{
-                if(this.expandId === id)
-                {this.isExpanded = false;
-                this.expandId = -1;}
-                else
-                {
-                    this.expandId = id;
-                }
-            }
         }
     },
     components: { CardComponent }
@@ -113,12 +104,14 @@ export default defineComponent({
 <style scoped>
 .card-container{
     --expandTiming: 0.5s;
-    --elementHeight: 320px;
+    --elementHeight: 400px;
+    --elementWidth: 600px;
     position: relative;
     width: 100%;
     display: grid;
-    gap: 4px;
     grid-template-columns: 1fr 1fr;
+    gap: 4px;
+
 }
 
 .item{
@@ -126,15 +119,8 @@ export default defineComponent({
     transition: height var(--expandTiming) ease;
 }
 .expanded-item{
-    grid-column: span 2;
-    height: calc(var(--elementHeight)*2);
+    height: calc(var(--elementHeight) * 2);
     transition: height var(--expandTiming) ease;
-}
-.card-container div:nth-child(2).expanded-item{
-    grid-row: 1 / 3;
-}
-.card-container div:nth-child(4).expanded-item{
-    grid-row: 2 / 4;
 }
 @media (max-width:768px){
     .card-container{
