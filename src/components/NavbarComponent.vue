@@ -1,9 +1,9 @@
 <template>
-    <header :class="{'navbar-container':true, 'scrolled':isScrolled}">
+    <header class="navbar-container">
         <MenuComponent style="z-index:2" :isMenuOpened="isMenuOpened"></MenuComponent>
         <MenuButton @click="OpenMenu" :lightTheme="lightTheme" :isScrolled="isScrolled" :isMenuOpened="isMenuOpened"></MenuButton>
         <ThemeButton @click="ChangeTheme" :lightTheme="lightTheme" :isScrolled="isScrolled"></ThemeButton>
-        <div class="navbar-grid">
+        <div :class="{'navbar-grid':true, 'scrolled':isScrolled}">
             <div class="navbar-section-left">
                 <ButtonComponent v-for="link in LeftLinks" :text="link.text" :key="link.id" :isCurrent="navState===link.text"></ButtonComponent>
             </div>
@@ -77,28 +77,30 @@ export default defineComponent({
     width: 100%;
     height: var(--navbar-height);
     justify-content: center;
-    background-color: var(--background-color);
     display: flex;
     flex-direction: row;
-    transition: background-color 0.5s ease;
 
-}
-.navbar-container.scrolled
-{
-    transition: background-color 0.5s ease;
-    background-color: var(--primary-color);
-    color: var(--background-color);
 }
 
 
 .navbar-grid{
     position: relative;
-    width: 60%;
+    width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-columns: 3fr 1fr 3fr;
     align-items: center;
+    border: 2px solid var(--primary-color);
+    background-color: var(--background-color);
+    transition: transform 0.5s ease;
+
 }
+.navbar-grid.scrolled
+{
+    transition: transform 0.5s ease;
+    transform: translateY(-100%);
+}
+
 .logo-wrapper{
     display: flex;
     justify-content: center;
@@ -110,22 +112,19 @@ export default defineComponent({
     background-size: 100% 50px;
     background-repeat: no-repeat;
 }
-.navbar-section-right{
+[class*= 'navbar-section-']{
     display:flex;
     flex-direction: row;
     gap: 50px;
+
 }
 .navbar-section-left{
-    display: flex;
-    flex-direction:row;
     justify-content: flex-end;
-    gap: 50px;
-
 }
 
 @media (max-width:768px)
 {
-    [class*='navbar-section']{
+    [class*='navbar-section-']{
         width: 0px;
         font-size:0px;
     }

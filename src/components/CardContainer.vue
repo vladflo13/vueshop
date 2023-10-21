@@ -16,8 +16,8 @@ export default defineComponent({
             Cards:[
                 {
                     id:1,
-                    image: 'https://picsum.photos/id/1080/600/400',
-                    text : 'Bread'
+                    image: require('@/assets/bread.jpg'),
+                    text : 'Bread',
                 },
                 {
                     id:2,
@@ -46,7 +46,7 @@ export default defineComponent({
 <style scoped>
     .card-container{
         position: relative;
-        width: 96%;
+        width: 100%;
         height: 720px;
         display: grid;
         gap: 0.3em;

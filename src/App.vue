@@ -56,6 +56,9 @@ export default defineComponent({
 .app{
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   --navbar-height:120px;
   background-color: var(--background-color);
 }

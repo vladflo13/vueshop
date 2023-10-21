@@ -37,7 +37,7 @@ export default defineComponent({
 <style scoped>
 
 .main{
-  width: 100%;
+  width: 96%;
   display: flex;
   flex-direction: column;
   justify-content: center;
