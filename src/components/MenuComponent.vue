@@ -89,7 +89,7 @@ export default defineComponent({
 }
 .theme-button{
     position: absolute;
-    left: 100px;
-    top: 85%;
+    left: 108px; /* icon width 65px, nav-menu width 150px*/
+    top: 65%;
 }
 </style>

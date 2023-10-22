@@ -1,7 +1,7 @@
 <template>
     <header class="navbar-container">
         <MenuComponent style="z-index:2" @themeChanged="ChangeTheme" :lightTheme="lightTheme" :isMenuOpened="isMenuOpened"></MenuComponent>
-        <MenuButton @click="OpenMenu" :lightTheme="lightTheme" :isScrolled="isScrolled" :isMenuOpened="isMenuOpened"></MenuButton>
+        <MenuButton @click="OpenMenu" :lightTheme="lightTheme" :isInMenuRange="isFixed" :isMenuOpened="isMenuOpened"></MenuButton>
         <ThemeButton :class="{'theme':true, 'scrolled':isScrolled}" @click="ChangeTheme" :lightTheme="lightTheme" :isScrolled="isScrolled"></ThemeButton>
         <div :class="{'navbar-grid':true, 'scrolled':isScrolled}">
             <div class="navbar-section-left">
@@ -45,8 +45,12 @@ export default defineComponent({
     props:{
         navState:{
             type:String,
-            default:'Home',
+            default:'Menu',
         },
+        isFixed:{
+            type:Boolean,
+            default:false,
+        }
     },
     methods:{
         HandleScroll(){

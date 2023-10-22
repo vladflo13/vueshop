@@ -237,8 +237,8 @@ export default defineComponent({
 .section-container{
     overflow:hidden;
     position: relative;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 .text-wrapper{
     padding-left: 50px;

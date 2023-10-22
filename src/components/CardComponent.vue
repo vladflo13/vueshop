@@ -47,13 +47,15 @@ export default defineComponent({
     position: relative;
     width: 100%;
     height: 100%;
-    border: 0.1em solid;
-    background-color: var(--primary-color);
+    border: 3px solid var(--primary-color);
+    background-color: var(--background-color);
+    height: 700px;
+    margin-bottom: 20px;
 }
 .text-container{
     width: 100%;
     height: 100%;
-    font-size: 2rem;
+    font-size: 3rem;
 
     display: flex;
     align-items: flex-end;
@@ -68,7 +70,6 @@ export default defineComponent({
     transform: scale(1.05);
 }
 .text-container.reveal{
-    font-size: 3rem;
     transform: translateY(-85%);
     transition: transform 0.5s ease;
     transition-delay: var(--expandTiming);

@@ -2,8 +2,8 @@
 <template>
   <div class ="app">
     <div class="ghost-navbar"></div>
-    <NavbarComponent :navState="navState" @themeChanged="changeTheme"></NavbarComponent>
-    <MainView v-if="navState==='Home'"></MainView>
+    <NavbarComponent :navState="navState" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
+    <MainView v-if="navState==='Home'" :isFixed="menuNavIsFixed"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
     <!-- <AccountView v-if="navState==='Home'"></AccountView> -->
 
@@ -22,17 +22,22 @@ export default defineComponent({
       return {
         navState: 'Home',
         lightTheme: true,
-        number:0,
+        menuNavIsFixed: false,
         };
     },
     methods:{
-      increase(){
-        this.number++;
+      HandleScroll(){
+        let cardContainer= document.getElementById('card-container');
+        let domRect = cardContainer?.getBoundingClientRect();
+        if(domRect)
+        {
+          if(domRect.top < 0 && -domRect.top < domRect.height) //726 is the height of one element
+              this.menuNavIsFixed=true;
+          else
+            this.menuNavIsFixed=false;
+        }
       },
-      decrease(){
-        this.number--;
-      },
-      changeTheme(){
+      ChangeTheme(){
         const element = document.querySelector(':root') as HTMLElement;
             this.lightTheme = !this.lightTheme;
             if(this.lightTheme){
@@ -48,6 +53,12 @@ export default defineComponent({
                 element.style.setProperty('--primary-halfopacity',"rgba(0, 15, 11, 0.5)");
             }
       }
+    },
+    mounted(){
+      window.addEventListener('scroll', this.HandleScroll);
+    },
+    beforeUnmount(){
+      window.removeEventListener('scroll', this.HandleScroll);
     },
     components:{ MainView, NavbarComponent, FooterComponent }
 })
