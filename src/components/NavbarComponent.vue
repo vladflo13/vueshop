@@ -1,8 +1,8 @@
 <template>
     <header class="navbar-container">
-        <MenuComponent style="z-index:2" :isMenuOpened="isMenuOpened"></MenuComponent>
+        <MenuComponent style="z-index:2" @themeChanged="ChangeTheme" :lightTheme="lightTheme" :isMenuOpened="isMenuOpened"></MenuComponent>
         <MenuButton @click="OpenMenu" :lightTheme="lightTheme" :isScrolled="isScrolled" :isMenuOpened="isMenuOpened"></MenuButton>
-        <ThemeButton @click="ChangeTheme" :lightTheme="lightTheme" :isScrolled="isScrolled"></ThemeButton>
+        <ThemeButton :class="{'theme':true, 'scrolled':isScrolled}" @click="ChangeTheme" :lightTheme="lightTheme" :isScrolled="isScrolled"></ThemeButton>
         <div :class="{'navbar-grid':true, 'scrolled':isScrolled}">
             <div class="navbar-section-left">
                 <ButtonComponent v-for="link in LeftLinks" :text="link.text" :key="link.id" :isCurrent="navState===link.text"></ButtonComponent>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent} from 'vue'
 import ButtonComponent from './ButtonComponent.vue';
 import MenuComponent from './MenuComponent.vue';
 import ThemeButton from './ThemeButton.vue';
@@ -32,10 +32,10 @@ export default defineComponent({
             RightLinks:[{id:3,text:"About us"},
             {id:4,text:"Locations"},],
             isScrolled: false,
-            lightTheme: true,
             isMenuOpened: false,
+            lightTheme: true,
         };
-    },  
+    },
     mounted(){
         window.addEventListener('scroll', this.HandleScroll);
     },
@@ -46,7 +46,7 @@ export default defineComponent({
         navState:{
             type:String,
             default:'Home',
-        }
+        },
     },
     methods:{
         HandleScroll(){
@@ -82,8 +82,6 @@ export default defineComponent({
     pointer-events: none;
 
 }
-
-
 .navbar-grid{
     position: relative;
     width: 100%;
@@ -101,7 +99,15 @@ export default defineComponent({
     transition: transform 0.5s ease;
     transform: translateY(-100%);
 }
-
+.theme{
+    position: absolute;
+    top:5px;
+    transition: transform 0.5s ease;
+}
+.theme.scrolled{
+    transition: transform 0.5s ease;
+    transform: translateY(-100%);
+}
 .logo-wrapper{
     display: flex;
     justify-content: center;

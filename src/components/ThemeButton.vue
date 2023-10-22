@@ -1,7 +1,7 @@
 <template>
     <div class="change-theme-wrapper">
-        <button :class="{'items-wrapper':true, 'scrolled':isScrolled}">
-                <div class="icons-container">
+        <button class="items-wrapper">
+                <div :class="{'icons-container':true, 'part-of-menu':isPartOfMenu}">
                     <p>Change Theme</p>
                     <svg v-show="lightTheme" width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z" fill="#1C274C"/>
@@ -13,7 +13,7 @@
                             <path d="M6.97521 17.0249C7.2681 17.3177 7.2681 17.7926 6.97521 18.0855L4.75299 20.3077C4.46009 20.6006 3.98522 20.6006 3.69233 20.3077C3.39943 20.0148 3.39943 19.54 3.69233 19.2471L5.91455 17.0248C6.20744 16.732 6.68232 16.732 6.97521 17.0249Z" fill="#1C274C"/>
                         </g>
                     </svg>
-                    <svg :class="{'moon-shine':isScrolled}" v-show="!lightTheme" width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg v-show="!lightTheme" width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M22 12.0004C22 17.5232 17.5228 22.0004 12 22.0004C10.8358 22.0004 9.71801 21.8014 8.67887 21.4357C8.24138 20.3772 8 19.217 8 18.0004C8 15.7792 8.80467 13.7459 10.1384 12.1762C11.31 13.8818 13.2744 15.0004 15.5 15.0004C17.8615 15.0004 19.9289 13.741 21.0672 11.8572C21.3065 11.4612 22 11.5377 22 12.0004Z" fill="var(--primary-color)"/>
                         <path d="M2 12C2 16.3586 4.78852 20.0659 8.67887 21.4353C8.24138 20.3768 8 19.2166 8 18C8 15.7788 8.80467 13.7455 10.1384 12.1758C9.42027 11.1303 9 9.86422 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12Z" fill="var(--primary-color)"/>
                     </svg>
@@ -23,19 +23,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
+import { defineComponent} from 'vue'
 export default defineComponent({
     props:{
         lightTheme:{
             type:Boolean,
-            default:false
+            default: true,
         },
         isScrolled:{
             type:Boolean,
             default:false
+        },
+        isPartOfMenu:{
+            type:Boolean,
+            default:false
         }
-    }
+    },
 })
 </script>
 
@@ -54,15 +57,19 @@ export default defineComponent({
     font-weight: bold;
 
     height: var(--navbar-height);
-    width: calc(var(--icon-width) * 3);
+    width: calc(var(--icon-width));
     right:0px;
     top: 0px;
+}
+.part-of-menu{
+    color:black;
+}
+.part-of-menu svg path{
+    fill: #1C274C;
 }
 .items-wrapper{
     z-index: 2;
     position: absolute;
-    top: calc(50% - (var(--icon-height) / 2) );
-    left: calc(50% - (var(--icon-width) / 2) );
     color:var(--primary-color);
     font-weight: bolder;
 }

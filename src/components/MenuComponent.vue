@@ -9,6 +9,7 @@
                         <div class="button-line"></div>
                     </div>
                 </div>
+                <ThemeButton :isPartOfMenu="true" :lightTheme="lightTheme" class ="theme-button" @click="ChangeTheme"></ThemeButton>
             </div>
             </Transition>
     </div>
@@ -17,6 +18,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ButtonComponent from './ButtonComponent.vue';
+import ThemeButton from './ThemeButton.vue';
 
 export default defineComponent({
     data() {
@@ -30,12 +32,21 @@ export default defineComponent({
         };
     },
     props: {
+        lightTheme: {
+            type:Boolean,
+            default:true
+        },
         isMenuOpened: {
             type: Boolean,
             default: false,
         }
     },
-    components: { ButtonComponent }
+    methods:{
+        ChangeTheme(){
+            this.$emit('themeChanged')
+        }
+    },
+    components: { ButtonComponent, ThemeButton }
 })
 </script>
 
@@ -75,5 +86,10 @@ export default defineComponent({
 }
 .slide-enter-active, .slide-leave-active{
     transition: transform 0.5s ease;
+}
+.theme-button{
+    position: absolute;
+    left: 100px;
+    top: 85%;
 }
 </style>
