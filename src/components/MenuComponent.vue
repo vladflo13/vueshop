@@ -9,7 +9,6 @@
                         <div class="button-line"></div>
                     </div>
                 </div>
-                <ThemeButton :isPartOfMenu="true" :lightTheme="lightTheme" class ="theme-button" @click="ChangeTheme"></ThemeButton>
             </div>
             </Transition>
     </div>
@@ -42,11 +41,8 @@ export default defineComponent({
         }
     },
     methods:{
-        ChangeTheme(){
-            this.$emit('themeChanged')
-        }
     },
-    components: { ButtonComponent, ThemeButton }
+    components: { ButtonComponent }
 })
 </script>
 

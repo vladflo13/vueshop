@@ -3,7 +3,7 @@
         <MenuComponent style="z-index:2" @themeChanged="ChangeTheme" :lightTheme="lightTheme" :isMenuOpened="isMenuOpened"></MenuComponent>
         <MenuButton @click="OpenMenu" :lightTheme="lightTheme" :isInMenuRange="isFixed" :isMenuOpened="isMenuOpened"></MenuButton>
         <ThemeButton :class="{'theme':true, 'scrolled':isScrolled}" @click="ChangeTheme" :lightTheme="lightTheme" :isScrolled="isScrolled"></ThemeButton>
-        <div :class="{'navbar-grid':true, 'scrolled':isScrolled}">
+        <div :class="{'navbar-grid':true, 'scrolled':isScrolled }">
             <div class="navbar-section-left">
                 <ButtonComponent v-for="link in LeftLinks" :text="link.text" :key="link.id" :isCurrent="navState===link.text"></ButtonComponent>
             </div>
@@ -105,7 +105,6 @@ export default defineComponent({
 }
 .theme{
     position: absolute;
-    top:5px;
     transition: transform 0.5s ease;
 }
 .theme.scrolled{
@@ -139,6 +138,11 @@ export default defineComponent({
         width: 0px;
         font-size:0px;
     }
+    .navbar-grid.scrolled
+{
+    transition: transform 0.5s ease;
+    transform: translateY(0);
+}
 }
 
 

@@ -2,12 +2,11 @@
         <div class="card-wrapper">
                 <div class="ghost-text"></div>
                 <div class="ghost-text"></div>
-                <div :class="{'text-container':true, 'reveal':isExpanded }"  @click="toggleExpand"
-                :style="'background-image:url('+ card.src +')'">
-                    <div class="small-bottom" v-show="!isExpanded"></div>
-                    <div class="text-wrapper">
+                <div :class="{'text-container':true,}">
+                    <div :class="{'bg-image':true, 'reveal':isExpanded }" @click="toggleExpand" :style="'background-image:url('+ card.src +')'"></div>
+                    <div :class="{'text-wrapper':true, 'go-up':isExpanded}" @click="toggleExpand">
                         <p>{{ card.text }}</p></div>
-                </div>
+                    </div>
                 <div v-for="image in card.childCards" :key="image.id">
                     <SmallCardComponent :class="{'card':true, 'appear':isExpanded, 'disappear':!isExpanded}"
                     :imgObject="image"></SmallCardComponent>
@@ -66,39 +65,40 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     font-size: 3rem;
+}
 
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column-reverse;
+.bg-image{
+    height: 100%;
+    width: 100%;
+    transition: transform 0.5s ease;
     background-position: center;
     background-size: cover;
-    background-color: rgba(0,0,0,0.10);
-    background-blend-mode: multiply;
-    transition: transform 0.5s ease;
 }
-.text-container:hover{
+.bg-image:hover{
     transform: scale(1.05);
 }
-.text-container.reveal{
+.bg-image.reveal{
     transform: translateY(calc(-100% + var(--ghost-height)));
     transition: transform 0.5s ease;
     transition-delay: var(--expandTiming);
 }
 .text-wrapper{
-    position: relative;
+    position: absolute;
     width: 100%;
     height: var(--ghost-height);
+    top: calc(var(--ghost-height));
     display:flex;
     justify-content: center;
     align-items: center;
     background-color:var(--background-halfopacity);
     color: var(--color-b);
+    transition: top 0.5s ease;
 }
-.small-bottom{
-    z-index: 0;
-    height:5%;
-    width: 100%;
+.text-wrapper.go-up{
+    top: 0px;
+    transition: top 0.5s ease;
 }
+
 .small-card-container{
     z-index: -1;
     position: absolute;
@@ -129,6 +129,11 @@ export default defineComponent({
 }
 @media (max-width:768px)
 {
+    .bg-image{
+        transform: translateY(calc(-100% + var(--ghost-height)));
+        transition: transform 0.5s ease;
+        transition-delay: var(--expandTiming);
+    }
     .card-wrapper{
         grid-template-columns: 1fr;
     }
@@ -136,14 +141,18 @@ export default defineComponent({
         height: calc(var(--card-height)/4);
     }
     .text-container{
-        font-size:2rem;
-    }
-    .text-container.reveal{
-        transform: translateY(calc(-100% + var(--card-height) / 2));
+        
         font-size:3rem;
     }
     .text-wrapper{
+        top: 0px;
         height: calc(var(--card-height)/2);
+    }
+    .card.appear{
+        animation-duration: 0s;
+    }
+    .card.disappear{
+        animation-duration: 0s;
     }
 }
 </style>

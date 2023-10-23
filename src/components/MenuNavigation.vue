@@ -78,7 +78,8 @@ export default defineComponent({
         --font-size: 1.5rem;
     }
     .fixed{
-        top:0px;
+        border-top: 0px solid;
+        top:var(--navbar-height);
     }
 }
 </style>

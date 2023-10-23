@@ -56,8 +56,6 @@ export default defineComponent({
     font-size: 1em;
     font-weight: bold;
 
-    height: var(--navbar-height);
-    width: calc(var(--icon-width));
     right:0px;
     top: 0px;
 }
@@ -72,6 +70,8 @@ export default defineComponent({
     position: absolute;
     color:var(--primary-color);
     font-weight: bolder;
+    top:calc((var(--navbar-height)/2) - (var(--icon-size)/2));
+    right:calc(var(--icon-width)/2);
 }
 .icons-container{
     display: flex;
@@ -79,5 +79,12 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
 }
-
+@media (max-width:768px){
+    .icons-container{
+        font-size: 0;
+    }
+    .icons-container > svg{
+        width:32px;
+    }
+}
 </style>
