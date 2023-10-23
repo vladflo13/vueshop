@@ -1,18 +1,16 @@
 <template>
         <div class="card-wrapper">
+                <div class="ghost-text"></div>
+                <div class="ghost-text"></div>
                 <div :class="{'text-container':true, 'reveal':isExpanded }"  @click="toggleExpand"
                 :style="'background-image:url('+ card.src +')'">
                     <div class="small-bottom" v-show="!isExpanded"></div>
                     <div class="text-wrapper">
                         <p>{{ card.text }}</p></div>
                 </div>
-                <div class="small-card-container">
-                    <div class="card-carousel">
-                        <div v-for="image in card.childCards" :key="image.id">
-                            <SmallCardComponent :class="{'pop-in':true, 'appear':isExpanded, 'disappear':!isExpanded}"
-                            :imgObject="image"></SmallCardComponent>
-                        </div>
-                    </div>
+                <div v-for="image in card.childCards" :key="image.id">
+                    <SmallCardComponent :class="{'card':true, 'appear':isExpanded, 'disappear':!isExpanded}"
+                    :imgObject="image"></SmallCardComponent>
                 </div>
         </div>
 </template>
@@ -42,17 +40,29 @@ export default defineComponent({
 
 <style scoped>
 .card-wrapper{
+    --card-height: 200px;
+    --ghost-height: calc(var(--card-height)/2);
     z-index: 1;
     overflow: hidden;
     position: relative;
     width: 100%;
     height: 100%;
-    border: 3px solid var(--primary-color);
+    border: 1px solid var(--color-b);
+    outline: 1px solid var(--primary-color);
     background-color: var(--background-color);
-    height: 700px;
+    min-height: 700px;
     margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10px
+}
+.ghost-text{
+    width: 100%;
+    height: var(--ghost-height);
 }
 .text-container{
+    z-index: 4;
+    position: absolute;
     width: 100%;
     height: 100%;
     font-size: 3rem;
@@ -70,19 +80,19 @@ export default defineComponent({
     transform: scale(1.05);
 }
 .text-container.reveal{
-    transform: translateY(-85%);
+    transform: translateY(calc(-100% + var(--ghost-height)));
     transition: transform 0.5s ease;
     transition-delay: var(--expandTiming);
 }
 .text-wrapper{
     position: relative;
     width: 100%;
-    height: 15%;
+    height: var(--ghost-height);
     display:flex;
     justify-content: center;
     align-items: center;
     background-color:var(--background-halfopacity);
-    color: var(--primary-color);
+    color: var(--color-b);
 }
 .small-bottom{
     z-index: 0;
@@ -93,25 +103,18 @@ export default defineComponent({
     z-index: -1;
     position: absolute;
     top: 15%;
-    height:85%;
     width: 100%;
 }
-.card-carousel{
-    position: absolute;
-    top: 10%;
-    width: 100%;
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 2px;
+.card{
+    height: var(--card-height);
+    margin: 2px;
 }
-.pop-in.appear{
+.card.appear{
     animation-name: fadeIn ;
     animation-duration: 0.5s;
     animation-delay: var(--expandTiming);
 }
-.pop-in.disappear{
+.card.disappear{
     animation-name: fadeOut ;
     animation-duration: 0.75s;
 
@@ -126,11 +129,21 @@ export default defineComponent({
 }
 @media (max-width:768px)
 {
+    .card-wrapper{
+        grid-template-columns: 1fr;
+    }
+    .ghost-text{
+        height: calc(var(--card-height)/4);
+    }
     .text-container{
-        font-size:1rem;
+        font-size:2rem;
     }
     .text-container.reveal{
-        font-size:2rem;
+        transform: translateY(calc(-100% + var(--card-height) / 2));
+        font-size:3rem;
+    }
+    .text-wrapper{
+        height: calc(var(--card-height)/2);
     }
 }
 </style>

@@ -1,10 +1,11 @@
 <template>
     <div class="sc-wrapper">
+        <FlourishComponent class="card-flourish"></FlourishComponent>
         <div class="image-wrapper">
             <div class="card-image" :style="'background-image:url('+ imgObject.src +')'"></div>
         </div>
         <div class="card-text">
-            <h2>{{ imgObject.title }}</h2>
+            <h1>{{ imgObject.title }}</h1>
             <h3>{{ imgObject.text }}</h3>
         </div>
     </div>
@@ -13,44 +14,55 @@
 <script lang="ts">
 import { imgObject } from '@/interfaces';
 import { defineComponent, PropType } from 'vue'
-//:style="'background-image:url('+imgSrc+')'"
+import FlourishComponent from './FlourishComponent.vue';
 export default defineComponent({
-    props:{
-        imgObject: { type:Object as PropType<imgObject>, default: null},
+    props: {
+        imgObject: { type: Object as PropType<imgObject>, default: null },
     },
+    components: { FlourishComponent }
 })
 </script>
 
 <style scoped>
 .sc-wrapper{
-    --card-width:100px;
-    --card-height:100px;
+    position: relative;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 .card-text{
-    height: calc(var(--card-height) / 4);
-    width: var(--card-width);
-    background-color: white;
-    overflow: hidden;
+    position: absolute;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.4);
+    width: 50%;
+    left: 50%;
+    height: 100%;
 }
-.card-text > h2{
+.card-text > h3{
+    margin-left: 10px;
+    color: var(--new-color)
+}
+.card-text > h1{
     text-align: center;
+    color: var(--color-a);
 }
 .image-wrapper{
-    width: var(--card-height);
-    height: var(--card-width);
+    position: absolute;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
 }
+.card-flourish{
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    color: var(--color-b);
+}
 .card-image{
-    box-sizing: border-box;
     width: 100%;
     height: 100%;
     background-position: center;
-    background-size: cover;
-    border: 0.1em solid green;
+    background-size:cover;
 }
-.card-image:hover{
-    transform: scale(1.05);   
-}
+
 </style>

@@ -47,7 +47,7 @@ export default defineComponent({
     background-color: var(--background-color);
 
     box-sizing:border-box;
-    border: 3px solid var(--primary-color);
+    border: 2px solid var(--primary-color);
     padding-top: 5px;
 }
 .fixed{

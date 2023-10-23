@@ -140,6 +140,10 @@ export default defineComponent({
 }
 
 .divider{
+  height: 100px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+
   animation-name: fade-in-up;
   animation-duration: 0.75s;
 }
@@ -147,7 +151,11 @@ export default defineComponent({
   0%{transform: translateY(-20px);   opacity: 0;}
   100%{transform: translateY(0p); opacity: 1;}
 }
-
+@media (max-width:768px) {
+    .divider{
+      height: 50px;
+    } 
+}
 
 
 </style>

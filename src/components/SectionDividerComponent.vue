@@ -96,13 +96,8 @@
             </g>
         </svg>
         <div class="section-wrapper">
-            <div class="section-container">
-                <div class="corner-tr"></div>
-                <div class="corner-tl"></div>
-                <div class="corner-br"></div>
-                <div class="corner-bl"></div>
-                <div class="text-wrapper">{{ text }}</div>
-            </div>
+            <FlourishComponent></FlourishComponent>
+            <div class="text-wrapper">{{ text }}</div>
         </div>
         <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
          height="100%" width="100%" viewBox="0 0 640.000000 640.000000"
@@ -205,19 +200,19 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import FlourishComponent from './FlourishComponent.vue';
 
 export default defineComponent({
-    setup () {
-        
-
-        return {}
+    setup() {
+        return {};
     },
-    props:{
-        text:{
-            type:String,
-            default:''
+    props: {
+        text: {
+            type: String,
+            default: ''
         }
-    }
+    },
+    components: { FlourishComponent }
 })
 </script>
 
@@ -226,11 +221,10 @@ export default defineComponent({
 .section-divider{
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
-    --flourish-unit: calc(50px);
-    margin-bottom: calc(var(--flourish-unit) * 0.75);
-    margin-top: calc(var(--flourish-unit) * 0.75);
 }
 .section-wrapper{
+    width: 100%;
+    position: relative;
     display: grid;
     align-items:center;
 }
@@ -243,7 +237,6 @@ export default defineComponent({
 .text-wrapper{
     padding-left: 50px;
     padding-right: 50px;
-    border:3px solid;
     height: calc(var(--flourish-unit)*2);
     font-size:3rem;
     display: flex;
@@ -251,36 +244,9 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
 }
-[class*='corner-']{
-    z-index: 2;
-    position: absolute;
-    width: calc(var(--flourish-unit));
-    height: calc(var(--flourish-unit));
-    border: 2px solid var(--primary-color);
-    background-color: var(--background-color);
-    border-radius: 50%;
-}
-.corner-tr{
-    top:calc(var(--flourish-unit)/(-2));
-    right:calc(var(--flourish-unit)/(-2));
-}
-.corner-tl{
-    top:calc(var(--flourish-unit)/(-2));
-    left:calc(var(--flourish-unit)/(-2));
-}
-.corner-br{
-    bottom:calc(var(--flourish-unit)/(-2));
-    right:calc(var(--flourish-unit)/(-2));
-}
-.corner-bl{
-    bottom:calc(var(--flourish-unit)/(-2));
-    left:calc(var(--flourish-unit)/(-2));
-}
 @media (max-width: 778px)
 {
-    .section-divider{
-        --flourish-unit: calc(25px);
-    }
+
     .text-wrapper{
         font-size: 1.5rem;
     }
