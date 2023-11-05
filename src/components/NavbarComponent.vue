@@ -1,8 +1,11 @@
 <template>
     <header class="navbar-container">
         <MenuComponent style="z-index:2" @themeChanged="ChangeTheme" :lightTheme="lightTheme" :isMenuOpened="isMenuOpened"></MenuComponent>
-        <MenuButton @click="OpenMenu" :lightTheme="lightTheme" :isInMenuRange="isFixed" :isMenuOpened="isMenuOpened"></MenuButton>
-        <ThemeButton :class="{'theme':true, 'scrolled':isScrolled}" @click="ChangeTheme" :lightTheme="lightTheme" :isScrolled="isScrolled"></ThemeButton>
+        <MenuButton :class="{'left-buttons':true, 'fixed':isFixed}" @click="OpenMenu" :lightTheme="lightTheme" :isMenuOpened="isMenuOpened"></MenuButton>
+        <div :class="{'right-buttons':true, 'fixed':isFixed}">
+            <CartButton :numberItems="numberItems" :lightTheme="lightTheme"></CartButton>
+            <ThemeButton  @click="ChangeTheme" :lightTheme="lightTheme"></ThemeButton>
+        </div>
         <div :class="{'navbar-grid':true, 'scrolled':isScrolled }">
             <div class="navbar-section-left">
                 <ButtonComponent v-for="link in LeftLinks" :text="link.text" :key="link.id" :isCurrent="navState===link.text"></ButtonComponent>
@@ -23,6 +26,7 @@ import ButtonComponent from './ButtonComponent.vue';
 import MenuComponent from './MenuComponent.vue';
 import ThemeButton from './ThemeButton.vue';
 import MenuButton from './MenuButton.vue';
+import CartButton from './CartButton.vue';
 export default defineComponent({
     data() {
         return {
@@ -34,6 +38,7 @@ export default defineComponent({
             isScrolled: false,
             isMenuOpened: false,
             lightTheme: true,
+            
         };
     },
     mounted(){
@@ -50,6 +55,10 @@ export default defineComponent({
         isFixed:{
             type:Boolean,
             default:false,
+        },
+        numberItems:{
+            type:Number,
+            default:0
         }
     },
     methods:{
@@ -66,9 +75,9 @@ export default defineComponent({
         },
         OpenMenu(){
             this.isMenuOpened = !this.isMenuOpened;
-        }
+        },
     },
-    components: { ButtonComponent, MenuComponent, ThemeButton, MenuButton }
+    components: { ButtonComponent, MenuComponent, ThemeButton, MenuButton, CartButton }
 })
 </script>
 
@@ -103,14 +112,7 @@ export default defineComponent({
     transition: transform 0.5s ease;
     transform: translateY(-100%);
 }
-.theme{
-    position: absolute;
-    transition: transform 0.5s ease;
-}
-.theme.scrolled{
-    transition: transform 0.5s ease;
-    transform: translateY(-100%);
-}
+
 .logo-wrapper{
     display: flex;
     justify-content: center;
@@ -131,7 +133,41 @@ export default defineComponent({
 .navbar-section-left{
     justify-content: flex-end;
 }
+.right-buttons{
+    position: absolute;
+    height: var(--navbar-height);
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    right:30px;
+    top:0px;
+    gap: 10px;
+    transition: top 0.5s ease;
+}
+.right-buttons.fixed{
+    top: -15px;
+    transition: top 0.5s ease;
+}
+.right-buttons > button{
+    pointer-events: all;
+}
+.left-buttons{
+    top:0px;
+    transition: top 0.5s ease;
 
+}
+.left-buttons.fixed{
+    top: -20px;
+    transition: top 0.5s ease;
+}
+@media (max-width:1080px)
+{
+    [class*='navbar-section-']{
+        width: 0px;
+        font-size:0px;
+    }
+}
 @media (max-width:768px)
 {
     [class*='navbar-section-']{
@@ -139,10 +175,20 @@ export default defineComponent({
         font-size:0px;
     }
     .navbar-grid.scrolled
-{
-    transition: transform 0.5s ease;
-    transform: translateY(0);
-}
+    {
+        transition: transform 0.5s ease;
+        transform: translateY(0);
+    }
+    .right-buttons{
+        gap:40px;
+    }
+    .right-buttons.fixed{
+        top: 0px;
+    }
+    .left-buttons.fixed{
+        top: 0px;
+        transition: top 0.5s ease;
+    }
 }
 
 

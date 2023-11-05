@@ -29,84 +29,115 @@ export default defineComponent({
           text2:"Who are we ? What do we do ?",
           text3:"Our Testimonies and Reviews",
           text4:"Follow us at @Vu!",
+          cookies:[] as imgObject[],
+          bread:[] as imgObject[],
+          tarts:[] as imgObject[],
+          quiche:[] as imgObject[],
           lightTheme : true,
           ParentCards:[
                 {
                     id:1,
                     src: require('@/assets/bread.jpg'),
                     text : 'Bread',
-                    childCards:[
-                        {id:1, title:"baguette", text:'', src:require('@/assets/baguette-460x328.jpg')},
-                        {id:2, title:"ciabatta", text:'', src:require('@/assets/ciabatta-460x328.jpg')},
-                        {id:3, title:"cranberry", text:'', src:require('@/assets/cranberry-460x328.jpg')},
-                        {id:4, title:"levain", text:'', src:require('@/assets/levain-460x328.jpg')},
-                        {id:5, title:"multigrain", text:'', src:require('@/assets/multigrain-460x328.jpg')},
-                        {id:6, title:"olive", text:'', src:require('@/assets/olive-460x328.jpg')},
-                        {id:7, title:"rolls", text:'', src:require('@/assets/rolls-460x328.jpg')},
-                        {id:8, title:"seigle", text:'', src:require('@/assets/seigle-460x328.jpg')},
-                        {id:9, title:"walnut", text:'', src:require('@/assets/walnut-460x328.jpg')},
-                    ] as imgObject[],
+                    childCards:[] as imgObject[],
                     isExpanded: false,
                 },
                 {
                     id:2,
                     src: 'https://picsum.photos/id/1080/600/400',
                     text : 'Cookies',
-                    childCards:[
-                        {id:1, image:require('@/assets/baguette-460x328.jpg')},
-                        {id:2, image:require('@/assets/ciabatta-460x328.jpg')},
-                        {id:3, image:require('@/assets/cranberry-460x328.jpg')},
-                        {id:4, image:require('@/assets/levain-460x328.jpg')},
-                        {id:5, image:require('@/assets/multigrain-460x328.jpg')},
-                        {id:6, image:require('@/assets/olive-460x328.jpg')},
-                        {id:7, image:require('@/assets/rolls-460x328.jpg')},
-                        {id:8, image:require('@/assets/seigle-460x328.jpg')},
-                        {id:9, image:require('@/assets/walnut-460x328.jpg')},
-                    ],
+                    childCards: [] as imgObject[],
                     isExpanded: false,
                     },
                 {
                     id:3,
                     src: 'https://picsum.photos/id/1080/600/400',
                     text : 'Tarts',
-                    childCards:[
-                        {id:1, image:require('@/assets/baguette-460x328.jpg')},
-                        {id:2, image:require('@/assets/ciabatta-460x328.jpg')},
-                        {id:3, image:require('@/assets/cranberry-460x328.jpg')},
-                        {id:4, image:require('@/assets/levain-460x328.jpg')},
-                        {id:5, image:require('@/assets/multigrain-460x328.jpg')},
-                        {id:6, image:require('@/assets/olive-460x328.jpg')},
-                        {id:7, image:require('@/assets/rolls-460x328.jpg')},
-                        {id:8, image:require('@/assets/seigle-460x328.jpg')},
-                        {id:9, image:require('@/assets/walnut-460x328.jpg')},
-                    ],
+                    childCards:[] as imgObject[],
+
                     isExpanded: false,
                     },
                 {
                     id:4,
                     src: 'https://picsum.photos/id/1080/600/400',
                     text : 'Quiche',
-                    childCards:[
-                        {id:1, image:require('@/assets/baguette-460x328.jpg')},
-                        {id:2, image:require('@/assets/ciabatta-460x328.jpg')},
-                        {id:3, image:require('@/assets/cranberry-460x328.jpg')},
-                        {id:4, image:require('@/assets/levain-460x328.jpg')},
-                        {id:5, image:require('@/assets/multigrain-460x328.jpg')},
-                        {id:6, image:require('@/assets/olive-460x328.jpg')},
-                        {id:7, image:require('@/assets/rolls-460x328.jpg')},
-                        {id:8, image:require('@/assets/seigle-460x328.jpg')},
-                        {id:9, image:require('@/assets/walnut-460x328.jpg')},
-                        ],
+                    childCards:[] as imgObject[],
+
                     isExpanded: false,
                     }
             ] as cardObject[],
-          lorem:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam veniam consequuntur provident voluptate? Itaque ipsum excepturi quidem animi provident suscipit aspernatur, perspiciatis autem sapiente doloremque aut voluptate, hic dolores error!",
-        };
+          };
     },
-    created(){
-        if(this.ParentCards)
-            for (let i = 0; i < this.ParentCards[0].childCards.length;i++)
-                  this.ParentCards[0].childCards[i].text = this.lorem
+    methods:{
+        async fetchProductList(){
+          const apiLocation = 'https://localhost:7018/api/Product';
+          var products;
+          try{
+            const response = await fetch(apiLocation);
+            if(response.ok){
+              products = response.json();
+            }
+            else
+              console.error('Failed to fetch products');
+            }
+          catch (error){
+            console.error('Error fetching data', error);
+          }
+          return products;
+      }
+    },
+    async created(){
+      try{
+      const products = await this.fetchProductList();
+      const path = '@/assets/productImgSrc/'
+      for (let i = 0; i < products.length; i++)
+      {
+        if(i>=0 && i<=9)
+        {
+          let imgobj:imgObject={
+            id:products[i].productId,
+            title:products[i].name,
+            text:products[i].description,
+            src:require('@/assets/productImgSrc/' + products[i].imgSrc)
+          };
+          this.bread.push(imgobj)
+        }
+        if(i >= 10 && i<=13){
+          let imgobj:imgObject={
+            id:products[i].productId,
+            title:products[i].name,
+            text:products[i].description,
+            src:require('@/assets/productImgSrc/' + products[i].imgSrc)
+          };
+          this.cookies.push(imgobj);
+        }
+        if(i >= 14 && i<=16){
+          let imgobj:imgObject={
+            id:products[i].productId,
+            title:products[i].name,
+            text:products[i].description,
+            src:require('@/assets/productImgSrc/' + products[i].imgSrc)
+          };
+          this.tarts.push(imgobj);
+        }
+        if(i >= 17 && i<=27){
+          let imgobj:imgObject={
+            id:products[i].productId,
+            title:products[i].name,
+            text:products[i].description,
+            src:require('@/assets/productImgSrc/' + products[i].imgSrc)
+          };
+          this.quiche.push(imgobj);
+        }
+      }
+      this.ParentCards[0].childCards = this.bread;
+      this.ParentCards[1].childCards = this.cookies;
+      this.ParentCards[2].childCards = this.tarts;
+      this.ParentCards[3].childCards = this.quiche;
+      }
+      catch(error){
+        console.error('Error fetching Product List');
+      }
     },
     props:{
       isFixed:{
@@ -114,7 +145,6 @@ export default defineComponent({
         default: false,
       }
     },
-  
     components: { CardContainer, HeroComponent, TestimoniesContainer, SectionDividerComponent, MenuNavigation }
 })
 </script>

@@ -1,6 +1,6 @@
 <template>
-    <div class="change-theme-wrapper">
-        <button class="items-wrapper">
+    <button class="change-theme-wrapper">
+        <div class="items-wrapper">
                 <div :class="{'icons-container':true, 'part-of-menu':isPartOfMenu}">
                     <p>Change Theme</p>
                     <svg v-show="lightTheme" width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,8 +18,8 @@
                         <path d="M2 12C2 16.3586 4.78852 20.0659 8.67887 21.4353C8.24138 20.3768 8 19.2166 8 18C8 15.7788 8.80467 13.7455 10.1384 12.1758C9.42027 11.1303 9 9.86422 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12Z" fill="var(--primary-color)"/>
                     </svg>
                 </div>
-        </button>
-    </div>
+            </div>
+    </button>
 </template>
 
 <script lang="ts">
@@ -29,10 +29,6 @@ export default defineComponent({
         lightTheme:{
             type:Boolean,
             default: true,
-        },
-        isScrolled:{
-            type:Boolean,
-            default:false
         },
         isPartOfMenu:{
             type:Boolean,
@@ -44,20 +40,14 @@ export default defineComponent({
 
 <style scoped>
 .change-theme-wrapper{
-    --icon-width:65px;
+    --icon-width:64px;
     --icon-height: 79px;
 
-    pointer-events:all;
-
-    z-index: 1;
-    position: absolute;
-    align-items: center;
+    width: var(--icon-width);
+    height: var(--icon-height);
 
     font-size: 1em;
     font-weight: bold;
-
-    right:0px;
-    top: 0px;
 }
 .part-of-menu{
     color:black;
@@ -66,25 +56,28 @@ export default defineComponent({
     fill: #1C274C;
 }
 .items-wrapper{
-    z-index: 2;
-    position: absolute;
+    height: 100%;
     color:var(--primary-color);
     font-weight: bolder;
-    top:calc((var(--navbar-height)/2) - (var(--icon-size)/2));
-    right:calc(var(--icon-width)/2);
 }
 .icons-container{
+    height: 100%;
     display: flex;
     flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
 }
+.icons-container > svg{
+    width: var(--icon-width);
+}
 @media (max-width:768px){
-    .icons-container{
+    .change-theme-wrapper{
         font-size: 0;
+        --icon-width:32px;
+        --icon-height: 40px;
     }
     .icons-container > svg{
-        width:32px;
+        width:var(--icon-width);
     }
 }
 </style>

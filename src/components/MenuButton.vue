@@ -1,6 +1,6 @@
 <template>
         <div class='menu-wrapper'>
-            <button :class="{'icon-wrapper':true, 'icon-adjust':isMenuOpened, 'move-up':isInMenuRange}">
+            <button :class="{'icon-wrapper':true, 'icon-adjust':isMenuOpened}">
                     <svg :class="{'menu-shine2':(!lightTheme&&!isMenuOpened)}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="50px" height="50px">
                         <g fill="#1c274c" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
                             <g transform="scale(5.12,5.12)">
@@ -15,10 +15,6 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     props:{
         lightTheme:{
-            type:Boolean,
-            default:false
-        },
-        isInMenuRange:{
             type:Boolean,
             default:false
         },
@@ -51,9 +47,6 @@ export default defineComponent({
     left: calc(var(--icon-size)/2);
     transition: all 0.5s ease;
 }
-.move-up{
-    top: 20px;
-}
 .icon-adjust {
     left: 130px;     /* 300px is the side menu*/
     transition: left 0.5s ease;
@@ -61,6 +54,7 @@ export default defineComponent({
 @media (max-width:768px)
 {
     .move-up{
+        top: 0px;
     }
     .icon-adjust{
         left: calc(120px + (var(--icon-size) / 2));
