@@ -1,7 +1,7 @@
 <template>
     <div class="card-container" v-for="card in cards" :key="card.id">
         <section :id="card.text"></section>
-        <CardComponent :card="card" class="item"></CardComponent>
+        <CardComponent :card="card" class="item" @addItem="addItem"></CardComponent>
     </div>
 </template>
 
@@ -12,6 +12,11 @@ import { imgObject, cardObject } from '../interfaces';
 export default defineComponent({
     props:{
         cards: Object as PropType<cardObject[]>
+    },
+    methods:{
+        addItem(id:number){
+            this.$emit('addItem', id);
+        }
     },
     components: { CardComponent }
 })

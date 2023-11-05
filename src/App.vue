@@ -2,8 +2,8 @@
 <template>
   <div class ="app">
     <div class="ghost-navbar"></div>
-    <NavbarComponent :navState="navState" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
-    <MainView v-if="navState==='Home'" :isFixed="menuNavIsFixed"></MainView>
+    <NavbarComponent :navState="navState" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
+    <MainView v-if="navState==='Home'" :isFixed="menuNavIsFixed" @addItem="addItem"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
     <!-- <AccountView v-if="navState==='Home'"></AccountView> -->
 
@@ -23,6 +23,8 @@ export default defineComponent({
         navState: 'Home',
         lightTheme: true,
         menuNavIsFixed: false,
+        numberItems:0,
+
         };
     },
     methods:{
@@ -41,17 +43,20 @@ export default defineComponent({
         const element = document.querySelector(':root') as HTMLElement;
             this.lightTheme = !this.lightTheme;
             if(this.lightTheme){
-                element.style.setProperty('--background-color',"rgb(241, 252, 162)")
-                element.style.setProperty('--primary-color',"#000f0b")
-                element.style.setProperty('--primary-font-color', "#000f0b");
-                element.style.setProperty('--primary-halfopacity',"rgba(241, 252, 162, 0.5)");
+                element.style.setProperty('--background-color',"#f0d7a7")
+                element.style.setProperty('--primary-color',"#894e3f")
+                element.style.setProperty('--primary-font-color', "#894e3f");
+                element.style.setProperty('--primary-halfopacity',"#894e3f80");
             }
             else{
-                element.style.setProperty('--background-color',"#000f0b");
-                element.style.setProperty('--primary-color',"rgb(241, 252, 162)");
-                element.style.setProperty('--primary-font-color', "rgb(241, 252, 162)");
-                element.style.setProperty('--primary-halfopacity',"rgba(0, 15, 11, 0.5)");
+                element.style.setProperty('--background-color',"#894e3f");
+                element.style.setProperty('--primary-color',"#f0d7a7");
+                element.style.setProperty('--primary-font-color', "#f0d7a7");
+                element.style.setProperty('--primary-halfopacity',"#f0d7a780");
             }
+      },
+      addItem(id:number){
+        this.numberItems++;
       }
     },
     mounted(){
@@ -76,6 +81,7 @@ export default defineComponent({
 .ghost-navbar{
   width: 100%;
   height: var(--navbar-height);
+  pointer-events: none;
 }
 @media (max-width:768px){
   .app{

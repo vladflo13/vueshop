@@ -3,7 +3,7 @@
       <SectionDividerComponent class="divider" :text="text1"></SectionDividerComponent>
       <div class="menu-section" id="card-container">
         <MenuNavigation :cards="ParentCards" :isFixed="isFixed"></MenuNavigation>
-        <CardContainer  :cards="ParentCards"></CardContainer>
+        <CardContainer  :cards="ParentCards" @addItem="addItem"></CardContainer>
       </div>
       <SectionDividerComponent class="divider" :text="text2"></SectionDividerComponent>
       <HeroComponent></HeroComponent>
@@ -69,7 +69,7 @@ export default defineComponent({
           };
     },
     methods:{
-        async fetchProductList(){
+      async fetchProductList(){
           const apiLocation = 'https://localhost:7018/api/Product';
           var products;
           try{
@@ -84,6 +84,9 @@ export default defineComponent({
             console.error('Error fetching data', error);
           }
           return products;
+      },
+      addItem(id:number){
+        this.$emit('addItem', id)
       }
     },
     async created(){

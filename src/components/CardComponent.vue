@@ -1,16 +1,12 @@
 <template>
         <div class="card-wrapper">
-                <div class="ghost-text"></div>
-                <div class="ghost-text"></div>
                 <div :class="{'text-container':true,}">
-                    <div :class="{'bg-image':true, 'reveal':isExpanded }" @click="toggleExpand" :style="'background-image:url('+ card.src +')'"></div>
-                    <div :class="{'text-wrapper':true, 'go-up':isExpanded}" @click="toggleExpand">
-                        <p>{{ card.text }}</p></div>
-                    </div>
-                <div v-for="image in card.childCards" :key="image.id">
-                    <SmallCardComponent :class="{'card':true, 'appear':isExpanded, 'disappear':!isExpanded}"
-                    :imgObject="image"></SmallCardComponent>
+                    <div :class="{'text-wrapper':true, 'go-up':true}">
+                    <h2>{{ card.text }}</h2></div>
                 </div>
+                <SmallCardComponent v-for="smallCard in card.childCards" class="card" @added-item="addItem(smallCard.id)"
+                    :imgObject="smallCard" :key="smallCard.id">
+                </SmallCardComponent>
         </div>
 </template>
 
@@ -28,6 +24,9 @@ export default defineComponent({
         toggleExpand() {
             this.$emit('childExpanded');
             this.isExpanded = !this.isExpanded;
+        },
+        addItem(id:number){
+            this.$emit('addItem', id)
         }
     },
     props: {
@@ -39,25 +38,26 @@ export default defineComponent({
 
 <style scoped>
 .card-wrapper{
-    --card-height: 200px;
-    --ghost-height: calc(var(--card-height)/2);
+    --card-height: 400px;
+    --card-width: 100%;
+    --ghost-height: calc(var(--card-height)/4);
+
     z-index: 1;
     overflow: hidden;
     position: relative;
-    width: 100%;
     height: 100%;
+    width: 100%;
     border: 1px solid var(--color-b);
     outline: 1px solid var(--primary-color);
     background-color: var(--background-color);
-    min-height: 700px;
     margin-bottom: 20px;
+    padding-top: var(--ghost-height);
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap:10px
-}
-.ghost-text{
-    width: 100%;
-    height: var(--ghost-height);
+    grid-template-columns: repeat(3, 1fr);
+    gap:10px;
+    padding-left: 5px;
+    padding-right: 5px;
+
 }
 .text-container{
     z-index: 4;
@@ -67,36 +67,15 @@ export default defineComponent({
     font-size: 3rem;
 }
 
-.bg-image{
-    height: 100%;
-    width: 100%;
-    transition: transform 0.5s ease;
-    background-position: center;
-    background-size: cover;
-}
-.bg-image:hover{
-    transform: scale(1.05);
-}
-.bg-image.reveal{
-    transform: translateY(calc(-100% + var(--ghost-height)));
-    transition: transform 0.5s ease;
-    transition-delay: var(--expandTiming);
-}
+
 .text-wrapper{
     position: absolute;
     width: 100%;
     height: var(--ghost-height);
-    top: calc(var(--ghost-height));
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    background-color:var(--background-halfopacity);
-    color: var(--color-b);
-    transition: top 0.5s ease;
-}
-.text-wrapper.go-up{
     top: 0px;
-    transition: top 0.5s ease;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: center;
 }
 
 .small-card-container{
@@ -104,28 +83,11 @@ export default defineComponent({
     position: absolute;
     top: 15%;
     width: 100%;
+    height: 100%;
 }
 .card{
     height: var(--card-height);
-    margin: 2px;
-}
-.card.appear{
-    animation-name: fadeIn ;
-    animation-duration: 0.5s;
-    animation-delay: var(--expandTiming);
-}
-.card.disappear{
-    animation-name: fadeOut ;
-    animation-duration: 0.75s;
-
-}
-@keyframes fadeIn{
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-@keyframes fadeOut{
-    0% {opacity: 1;}
-    100% {opacity: 0;}
+    width: var(--card-width);
 }
 @media (max-width:768px)
 {
@@ -137,16 +99,12 @@ export default defineComponent({
     .card-wrapper{
         grid-template-columns: 1fr;
     }
-    .ghost-text{
-        height: calc(var(--card-height)/4);
-    }
     .text-container{
         
         font-size:3rem;
     }
     .text-wrapper{
         top: 0px;
-        height: calc(var(--card-height)/2);
     }
     .card.appear{
         animation-duration: 0s;
