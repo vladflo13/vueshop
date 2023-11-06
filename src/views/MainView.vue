@@ -66,6 +66,8 @@ export default defineComponent({
                     isExpanded: false,
                     }
             ] as cardObject[],
+          localProducts:[] as imgObject[],
+          order:[] as imgObject[],
           };
     },
     methods:{
@@ -76,6 +78,7 @@ export default defineComponent({
             const response = await fetch(apiLocation);
             if(response.ok){
               products = response.json();
+              this.localProducts = await products;
             }
             else
               console.error('Failed to fetch products');
@@ -86,7 +89,9 @@ export default defineComponent({
           return products;
       },
       addItem(id:number){
-        this.$emit('addItem', id)
+        this.order.push(this.localProducts[id-1]);
+        this.$emit('addItem', this.order);
+
       }
     },
     async created(){
@@ -95,22 +100,25 @@ export default defineComponent({
       const path = '@/assets/productImgSrc/'
       for (let i = 0; i < products.length; i++)
       {
-        if(i>=0 && i<=9)
+        if(i>=0 && i<=8)
         {
           let imgobj:imgObject={
             id:products[i].productId,
             title:products[i].name,
             text:products[i].description,
-            src:require('@/assets/productImgSrc/' + products[i].imgSrc)
+            src:require('@/assets/productImgSrc/' + products[i].imgSrc),
+            price:products[i].price,
           };
           this.bread.push(imgobj)
         }
-        if(i >= 10 && i<=13){
+        if(i >= 9 && i<=13){
           let imgobj:imgObject={
             id:products[i].productId,
             title:products[i].name,
             text:products[i].description,
-            src:require('@/assets/productImgSrc/' + products[i].imgSrc)
+            src:require('@/assets/productImgSrc/' + products[i].imgSrc),
+            price:products[i].price,
+
           };
           this.cookies.push(imgobj);
         }
@@ -119,16 +127,18 @@ export default defineComponent({
             id:products[i].productId,
             title:products[i].name,
             text:products[i].description,
-            src:require('@/assets/productImgSrc/' + products[i].imgSrc)
+            src:require('@/assets/productImgSrc/' + products[i].imgSrc),
+            price:products[i].price,
           };
           this.tarts.push(imgobj);
         }
-        if(i >= 17 && i<=27){
+        if(i >= 17 && i<=26){
           let imgobj:imgObject={
             id:products[i].productId,
             title:products[i].name,
             text:products[i].description,
-            src:require('@/assets/productImgSrc/' + products[i].imgSrc)
+            src:require('@/assets/productImgSrc/' + products[i].imgSrc),
+            price:products[i].price,
           };
           this.quiche.push(imgobj);
         }

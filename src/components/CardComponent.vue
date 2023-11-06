@@ -57,7 +57,7 @@ export default defineComponent({
     gap:10px;
     padding-left: 5px;
     padding-right: 5px;
-
+    padding-bottom: 5px;
 }
 .text-container{
     z-index: 4;

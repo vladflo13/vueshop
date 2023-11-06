@@ -22,6 +22,7 @@
                 <h4>{{ imgObject.text }}</h4>
             </div>
         </div>
+        <div class="price"><h2>{{imgObject.price + ' €	'}}</h2></div>
 
     </div>
 </template>
@@ -50,10 +51,16 @@ export default defineComponent({
 }
 .bottom-section{
     z-index: 3;
-    height: 35%;
+    height: 27%;
     display: flex;
     flex-direction: column;
     background-color: var(--background-color);
+    overflow: hidden;
+}
+.price{
+    z-index: 4;
+    height:8%;
+    text-align :center;
 }
 .card-text{
     z-index: 3;
@@ -80,7 +87,7 @@ export default defineComponent({
     border: 1px solid var(--primary-color);
 }
 .cart-container{
-    z-index: 1;
+    z-index: 5;
     position: absolute;
     top:0px;
     right: 5%;
@@ -91,6 +98,8 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
+
+    overflow: hidden;
 }
 .cart-wrapper{    
     width: 100%;
@@ -99,6 +108,10 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
     background-color: rgba(0,0,0,0.3);
+}
+.cart-wrapper:hover{
+    transition: transform 0.2s ease;
+    transform: scale(1.1);
 }
 .cart-wrapper > h3{
     text-align: center;

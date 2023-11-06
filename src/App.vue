@@ -3,6 +3,7 @@
   <div class ="app">
     <div class="ghost-navbar"></div>
     <NavbarComponent :navState="navState" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
+    <ProductComponent v-if="order.length > 0"></ProductComponent>
     <MainView v-if="navState==='Home'" :isFixed="menuNavIsFixed" @addItem="addItem"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
     <!-- <AccountView v-if="navState==='Home'"></AccountView> -->
@@ -17,6 +18,9 @@ import { defineComponent } from 'vue'
 import MainView from './views/MainView.vue';
 import NavbarComponent from './components/NavbarComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
+import ProductComponent from './components/ProductComponent.vue';
+
+import { imgObject } from './interfaces';
 export default defineComponent({
     data() {
       return {
@@ -24,7 +28,7 @@ export default defineComponent({
         lightTheme: true,
         menuNavIsFixed: false,
         numberItems:0,
-
+        order: [] as imgObject[],
         };
     },
     methods:{
@@ -55,7 +59,8 @@ export default defineComponent({
                 element.style.setProperty('--primary-halfopacity',"#f0d7a780");
             }
       },
-      addItem(id:number){
+      addItem(order:imgObject[]){
+        this.order=order;
         this.numberItems++;
       }
     },
@@ -65,7 +70,7 @@ export default defineComponent({
     beforeUnmount(){
       window.removeEventListener('scroll', this.HandleScroll);
     },
-    components:{ MainView, NavbarComponent, FooterComponent }
+    components:{ MainView, NavbarComponent, FooterComponent, ProductComponent }
 })
 </script>
 <style scoped>
