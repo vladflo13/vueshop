@@ -78,12 +78,12 @@ export default defineComponent({
     z-index: 2;
     position: absolute;
     border-radius: 50%;
-    width: 40%;
-    height: 40%;
+    width: 20%;
+    height: 20%;
     opacity: 0;
     background-color: var(--cart-color-a);
-    left: 30%;
-    top: 20%;
+    left: 15%;
+    top: 30%;
 }
 .animate-add{
     animation-name: drop-in-fade;
@@ -98,11 +98,11 @@ export default defineComponent({
     position: absolute;
 
     border-radius: 50%;
-    width: 40%;
-    height: 40%;
+    width: 20%;
+    height: 20%;
     background-color: var(--cart-color-a);
-    left: 30%;
-    top: 20%;
+    left: 15%;
+    top: 30%;
 
     text-align: center;
     color: var(--background-color);
@@ -128,6 +128,11 @@ export default defineComponent({
 @media (max-width: 768px) {
     .cart-wrapper{
         --cart-size:32px;
+    }
+    .counter, .new-item{
+        left:40%;
+        width: 20%;
+        height: 40%;
     }
 }
 </style>

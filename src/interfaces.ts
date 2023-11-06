@@ -3,6 +3,7 @@ export interface imgObject{
     title:string,
     text:string,
     src:string,
+    price?:number,
 };
 
 export interface cardObject{

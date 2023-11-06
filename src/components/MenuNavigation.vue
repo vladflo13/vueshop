@@ -37,20 +37,22 @@ export default defineComponent({
     --font-size: 3rem;
     --navmenu-height: 100px;
     z-index: 2;
+    position: absolute;
+
     width: 100%;
     height: var(--navmenu-height);
-    position: absolute;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
     font-size: var(--font-size);
     gap: var(--font-size);
     background-color: var(--background-color);
 
     box-sizing:content-box;
     border: 2px solid var(--primary-color);
-    border-bottom: 2px solid transparent;
 
     padding-top: 5px;
 }

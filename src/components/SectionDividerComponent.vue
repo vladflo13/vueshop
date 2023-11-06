@@ -1,12 +1,12 @@
 <template>
     <div class="section-divider">
         <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-         height="100%" width="100%"  viewBox="0 0 640.000000 640.000000"
+         height="100%" width="100%"  viewBox="-640 0 640.000000 640.000000"
         preserveAspectRatio="xMidYMid meet">
             <metadata>
             Created by potrace 1.15, written by Peter Selinger 2001-2017
             </metadata>
-            <g transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
+            <g transform="translate(-320.000000,640.000000) scale(0.100000,-0.100000)"
             fill="var(--primary-color)" stroke="none">
                 <path d="M2969 4799 c-250 -36 -413 -194 -455 -439 -21 -123 -14 -198 26 -287
                 73 -161 258 -281 545 -353 102 -26 242 -50 475 -83 l95 -13 -75 -8 c-290 -29
@@ -100,12 +100,12 @@
             <div class="text-wrapper">{{ text }}</div>
         </div>
         <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-         height="100%" width="100%" viewBox="0 0 640.000000 640.000000"
+         height="100%" width="100%" viewBox="640 0 640.000000 640.000000"
         preserveAspectRatio="xMidYMid meet">
             <metadata>
             Created by potrace 1.15, written by Peter Selinger 2001-2017
             </metadata>
-            <g transform="translate(-640.000000,640.000000) scale(0.100000,-0.100000)"
+            <g transform="translate(-320.000000,640.000000) scale(0.100000,-0.100000)"
             fill="var(--primary-color)" stroke="none">
                     <path d="M9664 4800 c-139 -21 -215 -65 -282 -164 -23 -33 -26 -49 -26 -110 0
             -58 5 -81 28 -126 29 -56 107 -173 112 -167 1 1 -6 34 -17 72 -20 68 -20 72
@@ -244,17 +244,12 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
 }
-@media (max-width: 778px)
+@media (max-width: 768px)
 {
 
     .text-wrapper{
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
 }
-@media (max-width: 380px)
-{
-    .text-wrapper{
-        font-size: 1rem;
-    }
-}
+
 </style>
