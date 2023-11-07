@@ -20,7 +20,7 @@ import CardContainer from '@/components/CardContainer.vue';
 import TestimoniesContainer from '@/components/TestimoniesContainer.vue';
 import SectionDividerComponent from '@/components/SectionDividerComponent.vue';
 import MenuNavigation from '@/components/MenuNavigation.vue';
-import { cardObject, imgObject } from '@/interfaces';
+import { cardObject, imgObject, orderProduct, productDTO } from '@/interfaces';
 export default defineComponent({
 //. University Roman CYR
     data() {
@@ -66,8 +66,8 @@ export default defineComponent({
                     isExpanded: false,
                     }
             ] as cardObject[],
-          localProducts:[] as imgObject[],
-          order:[] as imgObject[],
+          localProducts:[] as productDTO[],
+          order:[] as orderProduct[],
           };
     },
     methods:{
@@ -89,7 +89,19 @@ export default defineComponent({
           return products;
       },
       addItem(id:number){
-        this.order.push(this.localProducts[id-1]);
+        var _id = id - 1;
+        const orderItem : orderProduct = {
+          id:this.localProducts[_id].productId,
+          title:this.localProducts[_id].name,
+          price:this.localProducts[_id].price,
+          src:require('@/assets/productImgSrc/' + this.localProducts[_id].imgSrc),
+          numberProducts: 1,
+        };
+        const foundIndex = this.order.findIndex(item=> item.id===orderItem.id);
+        if(foundIndex != -1)
+            this.order[foundIndex].numberProducts++;
+        else
+          this.order.push(orderItem);
         this.$emit('addItem', this.order);
 
       }
@@ -97,7 +109,6 @@ export default defineComponent({
     async created(){
       try{
       const products = await this.fetchProductList();
-      const path = '@/assets/productImgSrc/'
       for (let i = 0; i < products.length; i++)
       {
         if(i>=0 && i<=8)

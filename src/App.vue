@@ -2,8 +2,10 @@
 <template>
   <div class ="app">
     <div class="ghost-navbar"></div>
-    <NavbarComponent :navState="navState" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
-    <ProductComponent v-if="order.length > 0"></ProductComponent>
+    <NavbarComponent :navState="navState" @changeOrderOpen="ChangeOrderItem" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
+    <Transition name="fade-in">
+      <ProductComponent v-if="orderOpened" :order="order"></ProductComponent>
+    </Transition>
     <MainView v-if="navState==='Home'" :isFixed="menuNavIsFixed" @addItem="addItem"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
     <!-- <AccountView v-if="navState==='Home'"></AccountView> -->
@@ -20,7 +22,7 @@ import NavbarComponent from './components/NavbarComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import ProductComponent from './components/ProductComponent.vue';
 
-import { imgObject } from './interfaces';
+import { imgObject, orderProduct } from './interfaces';
 export default defineComponent({
     data() {
       return {
@@ -28,7 +30,8 @@ export default defineComponent({
         lightTheme: true,
         menuNavIsFixed: false,
         numberItems:0,
-        order: [] as imgObject[],
+        order: [] as orderProduct[],
+        orderOpened: false,
         };
     },
     methods:{
@@ -59,9 +62,16 @@ export default defineComponent({
                 element.style.setProperty('--primary-halfopacity',"#f0d7a780");
             }
       },
-      addItem(order:imgObject[]){
-        this.order=order;
-        this.numberItems++;
+      addItem(order:orderProduct[]){
+        this.order = order;
+        this.numberItems = 0;
+        this.order.forEach(element => {
+          this.numberItems+=element.numberProducts;
+        });
+        this.orderOpened = true;
+      },
+      ChangeOrderItem(){
+        this.orderOpened = !this.orderOpened;
       }
     },
     mounted(){
@@ -87,6 +97,13 @@ export default defineComponent({
   width: 100%;
   height: var(--navbar-height);
   pointer-events: none;
+}
+.fade-in-enter-to, .fade-in-leave-from{
+  transition: opacity 0.3s ease;
+}
+.fade-in-enter-from, .fade-in-leave-to{
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 @media (max-width:768px){
   .app{

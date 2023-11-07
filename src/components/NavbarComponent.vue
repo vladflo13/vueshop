@@ -3,7 +3,7 @@
         <MenuComponent style="z-index:2" @themeChanged="ChangeTheme" :lightTheme="lightTheme" :isMenuOpened="isMenuOpened"></MenuComponent>
         <MenuButton :class="{'left-buttons':true, 'fixed':isFixed}" @click="OpenMenu" :lightTheme="lightTheme" :isMenuOpened="isMenuOpened"></MenuButton>
         <div :class="{'right-buttons':true, 'fixed':isFixed}">
-            <CartButton :numberItems="numberItems" :lightTheme="lightTheme"></CartButton>
+            <CartButton @click="ChangeOrderOpen" :numberItems="numberItems" :lightTheme="lightTheme"></CartButton>
             <ThemeButton  @click="ChangeTheme" :lightTheme="lightTheme"></ThemeButton>
         </div>
         <div :class="{'navbar-grid':true, 'scrolled':isScrolled }">
@@ -76,6 +76,9 @@ export default defineComponent({
         OpenMenu(){
             this.isMenuOpened = !this.isMenuOpened;
         },
+        ChangeOrderOpen(){
+            this.$emit('changeOrderOpen');
+        }
     },
     components: { ButtonComponent, MenuComponent, ThemeButton, MenuButton, CartButton }
 })
