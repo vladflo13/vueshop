@@ -1,5 +1,8 @@
 <template>
-    <div class="carousel-container">
+    <div class="carousel-container"  ref="draggable"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd">
         <ul class="carousel">
             <li 
              v-for="image in imgCarousel" 
@@ -42,6 +45,8 @@ export default defineComponent({
             currentSlide: 1,
             prevSlide: 0,
             direction: 0, // 0 neutral 1 right to left -1 left to right
+            startX:0,
+            movedX:0,
         };
     },
     methods: {
@@ -51,6 +56,7 @@ export default defineComponent({
             if (this.currentSlide <= 0)
                 this.currentSlide = this.imgCarousel.length;
             this.direction = 1;
+            this.$emit('section-changed', this.currentSlide)
         },
         SlideRight() {
             this.prevSlide = this.currentSlide;
@@ -58,8 +64,33 @@ export default defineComponent({
             if (this.currentSlide > this.imgCarousel.length)
                 this.currentSlide = 1;
             this.direction = -1;
+            this.$emit('section-changed', this.currentSlide)
+        },
+        onTouchStart(event : TouchEvent) {
+            this.startX = event.touches[0].clientX;
+        },
+        onTouchMove(event : TouchEvent) {
+            event.preventDefault();
+            this.movedX = event.touches[0].clientX - this.startX;
+        },
+        onTouchEnd(event : TouchEvent) {
+            if (this.movedX < -50) {
+                // Trigger left drag action if the movement is more than 50px to the left
+                this.handleDragLeft();
+            } else if (this.movedX > 50) {
+                // Trigger right drag action if the movement is more than 50px to the right
+                this.handleDragRight();
+            }
+            this.movedX = 0;
+        },
+            handleDragLeft() {
+            this.SlideLeft();
+        },
+            handleDragRight() {
+            this.SlideRight();
         }
-    },
+  },
+    
     components: { PaginationComponent }
 })
 </script>
@@ -78,8 +109,11 @@ export default defineComponent({
 }
 .pag-component{
     z-index: 3;
+    width: 100%;
     position:absolute;
-    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     top: 90%;
 }
 .carousel-slide{
@@ -112,6 +146,7 @@ export default defineComponent({
     animation-name:slide-right-prev;
     animation-duration: 1s;
 }
+
 @keyframes slide-left-prev{
     0% {transform:translateX(0)}
     100% {transform:translateX(-100%);}
@@ -139,8 +174,11 @@ export default defineComponent({
     position: absolute;
     top: calc(50% - var(--arrow-width));
     width:var(--arrow-width);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.5);
     border:0px;
+}
+path{
+    fill:var(--color-a)
 }
 .arrow:hover{
     background-color: rgba(20,20,20,0.5);
@@ -153,5 +191,16 @@ export default defineComponent({
 }
 .arrow-right{
     left:0%;
+}
+@media (max-width:768px)
+{
+.pag-component{
+    z-index: 3;
+    position:absolute;
+    top: 10%;
+}
+[class*='arrow-']{
+    width: 0px;
+}
 }
 </style>

@@ -1,18 +1,18 @@
 <template>
     <div class="hero-container">
         <div class="carousel-wrapper">
-            <CarouselComponent></CarouselComponent>
+            <CarouselComponent @section-changed="ChangeSection"></CarouselComponent>
         </div>
         <div class="call-to-action">
-                <div class="h1-wrapper">
-                    <h1>Our wonderful bread!</h1>
-                </div>
-                <div class="h2-wrapper">
-                    <h2>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h2>
-                </div>
-                <div class="p-wrapper">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium recusandae porro, quo sequi soluta fugiat quae harum vitae cupiditate necessitatibus tenetur quas commodi voluptatum tempora debitis ipsum voluptates impedit eaque?</p>
-                </div>
+            <div v-for="section in Sections" :key="section.id">
+                <Transition name="fade">
+                    <div class="section" v-if="section.id===currentSection">
+                        <h1>{{ section.title }}</h1>
+                        <h2>{{ section.subtitle }}</h2>
+                        <h3>{{ section.paragraph }}</h3>
+                    </div>
+                </Transition>
+            </div>
         </div>
     </div>
 </template>
@@ -21,7 +21,50 @@
 import { defineComponent } from 'vue'
 import CarouselComponent from './CarouselComponent.vue';
 
+interface section{
+    id:number,
+    title: string,
+    subtitle: string,
+    paragraph:string,
+}
+
 export default defineComponent({
+    data() {
+        return {
+            Sections: [
+                {
+                    id:1,
+                    title: 'Indulge in Heavenly Delights',
+                    subtitle: 'Explore our Delectable Bakery Creations',
+                    paragraph: "At our bakery, we craft each confection with a blend of passion and precision. From our signature artisanal bread to our luscious pastries, every bite embodies a symphony of flavors. Join us on a delectable journey where each baked good is a celebration of taste and tradition. Don't miss out—treat yourself to a divine experience with our freshly baked delights today.",
+                },
+                {
+                    id:2,
+                    title: 'Customize Your Sweet Moments',
+                    subtitle: 'Create Memorable Occasions with Our Bespoke Treats',
+                    paragraph: 'Your special moments deserve the perfect touch, and our bakery is here to transform your celebrations into unforgettable experiences. From personalized cakes to tailored dessert platters, we cater to your unique preferences. Let us sweeten your events with our carefully crafted delicacies. Reach out to us for bespoke orders and infuse sweetness into your every occasion.',
+                },
+                {
+                    id:3,
+                    title: 'Join Our Loyalty Program',
+                    subtitle: 'Enjoy Rewards and Exclusive Offers',
+                    paragraph: 'Become a part of our family and relish exclusive benefits through our loyalty program. Earn rewards with every purchase and unlock member-only perks. From special discounts to sneak peeks of new products, our loyal customers are at the heart of everything we do. Sign up now to enjoy the sweet rewards of being a valued member of our bakery community.',
+                },
+                {
+                    id:4,
+                    title: 'Experience Baking Masterclasses',
+                    subtitle: 'Unleash Your Inner Pastry Chef',
+                    paragraph: "Ever wanted to master the art of baking? Join our hands-on masterclasses led by our experienced bakers. Learn the secrets behind perfect doughs, precise decorations, and the science of creating mouthwatering desserts. Whether you're a beginner or an enthusiast, these classes will elevate your baking skills to new heights. Dive into the world of baking with us and turn your kitchen into a haven of delectable creations.",
+                }
+            ] as section[],
+            currentSection:1,
+        };
+    },
+    methods:{
+        ChangeSection(id: number){
+            this.currentSection=id;
+        }
+    },
     components: { CarouselComponent }
 })
 </script>
@@ -33,76 +76,67 @@ export default defineComponent({
     position: relative;
     display: flex;
     flex-direction: row;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .carousel-wrapper{
     position: relative;
-    width: 67%;
+    width: 100%;
 }
 .call-to-action{
-    position:relative; 
+    position:absolute; 
     z-index: 2;
-    width: 33%;
-    height: 100%;
-
-    background-color: var(--background-color);
+    bottom: 0px;
+    width: 100%;
+    height: 33%;
+    background-color: rgba(0,0,0,0.5);
+    color: var(--color-a);
 }
-
-/* 
-    50% 
-    26% 
-*/
-.h1-wrapper{
-    position:absolute;
-    z-index: 3;
-    top: 33%;
-    left: 12%;
-    padding-top:2%;
-    padding-bottom:2%;
-    padding-left:5px;
-    width: 66%;
-    background-color: var(--primary-color);
-    color:var(--primary-font-color);
-
+.section > *{
+    margin-bottom: 10px;
 }
-.h2-wrapper{
-    
-    position: absolute;
-    z-index: 2;
-    top:38%;
-    left:24%;
-    padding-top:4%;
-    padding-left:5px;
-    width: 66%;
-
-    background-color: var(--secondary-color);
-    color:var(--primary-font-color);
-
+.section > *:hover{
+    color: color-mix(in lch, var(--color-a) 100%, var(--color-b) 100%);
 }
-.p-wrapper{
-    position: absolute;
-    z-index:1;
+.section > h1{
+    margin-left: 50px;
+}
+.section > h2{
+    margin-left: 150px;
+}
+.section > h3{
+    margin-left: 250px;
+}
+.fade-enter-from{
+    transform:translateX(-100%);
+    opacity: 0;
+    transition: all 0.75s ease;
+}
+.fade-enter-to{
+    transform:translateX(0%);
+    opacity: 1;
+    transition: all 0.75s ease;
 
-    top:48%;
-    left:33%;
-    padding-top:4%;
-    padding-left:5px;
-    width: 66%;
-    height:40%;
 }
 @media (max-height: 768px)
 {
-    .hero-container{
-        height: 160vh;
+    .section{
+        display: flex;
         flex-direction: column;
+        justify-content: space-evenly;
     }
-    .call-to-action{
-        width: 100%;
-        height: 50%;
+    .section > h1{
+        font-size:1.75rem;
+        margin-left: 10px;
+
     }
-    .carousel-wrapper{
-        width: 100%;
-        height: 50%;
+    .section > h2{
+        font-size:1.5rem;
+        margin-left: 20px;
+    }
+    .section > h3{
+        font-size: 0rem;
+        margin-left: 30px;
+
     }
 }
 </style>

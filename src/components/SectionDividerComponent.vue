@@ -249,6 +249,8 @@ export default defineComponent({
 
     .text-wrapper{
         font-size: 2rem;
+        padding-left: 40px;
+        padding-right: 40px;
     }
 }
 

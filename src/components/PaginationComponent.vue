@@ -34,13 +34,13 @@ export default defineComponent({
     gap: 2px;
 }
 .dot{
-    background-color: var(--primary-color);
+    background-color: white;
     height: 10px;
     width: 10px;
-    border: 0.1em solid var(--background-color);
+    border: 0.1em solid black;
     border-radius: 50%;
 }
 .selected{
-    background-color: var(--background-color);
+    background-color: var(--color-b);
 }
 </style>
