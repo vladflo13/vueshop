@@ -25,9 +25,9 @@ export default defineComponent({
 //. University Roman CYR
     data() {
         return {
-          text1:"Our Menu",
-          text2:"Who are we ? What do we do ?",
-          text3:"Our Testimonies and Reviews",
+          text1:"Our Menu.",
+          text2:"Who we are.",
+          text3:"Our Testimonies and Reviews.",
           text4:"Follow us at @Vu!",
           cookies:[] as imgObject[],
           bread:[] as imgObject[],
@@ -202,7 +202,10 @@ export default defineComponent({
   animation-name: fade-in-up;
   animation-duration: 0.75s;
 }
-
+.hero{
+  border: 2px solid var(--background-color);
+  outline: 2px solid var(--primary-color)
+}
 @keyframes fade-in-up{
   0%{transform: translateY(-20px);   opacity: 0;}
   100%{transform: translateY(0p); opacity: 1;}
@@ -212,7 +215,7 @@ export default defineComponent({
       height: 50px;
     } 
     .hero{
-      margin-top: 100px;
+      margin-top: 30px;
     }
   }
 

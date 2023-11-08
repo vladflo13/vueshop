@@ -4,7 +4,7 @@
     <div class="ghost-navbar"></div>
     <NavbarComponent :navState="navState" @changeOrderOpen="ChangeOrderItem" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
     <Transition name="fade-in">
-      <OrderComponent v-if="orderOpened" @order-closed="CloseOrder" :order="order"></OrderComponent>
+      <OrderComponent v-if="orderOpened" :propTotal="total" @order-closed="CloseOrder" :order="order"></OrderComponent>
     </Transition>
     <MainView v-if="navState==='Home'" :isFixed="menuNavIsFixed" @addItem="addItem"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
@@ -33,6 +33,7 @@ export default defineComponent({
         order: [] as orderProduct[],
         orderOpened: false,
         hasOpenedOnce: false,
+        total:0,
         };
     },
     methods:{
@@ -46,6 +47,7 @@ export default defineComponent({
           else
             this.menuNavIsFixed=false;
         }
+        
       },
       ChangeTheme(){
         const element = document.querySelector(':root') as HTMLElement;
@@ -74,19 +76,23 @@ export default defineComponent({
           this.hasOpenedOnce = true;
           this.orderOpened = true;
         }
+        this.AddTotal();
       },
       ChangeOrderItem(){
         this.orderOpened = !this.orderOpened;
       },
       CloseOrder(){
         this.orderOpened=false;
-      }
+      },
+      AddTotal(){
+        this.total=0;
+        this.order.forEach(element => {
+            element.price? this.total+=element.price * element.numberProducts: null;
+        });
+        console.log(this.total);
+    }
     },
-    watch:{
-      'OrderComponent.order': function(newVal, oldVal){
-        console.log('order changed');
-      }
-    },
+    
     mounted(){
       window.addEventListener('scroll', this.HandleScroll);
     },

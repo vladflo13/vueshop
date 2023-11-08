@@ -22,8 +22,10 @@
                 <h4>{{ imgObject.text }}</h4>
             </div>
         </div>
-        <div class="price"><h2>{{imgObject.price + ' €	'}}</h2></div>
-
+        <div class="pricing-container">
+            <div class="price"><h2>{{imgObject.price + ' €	'}}</h2></div>
+            <div v-if="imgObject.numberProducts" class="number-products"><h2>{{ imgObject.numberProducts + '   x ' }}</h2></div>
+        </div>
     </div>
 </template>
 
@@ -58,10 +60,18 @@ export default defineComponent({
     background-color: var(--background-color);
     overflow: hidden;
 }
-.price{
+.pricing-container{
+    position: relative ;
     z-index: 4;
+}
+.price{
     height:8%;
     text-align :center;
+}
+.number-products{
+    position: absolute;
+    top: 0px;
+    left: 30%;
 }
 .card-text{
     z-index: 3;

@@ -1,5 +1,5 @@
 <template>
-    <div class="product-container">
+    <div ref="orderComponent" class="product-container">
         <div class="product-backdrop">
             <div class="order-section">
                 <h1>Your Order</h1>
@@ -7,7 +7,10 @@
                     <ProductComponent class="card" v-for="product in order" :key="product.id" :imgObject="product" :onOrder="true" ></ProductComponent>
                 </div>
             </div>
-            <div class="total">{{'Your total price is: '+ total}}</div>
+            <div class="total-wrapper">
+                <div>{{'Your total price is:'}}</div>
+                <p>{{  total.toFixed(2) + ' €' }}</p>
+            </div>
             <div class="bottom-section">
                 <button @click="OrderClosed">Close</button>
                 <button>Place Order</button>
@@ -33,12 +36,18 @@ export default defineComponent({
         order:{
             type: Array as () => orderProduct[],
             default: null,
+        },
+        propTotal:{
+            type:Number,
+            default:0,
         }
     },
     mounted(){
         window.addEventListener('scroll', this.IsScrolling);
         window.addEventListener('scroll', this.HasScrollingStopped);
-
+        const ordcomp = this.$refs.orderComponent as HTMLElement;
+        ordcomp.focus();
+        this.total=this.propTotal;
     },
     beforeUnmount(){
         window.removeEventListener('scroll', this.IsScrolling);
@@ -47,19 +56,6 @@ export default defineComponent({
     methods:{
         CheckNutrition(id:number){
             console.log(id)
-        },
-        IncreaseProductNumber(id:number){
-            const productNumberInput = document.getElementById('input-'+id) as HTMLInputElement;
-            productNumberInput.value ? productNumberInput.value = (parseInt(productNumberInput.value) + 1).toString(): null;
-        },
-        DecreaseProductNumber(id:number){            
-            const productNumberInput = document.getElementById('input-'+id) as HTMLInputElement;
-            productNumberInput.value ? productNumberInput.value = (parseInt(productNumberInput.value) - 1).toString() : null;
-        },
-        HandleInputChange(event:Event){
-            console.log('change');
-            if(event.target)
-                console.log(event.target);
         },
         IsScrolling(){
             const element = document.querySelector('.product-container') as HTMLDivElement;
@@ -76,7 +72,20 @@ export default defineComponent({
         },
         OrderClosed(){
             this.$emit('order-closed');
+        },
+        AddTotal(){
+            this.total=0;
+            this.order.forEach(element => {
+                element.price? this.total+=element.price * element.numberProducts: null;
+            });
         }
+    },
+    watch:{
+      'order': {handler(newVal, oldVal){
+        this.AddTotal();
+      },
+      deep: true
+    }
     },
     components: { ProductComponent }
 })
@@ -109,8 +118,11 @@ export default defineComponent({
 }
 
 .order-section{
-    width: 90%;
+    width: 100%;
     height: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
+
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -155,12 +167,22 @@ button:hover{
     transform: scale(1.05);
     transition: transform 0.5s ease;
 }
-.total{
-    width: 100%;
-    font-size: 2rem;
+.total-wrapper{
+    display: flex;
+    flex-direction: row;
     text-align: end;
-    margin-right: 200px;
+    margin-left: 20%;
+    border: 2px solid var(--primary-color);
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 10px;
+    font-size: 2.5rem;
 }
+.total-wrapper > p{
+    margin-left: 10px;
+    font-weight: bolder;
+}
+
 @keyframes shrink{
     0% {width: 100%; height: 100%;}
     99%{ width: 20%; height: 33%;}
@@ -178,9 +200,19 @@ button:hover{
     .order-list{
         grid-template-columns: 1fr;
     }
+    .bottom-section{
+        position: absolute;
+        bottom: 0px;
+    }
     .bottom-section > button{
         font-size:2rem;
     }
-
+    .total-wrapper{
+        position: absolute;
+        bottom: 80px;
+        font-size: 1.25rem;
+        margin: 0px;
+        margin-bottom: 5px;
+    }
 }
 </style>
