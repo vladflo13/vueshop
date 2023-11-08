@@ -4,16 +4,16 @@
                     <div :class="{'text-wrapper':true, 'go-up':true}">
                     <h2>{{ card.text }}</h2></div>
                 </div>
-                <SmallCardComponent v-for="smallCard in card.childCards" class="card" @added-item="addItem(smallCard.id)"
-                    :imgObject="smallCard" :key="smallCard.id">
-                </SmallCardComponent>
+                <ProductComponent v-for="smallCard in card.childCards" class="card" @added-item="addItem(smallCard.id)"
+                    :imgObject="(smallCard as orderProduct)" :key="smallCard.id">
+                </ProductComponent>
         </div>
 </template>
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue'
-import SmallCardComponent from './SmallCardComponent.vue';
-import { cardObject } from '../interfaces';
+import ProductComponent from './ProductComponent.vue';
+import { cardObject, orderProduct } from '../interfaces';
 export default defineComponent({
     data() {
         return {
@@ -32,7 +32,7 @@ export default defineComponent({
     props: {
         card: {type: Object as PropType<cardObject>, default:null}
     },
-    components: { SmallCardComponent }
+    components: { ProductComponent }
 })
 </script>
 

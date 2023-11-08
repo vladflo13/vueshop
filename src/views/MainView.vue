@@ -6,7 +6,7 @@
         <CardContainer  :cards="ParentCards" @addItem="addItem"></CardContainer>
       </div>
       <SectionDividerComponent class="divider" :text="text2"></SectionDividerComponent>
-      <HeroComponent></HeroComponent>
+      <HeroComponent class="hero"></HeroComponent>
       <SectionDividerComponent class="divider" :text="text3"></SectionDividerComponent>
       <TestimoniesContainer></TestimoniesContainer>
       <SectionDividerComponent class="divider" :text="text4"></SectionDividerComponent>
@@ -94,6 +94,7 @@ export default defineComponent({
           id:this.localProducts[_id].productId,
           title:this.localProducts[_id].name,
           price:this.localProducts[_id].price,
+          text:this.localProducts[_id].description,
           src:require('@/assets/productImgSrc/' + this.localProducts[_id].imgSrc),
           numberProducts: 1,
         };
@@ -201,6 +202,7 @@ export default defineComponent({
   animation-name: fade-in-up;
   animation-duration: 0.75s;
 }
+
 @keyframes fade-in-up{
   0%{transform: translateY(-20px);   opacity: 0;}
   100%{transform: translateY(0p); opacity: 1;}
@@ -209,7 +211,10 @@ export default defineComponent({
     .divider{
       height: 50px;
     } 
-}
+    .hero{
+      margin-top: 100px;
+    }
+  }
 
 
 </style>

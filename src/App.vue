@@ -4,7 +4,7 @@
     <div class="ghost-navbar"></div>
     <NavbarComponent :navState="navState" @changeOrderOpen="ChangeOrderItem" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
     <Transition name="fade-in">
-      <ProductComponent v-if="orderOpened" :order="order"></ProductComponent>
+      <OrderComponent v-if="orderOpened" @order-closed="CloseOrder" :order="order"></OrderComponent>
     </Transition>
     <MainView v-if="navState==='Home'" :isFixed="menuNavIsFixed" @addItem="addItem"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
@@ -20,7 +20,7 @@ import { defineComponent } from 'vue'
 import MainView from './views/MainView.vue';
 import NavbarComponent from './components/NavbarComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
-import ProductComponent from './components/ProductComponent.vue';
+import OrderComponent from './components/OrderComponent.vue';
 
 import { imgObject, orderProduct } from './interfaces';
 export default defineComponent({
@@ -32,6 +32,7 @@ export default defineComponent({
         numberItems:0,
         order: [] as orderProduct[],
         orderOpened: false,
+        hasOpenedOnce: false,
         };
     },
     methods:{
@@ -68,10 +69,22 @@ export default defineComponent({
         this.order.forEach(element => {
           this.numberItems+=element.numberProducts;
         });
-        this.orderOpened = true;
+        if(!this.hasOpenedOnce)
+        {
+          this.hasOpenedOnce = true;
+          this.orderOpened = true;
+        }
       },
       ChangeOrderItem(){
         this.orderOpened = !this.orderOpened;
+      },
+      CloseOrder(){
+        this.orderOpened=false;
+      }
+    },
+    watch:{
+      'OrderComponent.order': function(newVal, oldVal){
+        console.log('order changed');
       }
     },
     mounted(){
@@ -80,7 +93,7 @@ export default defineComponent({
     beforeUnmount(){
       window.removeEventListener('scroll', this.HandleScroll);
     },
-    components:{ MainView, NavbarComponent, FooterComponent, ProductComponent }
+    components:{ MainView, NavbarComponent, FooterComponent, OrderComponent }
 })
 </script>
 <style scoped>
