@@ -84,10 +84,10 @@ export default defineComponent({
             this.movedX = 0;
         },
             handleDragLeft() {
-            this.SlideLeft();
+            this.SlideRight();
         },
             handleDragRight() {
-            this.SlideRight();
+            this.SlideLeft();
         }
   },
     
