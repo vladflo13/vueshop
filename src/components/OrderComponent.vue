@@ -189,7 +189,13 @@ button:hover{
     margin-left: 10px;
     font-weight: bolder;
 }
-
+::-webkit-scrollbar{
+    width: 3px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: var(--primary-color);
+    border-radius: 20px;
+}
 @keyframes shrink{
     0% {width: 100%; height: 100%;}
     99%{ width: 20%; height: 33%;}

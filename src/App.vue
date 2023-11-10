@@ -6,7 +6,7 @@
     <Transition name="fade-in">
       <OrderComponent v-if="orderOpened" @closed-item="CloseProduct" @new-input="ChangeInput" :propTotal="total" @order-closed="CloseOrder" :order="order"></OrderComponent>
     </Transition>
-    <MainView v-if="navState==='Home'" :isFixed="menuNavIsFixed" @addItem="addItem"></MainView>
+    <MainView v-if="navState==='Menu'" :isFixed="menuNavIsFixed" @addItem="addItem"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
     <!-- <AccountView v-if="navState==='Home'"></AccountView> -->
 
@@ -26,7 +26,7 @@ import { imgObject, orderProduct } from './interfaces';
 export default defineComponent({
     data() {
       return {
-        navState: 'Home',
+        navState: 'Menu',
         lightTheme: true,
         menuNavIsFixed: false,
         numberItems:0,
