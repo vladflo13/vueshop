@@ -4,7 +4,7 @@
     <div class="ghost-navbar"></div>
     <NavbarComponent :navState="navState" @changeOrderOpen="ChangeOrderItem" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
     <Transition name="fade-in">
-      <OrderComponent v-if="orderOpened" :propTotal="total" @order-closed="CloseOrder" :order="order"></OrderComponent>
+      <OrderComponent v-if="orderOpened" @closed-item="CloseProduct" @new-input="ChangeInput" :propTotal="total" @order-closed="CloseOrder" :order="order"></OrderComponent>
     </Transition>
     <MainView v-if="navState==='Home'" :isFixed="menuNavIsFixed" @addItem="addItem"></MainView>
     <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
@@ -85,13 +85,28 @@ export default defineComponent({
         this.orderOpened=false;
       },
       AddTotal(){
-        this.total=0;
+        this.total = 0;
         this.order.forEach(element => {
             element.price? this.total+=element.price * element.numberProducts: null;
         });
-        console.log(this.total);
-    }
     },
+    ChangeInput(inputValue:number, id:number)
+    {     
+      this.order.forEach(
+            element=>{
+                if(element.id == id)
+                  element.numberProducts=Number(inputValue);
+              }
+        )
+    },
+    CloseProduct(id: number){
+      const indexRemove = this.order.findIndex(item=> item.id == id)
+      if(indexRemove !=-1)
+        this.order.splice(indexRemove,1);
+      else
+        console.log('item not found');  
+    }
+  },
     
     mounted(){
       window.addEventListener('scroll', this.HandleScroll);

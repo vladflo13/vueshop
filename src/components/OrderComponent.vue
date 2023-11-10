@@ -4,7 +4,7 @@
             <div class="order-section">
                 <h1>Your Order</h1>
                 <div class="order-list">
-                    <ProductComponent class="card" v-for="product in order" :key="product.id" :imgObject="product" :onOrder="true" ></ProductComponent>
+                    <ProductComponent class="card" @new-input="ChangeInput" @closed-item="CloseProduct" v-for="product in order" :key="product.id" :imgObject="product" :onOrder="true" ></ProductComponent>
                 </div>
             </div>
             <div class="total-wrapper">
@@ -78,7 +78,14 @@ export default defineComponent({
             this.order.forEach(element => {
                 element.price? this.total+=element.price * element.numberProducts: null;
             });
-        }
+        },
+        ChangeInput(inputValue:number, id:number){
+            this.$emit('new-input', inputValue, id)
+
+        },
+        CloseProduct(id: number){
+            this.$emit('closed-item', id);
+        },
     },
     watch:{
       'order': {handler(newVal, oldVal){
@@ -97,7 +104,7 @@ export default defineComponent({
     position: fixed;
     top: 15%;
     left: 10%;
-    z-index: 3;
+    z-index: 6;
     width: 80vw;
     height: 80vh;
     pointer-events: all;

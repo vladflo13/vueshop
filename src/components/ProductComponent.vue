@@ -24,8 +24,12 @@
         </div>
         <div class="pricing-container">
             <div class="price"><h2>{{imgObject.price + ' €	'}}</h2></div>
-            <div v-if="imgObject.numberProducts" class="number-products"><h2>{{ imgObject.numberProducts + '   x ' }}</h2></div>
+            <div v-if="imgObject.numberProducts" class="number-products">
+                <button v-if="!isEditing" @click="ChangeEditing">{{ imgObject.numberProducts + '   x ' }}</button>
+                <input @blur="InputDone" v-show="isEditing" :id="'numberProducts'+imgObject.id">
+            </div>
         </div>
+        <button v-if="onOrder" class="close-product" @click="CloseProduct">X</button>
     </div>
 </template>
 
@@ -34,13 +38,36 @@ import { imgObject, orderProduct } from '@/interfaces';
 import { defineComponent, PropType } from 'vue'
 import FlourishComponent from './FlourishComponent.vue';
 export default defineComponent({
+    data(){
+        return{
+            isEditing:false,
+        }
+    },
     props: {
         imgObject: { type: Object as PropType<orderProduct>, default: null },
-        onOrder:{type: Boolean, default:false}
+        onOrder:{type: Boolean, default:false},
     },
     methods:{
         EmitAdd(){
             this.$emit('added-item');
+        },
+        CloseProduct(){
+            this.$emit('closed-item',this.imgObject.id);
+        },
+        ChangeEditing(){
+            this.isEditing=true;
+            const input = document.getElementById('numberProducts'+this.imgObject.id) as HTMLInputElement;
+            input.value = (this.imgObject.numberProducts).toString();
+        },
+        InputDone(){
+            this.isEditing=false;
+            const input = document.getElementById('numberProducts'+this.imgObject.id) as HTMLInputElement;
+            if(Number(input.value) < 1 || Number.isNaN(Number(input.value)))
+                input.value=String(1);
+            if(Number(input.value)>100)
+                input.value=String(99);
+            input.value = String(Math.floor(Number(input.value)))
+            this.$emit('new-input', input.value, this.imgObject.id)
         }
     },
     components: { FlourishComponent }
@@ -70,8 +97,18 @@ export default defineComponent({
 }
 .number-products{
     position: absolute;
-    top: 0px;
+    z-index: 5;
+    pointer-events: all;
+    top:0px;
     left: 30%;
+
+}
+.number-products > *{
+    font-weight: bold;
+    font-size: 1.5rem;
+    width: 50px;
+    background-color: var(--color-b);
+    color:var(--color-a);
 }
 .card-text{
     z-index: 3;
@@ -148,6 +185,32 @@ export default defineComponent({
     background-position: center;
     background-size:cover;
 }
+.close-product{
+    z-index: 5;
 
+    position: absolute;
+    font-size: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    top:5%;
+    left:5%;
+    color: var(--color-a);
+    background-color: var(--color-b);
+    border: 1px solid black;
+    border-radius: 50%;
+    pointer-events: all;
+    transition: all 0.5s ease;
 
+}
+.close-product:hover{
+    color: var(--color-b);
+    background-color: var(--color-a);
+    transition: all 0.5s ease;
+}
+@media (max-width:768px)
+{
+    .number-products{
+        left:10%;
+    }
+}
 </style>
