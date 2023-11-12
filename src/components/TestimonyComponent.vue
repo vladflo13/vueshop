@@ -2,6 +2,7 @@
     <div class="testimony-wrapper">
         <div class="testimony">{{ testimonyBody }}</div>
         <div class="author">{{ customerName }}</div>
+        <div></div>
     </div>
 </template>
 
@@ -13,7 +14,7 @@ export default defineComponent({
         return {}
     },
     props:{
-        customerName:{type:String, default:''},
+        customerName:{type:String, default:'Lorem, ipsum.'},
         testimonyBody:{type:String, default:'Nostrud proident sint anim non voluptate cillum veniam esse enim magna fugiat culpa sit.'}
     }
 })
@@ -21,18 +22,12 @@ export default defineComponent({
 
 <style scoped>
 .testimony-wrapper{
-    height: 240px;
-    width: 160px;
-    background-color: var(--secondary-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    height: 300px;
+    background-color: var(--color-b);
+    color: var(--color-a);
 }
 .testimony{
-    height: 60%;
-    width: 80%;
-    
     font-size: small;
     text-align: center;
 }

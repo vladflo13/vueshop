@@ -8,7 +8,10 @@
       <SectionDividerComponent class="divider" :text="text2"></SectionDividerComponent>
       <HeroComponent class="hero"></HeroComponent>
       <SectionDividerComponent class="divider" :text="text3"></SectionDividerComponent>
-      <TestimoniesContainer></TestimoniesContainer>
+      <div class="testimony-storage">
+        <TestimoniesContainer class="testimony-1"></TestimoniesContainer>
+        <TestimoniesContainer class="testimony-2"></TestimoniesContainer>
+      </div>
       <SectionDividerComponent class="divider" :text="text4"></SectionDividerComponent>
     </div>
 </template>
@@ -183,7 +186,7 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  overflow-x: hidden;
   /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
 }
 .menu-section{
@@ -206,9 +209,51 @@ export default defineComponent({
   border: 2px solid var(--background-color);
   outline: 2px solid var(--primary-color)
 }
+.testimony-storage{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  --slide-duration: 15s
+}
+.testimony-1{
+  z-index: 2;
+  animation-name: move-right-1;
+  animation-duration: var(--slide-duration);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.testimony-2{
+  animation-name: move-right-2;
+  animation-duration: var(--slide-duration);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes move-right-1{
+  0% {transform:translateX(0px)}
+  75% {transform: translateX(300vw);opacity: 1;}
+  75.01% {opacity: 0;}
+  75.02% {transform: translate(-100vw);}
+  75.03% {opacity: 1;}
+
+  /*
+  50.1% {transform: translateX(-100vw);}
+  100%{transform:translateX(0px)} */
+}
+
+@keyframes move-right-2{
+   0% {transform:translateX(0px)}
+  25% {transform: translateX(100vw); opacity: 1;}
+  25.01% {opacity: 0;}
+  25.02% {transform: translate(-300vw);}
+  25.03% {opacity: 1;}
+
+  /*
+  100%{transform:translateX(0px)} */
+
+}
 @keyframes fade-in-up{
   0%{transform: translateY(-20px);   opacity: 0;}
-  100%{transform: translateY(0p); opacity: 1;}
+  100%{transform: translateY(0px); opacity: 1;}
 }
 @media (max-width:768px) {
     .divider{

@@ -139,21 +139,24 @@ export default defineComponent({
     left: -50px;
     height: 27px;
     width: 80px;
-    
+    background-color: var(--color-b);
+
+    border: 1px solid var(--color-a);
+    outline: 1px solid var(--color-b);
 }
 .editing-container > svg{
     margin-right: 10px;
     border-radius: 20%;
-    background-color: var(--color-b);
     padding: 5px;
-    fill: var(--color-a)
+    background-color: var(--color-a);
+    fill: var(--color-b);
+    margin: 2px;
+    height: 90%;
 }
 .editing-container > div{
     background-color: var(--color-b);
     height: 25px;
     width: 60px;
-    border: 1px solid var(--color-a);
-    outline: 1px solid var(--color-b);
 }
 .card-text{
     z-index: 3;
