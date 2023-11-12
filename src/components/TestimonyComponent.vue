@@ -1,7 +1,14 @@
 <template>
     <div class="testimony-wrapper">
+        <div class="corner-tr"></div>
+        <div class="corner-tl"></div>
+        <div class="corner-br"></div>
+        <div class="corner-bl"></div>
+        <div class="portrait-wrapper">
+            <div class="portrait"></div>
+        </div>
         <div class="testimony">{{ testimonyBody }}</div>
-        <div class="author">{{ customerName }}</div>
+        <div class="author">{{ '- ' + customerName }}</div>
         <div></div>
     </div>
 </template>
@@ -22,19 +29,69 @@ export default defineComponent({
 
 <style scoped>
 .testimony-wrapper{
+    position: relative;
+    height: 100%;
     width: 100%;
-    height: 300px;
-    background-color: var(--color-b);
-    color: var(--color-a);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border: 2px solid var(--background-color);
+    outline: 2px solid var(--primary-color);
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+}
+[class*='corner-']{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    border: 2px solid var(--background-color);
+    outline: 2px solid var(--primary-color);
+}
+.corner-tr{
+    top:-15px;
+    right: -15px;
+}
+.corner-tl{
+    top:-15px;
+    left: -15px;
+}
+.corner-br{
+    bottom:-15px;
+    right: -15px;
+}
+.corner-bl{
+    bottom:-15px;
+    left: -15px;
+}
+.portrait-wrapper{
+    height: 20%;
+    padding-top: 5px;;
 }
 .testimony{
-    font-size: small;
+    height: 65%;
+    font-size: 1.25rem;
+    padding: 10px;
+    margin: 5px;
     text-align: center;
+    border: 2px solid var(--background-color);
+    box-shadow: 2px 2px rgba(0,0,0,0.4);
+}
+.portrait{
+    width: 60px;
+    height: 60px;
+    background-color: aliceblue;
+    border-radius: 50%;
+    border: 2px solid var(--background-color);
+    box-shadow: 2px 2px rgba(0,0,0,0.4);
+
 }
 .author{
     text-align:center;
     margin: 10px;
-    height: 20%;
-    width: 80%;
+    font-size: 1.5rem;
 }
 </style>

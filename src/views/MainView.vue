@@ -212,8 +212,7 @@ export default defineComponent({
 .testimony-storage{
   display: flex;
   flex-direction: row;
-  gap: 20px;
-  --slide-duration: 15s
+  --slide-duration: 60s
 }
 .testimony-1{
   z-index: 2;
@@ -229,7 +228,7 @@ export default defineComponent({
   animation-timing-function: linear;
 }
 @keyframes move-right-1{
-  0% {transform:translateX(0px)}
+  0%, 100% {transform:translateX(0px)}
   75% {transform: translateX(300vw);opacity: 1;}
   75.01% {opacity: 0;}
   75.02% {transform: translate(-100vw);}
