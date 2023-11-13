@@ -172,10 +172,12 @@ export default defineComponent({
 [class*="arrow-"]{
     z-index: 3;
     position: absolute;
-    top: calc(50% - var(--arrow-width));
+    top: calc(33% - (var(--arrow-width) / 2));
     width:var(--arrow-width);
     background-color: rgba(0,0,0,0.5);
     border:0px;
+    cursor: pointer;
+
 }
 path{
     fill:var(--color-a)
@@ -187,7 +189,7 @@ path{
     cursor: pointer;
 }
 .arrow-left{
-    left:calc(100% - var(--arrow-width));
+    right:0%;
 }
 .arrow-right{
     left:0%;

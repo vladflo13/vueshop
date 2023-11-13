@@ -1,5 +1,5 @@
 <template>
-    <header class="navbar-container">
+    <nav class="navbar-container">
         <MenuComponent style="z-index:2" @themeChanged="ChangeTheme" :lightTheme="lightTheme" :isMenuOpened="isMenuOpened"></MenuComponent>
         <MenuButton :class="{'left-buttons':true, 'fixed':isFixed}" @click="OpenMenu" :lightTheme="lightTheme" :isMenuOpened="isMenuOpened"></MenuButton>
         <div :class="{'right-buttons':true, 'fixed':isFixed}">
@@ -8,16 +8,26 @@
         </div>
         <div :class="{'navbar-grid':true, 'scrolled':isScrolled }">
             <div class="navbar-section-left">
-                <ButtonComponent v-for="link in LeftLinks" :text="link.text" :key="link.id" :isCurrent="navState===link.text"></ButtonComponent>
+                <router-link to="/" >
+                    <ButtonComponent  :text="LeftLinks[0].text" :key="LeftLinks[0].id" :isCurrent="navState===LeftLinks[0].text"></ButtonComponent>
+                </router-link>
+                <router-link to ="/delivery">
+                    <ButtonComponent :previousOrder="previousOrder"  :text="LeftLinks[1].text" :key="LeftLinks[1].id" :isCurrent="navState===LeftLinks[1].text"></ButtonComponent>
+                </router-link>
             </div>
             <div class="logo-wrapper">
                 <div class="logo" :style="'background:url('+logo+')'"></div>
             </div>
             <div class="navbar-section-right">
-                <ButtonComponent v-for="link in RightLinks" :text="link.text" :key="link.id" :isCurrent="navState===link.text"></ButtonComponent>
+                <router-link to="/account">
+                    <ButtonComponent  :text="RightLinks[0].text" :key="RightLinks[0].id" :isCurrent="navState===RightLinks[0].text"></ButtonComponent>
+                </router-link>
+                <router-link to="/locations">
+                    <ButtonComponent  :text="RightLinks[1].text" :key="RightLinks[1].id" :isCurrent="navState===RightLinks[1].text"></ButtonComponent>
+                </router-link>
             </div>
         </div>
-    </header>
+    </nav>
 </template>
 
 <script lang="ts">
@@ -27,13 +37,14 @@ import MenuComponent from './MenuComponent.vue';
 import ThemeButton from './ThemeButton.vue';
 import MenuButton from './MenuButton.vue';
 import CartButton from './CartButton.vue';
+import { orderProduct } from '@/interfaces';
 export default defineComponent({
     data() {
         return {
             logo: require('@/assets/VuLogo.png'),
             LeftLinks:[{id:1,text:"Menu"},
-            {id:2,text:"Delivery"}],
-            RightLinks:[{id:3,text:"About us"},
+            {id:2,text:"Search"}],
+            RightLinks:[{id:3,text:"Account"},
             {id:4,text:"Locations"},],
             isScrolled: false,
             isMenuOpened: false,
@@ -59,6 +70,10 @@ export default defineComponent({
         numberItems:{
             type:Number,
             default:0
+        },
+        previousOrder:{
+            type: Array as () => orderProduct[],
+            default: null,
         }
     },
     methods:{
@@ -85,7 +100,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+.click{
+    z-index: 40;
+    pointer-events: all;
+}
 .navbar-container{
     z-index: 5;
     position:fixed;

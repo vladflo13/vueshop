@@ -227,12 +227,14 @@ export default defineComponent({
     position: relative;
     display: grid;
     align-items:center;
+
 }
 .section-container{
     overflow:hidden;
     position: relative;
     margin-bottom: 5px;
     margin-top: 5px;
+    
 }
 .text-wrapper{
     padding-left: 50px;

@@ -68,6 +68,7 @@ export default defineComponent({
     --cart-size:64px;
     width: var(--cart-size);
     height: var(--cart-size);
+    cursor: pointer;
 
     --cart-color-a: #1C274C;
 }

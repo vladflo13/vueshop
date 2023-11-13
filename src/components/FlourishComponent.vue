@@ -29,11 +29,13 @@ export default defineComponent({
     position: absolute;
     box-sizing: border-box;
     --flourish-unit: 50px;
+    
 }
 .border{
     width: 100%;
     height: 100%;
     border: 2px solid var(--primary-color);
+    
 }
 [class*='corner-']{
     z-index: 2;

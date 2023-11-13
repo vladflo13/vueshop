@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <h1>This is the Account View</h1>
     </div>
 </template>
 

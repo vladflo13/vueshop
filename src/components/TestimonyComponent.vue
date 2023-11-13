@@ -1,13 +1,13 @@
 <template>
-    <div class="testimony-wrapper">
+    <div :class="{'testimony-wrapper':true, 'invert':styleMode}">
         <div class="corner-tr"></div>
         <div class="corner-tl"></div>
         <div class="corner-br"></div>
         <div class="corner-bl"></div>
         <div class="portrait-wrapper">
-            <div class="portrait"></div>
+            <div class="portrait" :style="'background-image:url('+imgSrc+')'"></div>
         </div>
-        <div class="testimony">{{ testimonyBody }}</div>
+        <div class="testimony">{{ '" '+testimonyBody +'"'}}</div>
         <div class="author">{{ '- ' + customerName }}</div>
         <div></div>
     </div>
@@ -22,34 +22,42 @@ export default defineComponent({
     },
     props:{
         customerName:{type:String, default:'Lorem, ipsum.'},
-        testimonyBody:{type:String, default:'Nostrud proident sint anim non voluptate cillum veniam esse enim magna fugiat culpa sit.'}
+        testimonyBody:{type:String, default:'Nostrud proident sint anim non voluptate cillum veniam esse enim magna fugiat culpa sit.'},
+        imgSrc:{type:String, default:''},
+        styleMode:{type:Boolean, default:false},
     }
 })
 </script>
 
 <style scoped>
 .testimony-wrapper{
+    --testimony-bg: var(--primary-color);
+    --testimony-fcolor: var(--background-color);
     position: relative;
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: var(--primary-color);
-    color: var(--background-color);
-    border: 2px solid var(--background-color);
-    outline: 2px solid var(--primary-color);
+    background-color: var(--testimony-bg);
+    color: var(--testimony-fcolor);
+    border: 2px solid var(--testimony-fcolor);
+    outline: 2px solid var(--testimony-bg);
     overflow: hidden;
     justify-content: center;
     align-items: center;
+}
+.invert{
+    --testimony-bg:  var(--background-color);
+    --testimony-fcolor:var(--primary-color);
 }
 [class*='corner-']{
     position: absolute;
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: var(--primary-color);
-    border: 2px solid var(--background-color);
-    outline: 2px solid var(--primary-color);
+    background-color: var(--testimony-bg);
+    border: 2px solid var(--testimony-fcolor);
+    outline: 2px solid var(--testimony-bg);
 }
 .corner-tr{
     top:-15px;
@@ -77,21 +85,33 @@ export default defineComponent({
     padding: 10px;
     margin: 5px;
     text-align: center;
-    border: 2px solid var(--background-color);
+    border: 2px solid var(--testimony-fcolor);
     box-shadow: 2px 2px rgba(0,0,0,0.4);
 }
 .portrait{
-    width: 60px;
-    height: 60px;
+    --portrait-size:60px;
+    width: var(--portrait-size);
+    height: var(--portrait-size);
     background-color: aliceblue;
     border-radius: 50%;
-    border: 2px solid var(--background-color);
+    border: 2px solid var(--testimony-fcolor);
     box-shadow: 2px 2px rgba(0,0,0,0.4);
-
+    background-position: center;
+    background-size: cover;
 }
 .author{
     text-align:center;
     margin: 10px;
     font-size: 1.5rem;
+    font-weight: bold;
+}
+@media (max-width:768px) {
+    .testimony{
+        font-size: 1.1rem;
+    }
+    .portrait{
+        --portrait-size:50px;
+
+    }
 }
 </style>

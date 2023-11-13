@@ -34,7 +34,9 @@ export default defineComponent({
 }
 .menu-wrapper{
     --icon-size:50px;
+    
     pointer-events:all;
+    
     z-index: 3;
     position: absolute;
     top:0px;

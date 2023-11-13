@@ -8,7 +8,7 @@
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
 import CardComponent from './CardComponent.vue';
-import { imgObject, cardObject } from '../interfaces';
+import { cardObject } from '../interfaces';
 export default defineComponent({
     props:{
         cards: Object as PropType<cardObject[]>
@@ -30,8 +30,5 @@ export default defineComponent({
     flex-direction: column;
 
 }
-@media (max-width:768px){
-   
 
-}
 </style>

@@ -1,15 +1,14 @@
  
 <template>
-  <div class ="app">
+  <div class="app">
     <div class="ghost-navbar"></div>
-    <NavbarComponent :navState="navState" @changeOrderOpen="ChangeOrderItem" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
+    <NavbarComponent :previousOrder="order" :navState="navState" @changeOrderOpen="ChangeOrderItem" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
     <Transition name="fade-in">
       <OrderComponent v-if="orderOpened" @closed-item="CloseProduct" @new-input="ChangeInput" :propTotal="total" @order-closed="CloseOrder" :order="order"></OrderComponent>
     </Transition>
-    <MainView v-if="navState==='Menu'" :isFixed="menuNavIsFixed" @addItem="addItem"></MainView>
-    <!-- <ShopView v-if="navState==='Shop'"></ShopView> -->
+    <router-view @addItem="addItem"></router-view>
+    <!-- <MainView :isFixed="menuNavIsFixed" @addItem="addItem"></MainView> -->
     <!-- <AccountView v-if="navState==='Home'"></AccountView> -->
-
     <FooterComponent></FooterComponent>
   </div>
 </template>
@@ -17,12 +16,11 @@
 <script lang="ts">
 
 import { defineComponent } from 'vue'
-import MainView from './views/MainView.vue';
 import NavbarComponent from './components/NavbarComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import OrderComponent from './components/OrderComponent.vue';
 
-import { imgObject, orderProduct } from './interfaces';
+import {orderProduct } from './interfaces';
 export default defineComponent({
     data() {
       return {
@@ -37,18 +35,7 @@ export default defineComponent({
         };
     },
     methods:{
-      HandleScroll(){
-        let cardContainer= document.getElementById('card-container');
-        let domRect = cardContainer?.getBoundingClientRect();
-        if(domRect)
-        {
-          if(domRect.top < 0 && -domRect.top < domRect.height) //726 is the height of one element
-              this.menuNavIsFixed=true;
-          else
-            this.menuNavIsFixed=false;
-        }
-        
-      },
+      
       ChangeTheme(){
         const element = document.querySelector(':root') as HTMLElement;
             this.lightTheme = !this.lightTheme;
@@ -108,13 +95,8 @@ export default defineComponent({
     }
   },
     
-    mounted(){
-      window.addEventListener('scroll', this.HandleScroll);
-    },
-    beforeUnmount(){
-      window.removeEventListener('scroll', this.HandleScroll);
-    },
-    components:{ MainView, NavbarComponent, FooterComponent, OrderComponent }
+   
+    components:{ NavbarComponent, FooterComponent, OrderComponent}
 })
 </script>
 <style scoped>
@@ -123,6 +105,7 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 
   --navbar-height:120px;
   background-color: var(--background-color);

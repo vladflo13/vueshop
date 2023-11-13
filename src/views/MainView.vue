@@ -32,6 +32,7 @@ export default defineComponent({
           text2:"Who we are.",
           text3:"Our Testimonies and Reviews.",
           text4:"Follow us at @Vu!",
+          isFixed: false,
           cookies:[] as imgObject[],
           bread:[] as imgObject[],
           tarts:[] as imgObject[],
@@ -108,7 +109,18 @@ export default defineComponent({
           this.order.push(orderItem);
         this.$emit('addItem', this.order);
 
-      }
+      },
+      HandleScroll(){
+        let cardContainer= document.getElementById('card-container');
+        let domRect = cardContainer?.getBoundingClientRect();
+        if(domRect)
+        {
+          if(domRect.top < 0 && -domRect.top < domRect.height) //726 is the height of one element
+              this.isFixed=true;
+          else
+            this.isFixed=false;
+        }
+      },
     },
     async created(){
       try{
@@ -167,10 +179,18 @@ export default defineComponent({
         console.error('Error fetching Product List');
       }
     },
+    mounted(){
+      window.addEventListener('scroll', this.HandleScroll);
+      if(this.previousOrder)
+        this.order=this.previousOrder;
+    },
+    beforeUnmount(){
+      window.removeEventListener('scroll', this.HandleScroll);
+    },
     props:{
-      isFixed:{
-        type:Boolean,
-        default: false,
+      previousOrder:{
+        type: Array as () => orderProduct[],
+        default: null,
       }
     },
     components: { CardContainer, HeroComponent, TestimoniesContainer, SectionDividerComponent, MenuNavigation }
@@ -210,6 +230,7 @@ export default defineComponent({
   outline: 2px solid var(--primary-color)
 }
 .testimony-storage{
+  margin-top: 50px;
   display: flex;
   flex-direction: row;
   --slide-duration: 60s
@@ -229,9 +250,9 @@ export default defineComponent({
 }
 @keyframes move-right-1{
   0%, 100% {transform:translateX(0px)}
-  75% {transform: translateX(300vw);opacity: 1;}
+  75% {transform: translateX(4800px);opacity: 1;}
   75.01% {opacity: 0;}
-  75.02% {transform: translate(-100vw);}
+  75.02% {transform: translate(-1600px);}
   75.03% {opacity: 1;}
 
   /*
@@ -241,9 +262,9 @@ export default defineComponent({
 
 @keyframes move-right-2{
    0% {transform:translateX(0px)}
-  25% {transform: translateX(100vw); opacity: 1;}
+  25% {transform: translateX(1600px); opacity: 1;}
   25.01% {opacity: 0;}
-  25.02% {transform: translate(-300vw);}
+  25.02% {transform: translate(-4800px);}
   25.03% {opacity: 1;}
 
   /*
