@@ -82,6 +82,7 @@ export default defineComponent({
 <style scoped>
 .footer-element{
     z-index: 4;
+    position: relative;
     margin-top: 20px;
     height: 240px;
     width: 100%;
@@ -112,7 +113,6 @@ export default defineComponent({
 .location{
     padding: 10px;
     transition: transform 0.5s ease;
-
 }
 .location:hover{
     cursor: pointer;
@@ -130,5 +130,25 @@ export default defineComponent({
     text-align: center;
     padding-top: 20px;
     font-size: 1.25rem;
+}
+@media (max-width:768px) {
+    .footer-element{
+    height: 200px;
+    }
+    .locations-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+    }
+    .location > h2{
+        font-size: 0.75rem;
+        border:none;
+        padding: none;
+    }
+    .location > p{
+        width: 0px;
+        font-size: 0px;
+    }
 }
 </style>

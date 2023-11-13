@@ -140,6 +140,7 @@ export default defineComponent({
     display: flex;
     flex-direction: row;
 }
+
 .image{
     width: 65%;
     background-position: center;
@@ -166,8 +167,14 @@ export default defineComponent({
     gap:40px
 }
 .address{
+    margin: 5px;
+
     margin-top: 40px;
+    padding: 5px;
     text-align: center;
+    border: 4px solid var(--primary-color);
+    box-shadow: 8px 8px rgba(0,0,0,0.5);
+
 }
 h1{
     font-size: 3rem;
@@ -177,6 +184,13 @@ h2{
 }
 .schedule{
     text-align: center;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    padding: 10px;
+    border: 4px solid var(--background-color);
+    outline: 4px solid var(--primary-color);
+    box-shadow: 8px 8px rgba(0,0,0,0.5);
+
 }
 @keyframes fade-in-up{
   0%{transform: translateY(-20px);   opacity: 0;}
@@ -184,8 +198,16 @@ h2{
 }
 @media (max-width:768px)
 {
+    .divider{
+        height: 60px;
+    }
     .location{
         flex-direction: column;
+        height: 1000px;
+
+    };
+    .location:nth-child(3),.location:nth-child(4){
+        height: 2000px;   
     }
     .image{
         width: 100%;
