@@ -94,13 +94,6 @@ export default defineComponent({
         console.log('item not found');  
     }
   },
-  created(){
-    const screenWidth = window.innerWidth
-    console.log('Screen Width:', screenWidth);
-    const contentWidth = document.documentElement.scrollWidth;
-    // Log the content width to the console
-    console.log('Content Width:', contentWidth);
-  },
     components:{ NavbarComponent, FooterComponent, OrderComponent}
 })
 </script>

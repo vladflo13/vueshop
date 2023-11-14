@@ -48,7 +48,7 @@ export default defineComponent({
     },
     props: {
         imgObject: { type: Object as PropType<orderProduct>, default: null },
-        onOrder:{type: Boolean, default:false},
+        onOrder: {type: Boolean, default:false},
     },
     update()
     {
@@ -90,6 +90,7 @@ export default defineComponent({
 .sc-wrapper{
     position: relative;
     width: 100%;
+    height: 100%;
 }
 .bottom-section{
     z-index: 3;

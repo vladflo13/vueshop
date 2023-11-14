@@ -8,7 +8,7 @@
                         <ButtonComponent  class="button-wrapper" :text="'Menu'"></ButtonComponent>
                     </router-link>
                     <div class="button-line"></div>
-                    <router-link to="/delivery">    
+                    <router-link to="/search">    
                         <ButtonComponent  class="button-wrapper" :text="'Search'"></ButtonComponent>
                     </router-link>
                     <div class="button-line"></div>

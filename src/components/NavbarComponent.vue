@@ -11,7 +11,7 @@
                 <router-link to="/" >
                     <ButtonComponent  :text="LeftLinks[0].text" :key="LeftLinks[0].id" :isCurrent="navState===LeftLinks[0].text"></ButtonComponent>
                 </router-link>
-                <router-link to ="/delivery">
+                <router-link to ="/search">
                     <ButtonComponent :previousOrder="previousOrder"  :text="LeftLinks[1].text" :key="LeftLinks[1].id" :isCurrent="navState===LeftLinks[1].text"></ButtonComponent>
                 </router-link>
             </div>

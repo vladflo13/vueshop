@@ -12,6 +12,16 @@ export interface productDTO{
     imgSrc: string,
     price: number
 }
+export interface productTagDTO{
+    productId:number,
+    tagId:number,
+    tagName:string
+}
+export interface productTag{
+    tagId:number,
+    tagName:string,
+    productId:number[],
+}
 export interface cardObject{
     id: number,
     src: string,
