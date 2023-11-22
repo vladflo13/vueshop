@@ -9,7 +9,7 @@
             </div>
             <div class="total-wrapper">
                 <div>{{'Your total price is:'}}</div>
-                <p>{{  total.toFixed(2) + ' €' }}</p>
+                <p>{{  total.toFixed(2) + ' £' }}</p>
             </div>
             <div class="bottom-section">
                 <button @click="OrderClosed">Close</button>
@@ -45,13 +45,12 @@ export default defineComponent({
     mounted(){
         window.addEventListener('scroll', this.IsScrolling);
         window.addEventListener('scroll', this.HasScrollingStopped);
-        const ordcomp = this.$refs.orderComponent as HTMLElement;
-        ordcomp.focus();
         this.total=this.propTotal;
     },
     beforeUnmount(){
         window.removeEventListener('scroll', this.IsScrolling);
         window.removeEventListener('scroll', this.HasScrollingStopped);
+        this.$emit('current-order',this.order, this.propTotal)
     },
     methods:{
         CheckNutrition(id:number){

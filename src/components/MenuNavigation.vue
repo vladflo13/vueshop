@@ -1,14 +1,14 @@
 <template>
         <div class="ghost-nav"></div>
         <div :class="{'button-container':true, 'fixed':isFixed}">
-            <div class="button-wrapper" v-for="card in cards" :key="card.id">
+            <div class="button-wrapper" v-for="card in ParentCards" :key="card.id">
                 <button @click="handleClick(card.text)">{{card.text}}</button>
             </div>            
         </div>
 </template>
 
 <script lang="ts">
-import { cardObject } from '@/interfaces';
+import { bakeryMenu } from '@/interfaces';
 import { PropType, defineComponent } from 'vue'
 
 export default defineComponent({
@@ -23,7 +23,10 @@ export default defineComponent({
         },
     },
     props:{
-        cards: Object as PropType<cardObject[]>,
+        ParentCards: {
+            type: Array as () => bakeryMenu[],
+            default: null,
+        },
         isFixed:{
             type:Boolean,
             default:false

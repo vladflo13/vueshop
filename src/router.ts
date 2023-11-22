@@ -7,7 +7,9 @@ export default createRouter({
     {
       path: '/',
       component: () => import('@/views/MainView.vue'),
-      props:{previousOrder:''}
+      props:{previousOrder:'',
+            ParentCards:'',
+    }
     },
     {
       path: '/locations',
@@ -20,6 +22,12 @@ export default createRouter({
     {
       path: '/account',
       component: () => import('@/views/AccountView.vue'),
+    },
+    {
+      path:'/product/:id',
+      component:() => import('@/views/ProductPageView.vue'),
+      name:'product-details',
+      props:true,
     },
   ],
 })

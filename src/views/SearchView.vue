@@ -12,14 +12,13 @@
                 <button @click="FilterByTag(tag)" @blur="ResetProducts" class="tag" v-for="tag in TagList" :key="tag.tagName">{{ tag.tagName }}</button>
             </div>
             <div class="product-container">
-                <ProductComponent v-for="product in FilteredProducts" :key="product.id" class="item"  :imgObject="product"></ProductComponent>
+                <ProductComponent v-for="product in FilteredProducts" :key="product.id" :onOrder="false" :isSearch="true" class="item" :imgObject="product" @go-to-product="GoToProduct"></ProductComponent>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import FlourishComponent from '@/components/FlourishComponent.vue';
 import ProductComponent from '@/components/ProductComponent.vue';
 import {orderProduct, productDTO, productTag, productTagDTO } from '@/interfaces';
 import { defineComponent } from 'vue'
@@ -132,7 +131,10 @@ export default defineComponent({
         },
         ResetProducts(){
             this.FilteredProducts = this.Products;
-        }
+        },
+        GoToProduct(id:number){
+            this.$router.push({ name: 'product-details', params: { id: id } });
+        },
     },
     async created() {
         try {
@@ -224,14 +226,16 @@ input{
     flex-direction: row;
 }
 .tag-container{
-    width: 40%;
+    width: 30%;
     height: 100%;
-    display: grid;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 20px;
-    grid-template-columns: repeat(3,1fr);
     padding: 10px;
 }
 .tag{
+    flex: 1;
     width: 100%;
     height: 50px;
     border-radius: 20px;
@@ -240,27 +244,32 @@ input{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     box-shadow: 5px 5px rgba(0,0,0,0.4);
+    border: 4px solid var(--primary-color);
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: nowrap;
 }
 .tag:focus{
     background-color: var(--background-color);
     color: var(--primary-color);
-    border: 4px solid var(--primary-color);
+
 }
 .product-container{
-    width: 60%;
+    width: 70%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
     padding-bottom: 600px;
 }
 .item{
-    height: 400px;
+    height: 500px;
 }
 @media (max-width:768px) {
+    
     .product-search-container{
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
     .product-container{
         grid-template-columns: 1fr;

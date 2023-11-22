@@ -1,7 +1,10 @@
 <template>
-    <div class="sc-wrapper">
-        <FlourishComponent class="card-flourish"></FlourishComponent>
-        <div v-if="!onOrder" class="cart-container">
+    <div :class="{'sc-wrapper':true, 'search-wrapper':isSearch}">
+        <FlourishComponent v-if="!isSearch" class="card-flourish"></FlourishComponent>
+        <button v-if="isSearch" class="product-page-button" @click="GoToProduct">
+            <p>Go to Product Page</p>
+        </button>
+        <div v-if="!onOrder && !isSearch" class="cart-container">
             <button class="cart-wrapper" @click="EmitAdd">
                 <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M1.28869 2.76279C1.41968 2.36983 1.84442 2.15746 2.23737 2.28845L2.50229 2.37675C2.51549 2.38115 2.52864 2.38554 2.54176 2.38991C3.16813 2.59867 3.69746 2.7751 4.11369 2.96873C4.55613 3.17456 4.94002 3.42965 5.23112 3.83352C5.52221 4.2374 5.64282 4.68226 5.69817 5.16708C5.75025 5.62318 5.75023 6.18114 5.7502 6.84139L5.7502 9.49996C5.7502 10.9354 5.7518 11.9365 5.85335 12.6918C5.952 13.4256 6.13245 13.8142 6.40921 14.091C6.68598 14.3677 7.07455 14.5482 7.80832 14.6468C8.56367 14.7484 9.56479 14.75 11.0002 14.75H18.0002C18.4144 14.75 18.7502 15.0857 18.7502 15.5C18.7502 15.9142 18.4144 16.25 18.0002 16.25H10.9453C9.57774 16.25 8.47542 16.25 7.60845 16.1334C6.70834 16.0124 5.95047 15.7535 5.34855 15.1516C4.74664 14.5497 4.48774 13.7918 4.36673 12.8917C4.25017 12.0247 4.25018 10.9224 4.2502 9.55484L4.2502 6.883C4.2502 6.17 4.24907 5.69823 4.20785 5.33722C4.16883 4.99538 4.10068 4.83049 4.01426 4.71059C3.92784 4.59069 3.79296 4.47389 3.481 4.32877C3.15155 4.17551 2.70435 4.02524 2.02794 3.79978L1.76303 3.71147C1.37008 3.58049 1.15771 3.15575 1.28869 2.76279Z" fill="#1C274C"/>
@@ -12,7 +15,7 @@
                 <h3>Add to cart</h3>
             </button>
         </div>
-        <div :class="{'image-wrapper':true, 'on-order':onOrder}">
+        <div :class="{'image-wrapper':true, 'on-order':onOrder, }">
             <div class="card-image" :style="'background-image:url('+ imgObject.src +')'"></div>
         </div>
         <div :class ="{'bottom-section':true, 'on-order':onOrder} ">
@@ -23,8 +26,8 @@
             </div>
         </div>
         <div class="pricing-container">
-            <div class="price"><h2>{{imgObject.price + ' €	'}}</h2></div>
-            <div v-if="imgObject.numberProducts" class="number-products">
+            <div class="price"><h2>{{imgObject.price + ' £'}}</h2></div>
+            <div v-if="onOrder" class="number-products">
                 <button class="editing-container" v-if="!isEditing" @click="ChangeEditing">
                     <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="25px" height="25px"><path d="M 43.125 2 C 41.878906 2 40.636719 2.488281 39.6875 3.4375 L 38.875 4.25 L 45.75 11.125 C 45.746094 11.128906 46.5625 10.3125 46.5625 10.3125 C 48.464844 8.410156 48.460938 5.335938 46.5625 3.4375 C 45.609375 2.488281 44.371094 2 43.125 2 Z M 37.34375 6.03125 C 37.117188 6.0625 36.90625 6.175781 36.75 6.34375 L 4.3125 38.8125 C 4.183594 38.929688 4.085938 39.082031 4.03125 39.25 L 2.03125 46.75 C 1.941406 47.09375 2.042969 47.457031 2.292969 47.707031 C 2.542969 47.957031 2.90625 48.058594 3.25 47.96875 L 10.75 45.96875 C 10.917969 45.914063 11.070313 45.816406 11.1875 45.6875 L 43.65625 13.25 C 44.054688 12.863281 44.058594 12.226563 43.671875 11.828125 C 43.285156 11.429688 42.648438 11.425781 42.25 11.8125 L 9.96875 44.09375 L 5.90625 40.03125 L 38.1875 7.75 C 38.488281 7.460938 38.578125 7.011719 38.410156 6.628906 C 38.242188 6.246094 37.855469 6.007813 37.4375 6.03125 C 37.40625 6.03125 37.375 6.03125 37.34375 6.03125 Z"/></svg>
                     <div  >{{ imgObject.numberProducts + '   x ' }}</div>
@@ -33,11 +36,12 @@
             </div>
         </div>
         <button v-if="onOrder" class="close-product" @click="CloseProduct">X</button>
+        
     </div>
 </template>
 
 <script lang="ts">
-import { imgObject, orderProduct } from '@/interfaces';
+import { orderProduct } from '@/interfaces';
 import { defineComponent, PropType } from 'vue'
 import FlourishComponent from './FlourishComponent.vue';
 export default defineComponent({
@@ -49,6 +53,7 @@ export default defineComponent({
     props: {
         imgObject: { type: Object as PropType<orderProduct>, default: null },
         onOrder: {type: Boolean, default:false},
+        isSearch: {type:Boolean, default:false},
     },
     update()
     {
@@ -80,6 +85,9 @@ export default defineComponent({
                 input.value=String(99);
             input.value = String(Math.floor(Number(input.value)))
             this.$emit('new-input', input.value, this.imgObject.id)
+        },
+        GoToProduct(){
+            this.$emit('go-to-product', this.imgObject.id)
         }
     },
     components: { FlourishComponent }
@@ -91,6 +99,10 @@ export default defineComponent({
     position: relative;
     width: 100%;
     height: 100%;
+}
+.search-wrapper{
+    border: 2px solid var(--primary-color);
+    box-shadow: 4px 4px rgba(0,0,0,0.3);
 }
 .bottom-section{
     z-index: 3;
@@ -220,8 +232,8 @@ export default defineComponent({
 .image-wrapper{
     height: 65%;
     width: 100%;
+    overflow: hidden;
 }
-
 .card-flourish{
     z-index: 2;
     width: 100%;
@@ -234,6 +246,7 @@ export default defineComponent({
     background-position: center;
     background-size:cover;
 }
+
 .close-product{
     z-index: 5;
 
@@ -257,7 +270,19 @@ export default defineComponent({
     background-color: var(--color-a);
     transition: all 0.5s ease;
 }
-
+.product-page-button{
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 2rem;
+    font-weight: bolder;
+    background-color: rgba(0,0,0,0.6);
+    color: var(--color-a);
+    pointer-events: all;
+}
 
 @media (max-width:768px)
 {

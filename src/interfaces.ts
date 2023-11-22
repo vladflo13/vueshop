@@ -1,10 +1,4 @@
-export interface imgObject{
-    id:number,
-    title:string,
-    text?:string,
-    src?:string,
-    price?:number,
-}
+
 export interface productDTO{
     productId:number,
     name:string,
@@ -22,13 +16,21 @@ export interface productTag{
     tagName:string,
     productId:number[],
 }
-export interface cardObject{
+export interface product{
+    id:number,
+    title:string,
+    text?:string,
+    src?:string,
+    price?:number,
+}
+export interface orderProduct extends product{
+    numberProducts: number,
+}
+
+export interface bakeryMenu{
     id: number,
     src: string,
     text: string,
-    childCards: imgObject[],
+    childCards: product[],
     isExpanded: boolean,
-}
-export interface orderProduct extends imgObject{
-    numberProducts: number,
 }

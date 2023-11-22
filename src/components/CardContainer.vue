@@ -8,10 +8,10 @@
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
 import CardComponent from './CardComponent.vue';
-import { cardObject } from '../interfaces';
+import { bakeryMenu } from '../interfaces';
 export default defineComponent({
     props:{
-        cards: Object as PropType<cardObject[]>
+        cards: Object as PropType<bakeryMenu[]>
     },
     methods:{
         addItem(id:number){

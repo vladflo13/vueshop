@@ -13,7 +13,7 @@
 <script lang="ts">
 import { PropType, defineComponent } from 'vue'
 import ProductComponent from './ProductComponent.vue';
-import { cardObject, orderProduct } from '../interfaces';
+import { bakeryMenu, orderProduct } from '../interfaces';
 export default defineComponent({
     data() {
         return {
@@ -30,7 +30,7 @@ export default defineComponent({
         }
     },
     props: {
-        card: {type: Object as PropType<cardObject>, default:null}
+        card: {type: Object as PropType<bakeryMenu>, default:null}
     },
     components: { ProductComponent }
 })

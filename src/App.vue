@@ -2,13 +2,13 @@
 <template>
   <div class="app">
     <div class="ghost-navbar"></div>
-    <NavbarComponent :previousOrder="order" :navState="navState" @changeOrderOpen="ChangeOrderItem" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
+    <NavbarComponent :previousOrder="order" @changeOrderOpen="ChangeOrderItem" :numberItems="numberItems" @themeChanged="ChangeTheme" :isFixed="menuNavIsFixed"></NavbarComponent>
     <Transition name="fade-in">
-      <OrderComponent v-if="orderOpened" @closed-item="CloseProduct" @new-input="ChangeInput" :propTotal="total" @order-closed="CloseOrder" :order="order"></OrderComponent>
+      <OrderComponent v-if="orderOpened" @current-order="UpdateOrder" @closed-item="CloseProduct" @new-input="ChangeInput" :propTotal="total" @order-closed="CloseOrder" :order="order"></OrderComponent>
     </Transition>
-    <router-view @addItem="addItem"></router-view>
-    <!-- <MainView :isFixed="menuNavIsFixed" @addItem="addItem"></MainView> -->
-    <!-- <AccountView v-if="navState==='Home'"></AccountView> -->
+    <router-view @AddItem="AddItem" :ParentCards="ParentCards"></router-view>
+    <!-- <ProductPageView v-if="$route.params.id"></ProductPageView> -->
+
     <FooterComponent></FooterComponent>
   </div>
 </template>
@@ -20,47 +20,145 @@ import NavbarComponent from './components/NavbarComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import OrderComponent from './components/OrderComponent.vue';
 
-import {orderProduct } from './interfaces';
+import {orderProduct, product, productDTO, bakeryMenu } from './interfaces';
 export default defineComponent({
     data() {
       return {
-        navState: 'Menu',
         lightTheme: true,
         menuNavIsFixed: false,
         numberItems:0,
-        order: [] as orderProduct[],
-        orderOpened: false,
-        hasOpenedOnce: false,
         total:0,
+
+        orderOpened: false,
+        hasOrderOpenedOnce: false,
+
+        fetchedProducts:[] as productDTO[],
+        bread:[] as product[],
+        cookies:[] as product[],
+        tarts:[] as product[],
+        quiche:[] as product[],
+
+        ParentCards:[] as bakeryMenu[],
+
+        order: [] as orderProduct[],
         };
     },
+    async created(){
+      try{
+        const products = await this.fetchProductList();
+        for (let i = 0; i < products.length; i++)
+        {
+          if(i>=0 && i<=8)
+          {
+            let product:product={
+              id:products[i].productId,
+              title:products[i].name,
+              text:products[i].description,
+              src:require('@/assets/productImgSrc/' + products[i].imgSrc),
+              price:products[i].price,
+            };
+            this.bread.push(product)
+          }
+          if(i >= 9 && i<=13){
+            let product:product={
+              id:products[i].productId,
+              title:products[i].name,
+              text:products[i].description,
+              src:require('@/assets/productImgSrc/' + products[i].imgSrc),
+              price:products[i].price,
+
+            };
+            this.cookies.push(product);
+          }
+          if(i >= 14 && i<=16){
+            let product:product={
+              id:products[i].productId,
+              title:products[i].name,
+              text:products[i].description,
+              src:require('@/assets/productImgSrc/' + products[i].imgSrc),
+              price:products[i].price,
+            };
+            this.tarts.push(product);
+          }
+          if(i >= 17 && i<=26){
+            let product:product={
+              id:products[i].productId,
+              title:products[i].name,
+              text:products[i].description,
+              src:require('@/assets/productImgSrc/' + products[i].imgSrc),
+              price:products[i].price,
+            };
+            this.quiche.push(product);
+          }
+        }
+        this.ParentCards[0].childCards = this.bread;
+        console.log(this.bread)
+        console.log(this.ParentCards[0].childCards)
+        this.ParentCards[1].childCards = this.cookies;
+        this.ParentCards[2].childCards = this.tarts;
+        this.ParentCards[3].childCards = this.quiche;
+
+        }
+      catch(error){
+
+        console.error('Error fetching Product List');
+      }
+    },
     methods:{
-      
+      async fetchProductList(){
+          const apiLocation = 'https://localhost:7018/api/Product';
+          try{
+            const response = await fetch(apiLocation);
+            if(response.ok){
+              this.fetchedProducts = await response.json();
+            }
+            else
+              console.error('Failed to fetch products');
+            }
+          catch (error){
+            console.error('Error fetching data', error);
+          }
+
+          return this.fetchedProducts;
+      },
       ChangeTheme(){
         const element = document.querySelector(':root') as HTMLElement;
             this.lightTheme = !this.lightTheme;
             if(this.lightTheme){
-                element.style.setProperty('--background-color',"#f0d7a7")
-                element.style.setProperty('--primary-color',"#894e3f")
-                element.style.setProperty('--primary-font-color', "#894e3f");
-                element.style.setProperty('--primary-halfopacity',"#894e3f80");
+                element.style.setProperty('--background-color',"#f0d7a7");
+                element.style.setProperty('--primary-color',"#894e3f");
             }
             else{
                 element.style.setProperty('--background-color',"#894e3f");
                 element.style.setProperty('--primary-color',"#f0d7a7");
-                element.style.setProperty('--primary-font-color', "#f0d7a7");
-                element.style.setProperty('--primary-halfopacity',"#f0d7a780");
             }
       },
-      addItem(order:orderProduct[]){
-        this.order = order;
+      AddItem(id: number){
+        var _id = id - 1;
+
+        const orderItem : orderProduct = {
+          id:this.fetchedProducts[_id].productId,
+          title:this.fetchedProducts[_id].name,
+          price:this.fetchedProducts[_id].price,
+          text:this.fetchedProducts[_id].description,
+          src:require('@/assets/productImgSrc/' + this.fetchedProducts[_id].imgSrc),
+          numberProducts: 1,
+        };
+
+        const foundIndex = this.order.findIndex(item=> item.id===orderItem.id);
+        if(foundIndex != -1)
+            this.order[foundIndex].numberProducts++;
+        else
+          this.order.push(orderItem);
+
         this.numberItems = 0;
         this.order.forEach(element => {
-          this.numberItems+=element.numberProducts;
+          this.numberItems += element.numberProducts;
         });
-        if(!this.hasOpenedOnce)
+
+        if(!this.hasOrderOpenedOnce)
         {
-          this.hasOpenedOnce = true;
+          this.hasOrderOpenedOnce = true;
           this.orderOpened = true;
         }
         this.AddTotal();
@@ -70,31 +168,55 @@ export default defineComponent({
       },
       CloseOrder(){
         this.orderOpened=false;
+        
       },
       AddTotal(){
         this.total = 0;
         this.order.forEach(element => {
             element.price? this.total+=element.price * element.numberProducts: null;
         });
-    },
-    ChangeInput(inputValue:number, id:number)
-    {     
-      this.order.forEach(
-            element=>{
-                if(element.id == id)
-                  element.numberProducts=Number(inputValue);
-              }
-        )
-    },
-    CloseProduct(id: number){
-      const indexRemove = this.order.findIndex(item=> item.id == id)
-      if(indexRemove !=-1)
-        this.order.splice(indexRemove,1);
-      else
-        console.log('item not found');  
-    }
+      },
+      UpdateOrder(order:orderProduct[]){
+        this.order = order;
+        this.AddTotal();
+        this.numberItems = 0;
+        order.forEach(element => {
+          this.numberItems+=element.numberProducts;
+        });
+      },
+      ChangeInput(inputValue:number, id:number)
+      {     
+        this.order.forEach(
+              element=>{
+                  if(element.id == id)
+                    element.numberProducts=Number(inputValue);
+                }
+          )
+      },
+      CloseProduct(id: number){
+        const indexRemove = this.order.findIndex(item=> item.id == id)
+        if(indexRemove !=-1)
+          this.order.splice(indexRemove, 1);
+        else
+          console.log('item not found');
+        this.numberItems = 0;
+        this.order.forEach(element => {
+          this.numberItems+=element.numberProducts;
+        }); 
+      },
+      // GetCard(){
+      //   let id = parseInt(this.$route.params.id,10);
+      //   if(!Number.isNaN(id))
+      //     {
+      //       console.log(this.order);  
+      //       this.order.forEach(element => {
+      //       console.log(id+' '+element.id)
+      //       if (id==element.id)
+      //         return element;
+      //     });}}
+    
   },
-    components:{ NavbarComponent, FooterComponent, OrderComponent}
+    components:{ NavbarComponent, FooterComponent, OrderComponent }
 })
 </script>
 <style scoped>
