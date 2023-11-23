@@ -32,5 +32,4 @@ export interface bakeryMenu{
     src: string,
     text: string,
     childCards: product[],
-    isExpanded: boolean,
 }

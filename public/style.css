@@ -1,26 +1,11 @@
 :root{
-    /* --primary-color: #000f0b;
-    --primary-halfopacity:rgba(0, 15, 11, 0.5);
-    
-    --background-color: rgb(241, 252, 162);
-    --background-halfopacity: rgb(241, 252, 162, 0.5);
 
-    --color-a:rgb(241, 252, 162);
-    --color-b: #000f0b; 
-    https://www.color-hex.com/color-palette/42673
-    */
-
-    --primary-color:#894e3f		;
-    --primary-halfopacity:#894e3f80;
-    
-    --background-color: #f0d7a7	;
-    --background-halfopacity: #f0d7a780;
-    --primary-font-color:#894e3f;
-
+    --primary-color:#894e3f;    
+    --background-color: #f0d7a7;
     --color-a:#f0d7a7;
     --color-b: #894e3f	;
 
-    --font-size-default:1em;
+    color:var(--primary-color);
 
 }
 @font-face {
@@ -32,21 +17,22 @@
     padding: 0;
     font-family: inherit;
     color:inherit;
+
     box-sizing: border-box;
 }
-button{
-    border: 0px;
-    background-color: transparent;
-    cursor: pointer;
 
-}
 .app{
 
     color:var(--primary-font-color);
     box-sizing: border-box;
     font-family: 'garamond', sans-serif;
 }
+.app button{
+    border: 0px;
+    background-color: transparent;
+    cursor: pointer;
 
+}
 ul {
     list-style: none;
 }

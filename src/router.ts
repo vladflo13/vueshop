@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/views/Home.vue'
+import {product} from './interfaces'
 
 export default createRouter({
   history: createWebHistory(),
@@ -27,7 +27,7 @@ export default createRouter({
       path:'/product/:id',
       component:() => import('@/views/ProductPageView.vue'),
       name:'product-details',
-      props:true,
+      props: route =>({card: {} as product}),
     },
   ],
 })

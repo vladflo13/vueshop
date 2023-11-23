@@ -31,8 +31,8 @@ export default defineComponent({
 
 <style scoped>
 .testimony-wrapper{
-    --testimony-bg: var(--primary-color);
-    --testimony-fcolor: var(--background-color);
+    --testimony-bg:  var(--background-color);
+    --testimony-fcolor: var(--primary-color);
     position: relative;
     height: 100%;
     width: 100%;
@@ -47,8 +47,9 @@ export default defineComponent({
     align-items: center;
 }
 .invert{
-    --testimony-bg:  var(--background-color);
-    --testimony-fcolor:var(--primary-color);
+    --testimony-bg:  var(--primary-color);
+    --testimony-fcolor: var(--background-color);
+
 }
 [class*='corner-']{
     position: absolute;

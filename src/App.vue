@@ -6,7 +6,7 @@
     <Transition name="fade-in">
       <OrderComponent v-if="orderOpened" @current-order="UpdateOrder" @closed-item="CloseProduct" @new-input="ChangeInput" :propTotal="total" @order-closed="CloseOrder" :order="order"></OrderComponent>
     </Transition>
-    <router-view @AddItem="AddItem" :ParentCards="ParentCards"></router-view>
+    <router-view @AddItem="AddItem" :ParentCards="ParentCards" :card="GetCard()"></router-view>
     <!-- <ProductPageView v-if="$route.params.id"></ProductPageView> -->
 
     <FooterComponent></FooterComponent>
@@ -39,7 +39,7 @@ export default defineComponent({
         quiche:[] as product[],
 
         ParentCards:[] as bakeryMenu[],
-
+        ProductList:[] as product[],
         order: [] as orderProduct[],
         };
     },
@@ -91,16 +91,38 @@ export default defineComponent({
             this.quiche.push(product);
           }
         }
-        this.ParentCards[0].childCards = this.bread;
-        console.log(this.bread)
-        console.log(this.ParentCards[0].childCards)
-        this.ParentCards[1].childCards = this.cookies;
-        this.ParentCards[2].childCards = this.tarts;
-        this.ParentCards[3].childCards = this.quiche;
-
+        this.ParentCards = [
+          {
+            id:1,
+            text:'Bread',
+            src:'@/assets/bread.jpg',
+            childCards:this.bread,
+          },
+          {
+            id:2,
+            text:'Cookies',
+            src:'@/assets/cookies.jpg',
+            childCards:this.cookies,
+          },
+          {
+            id:4,
+            text:'Quiche',
+            src:'@/assets/quiche.webp',
+            childCards:this.quiche,
+          },
+          {
+            id:3,
+            text:'Tarts',
+            src:'@/assets/tarts.webp',
+            childCards:this.tarts,
+          }
+        ]
+          this.ProductList.push(...this.bread);
+          this.ProductList.push(...this.cookies);
+          this.ProductList.push(...this.quiche);
+          this.ProductList.push(...this.tarts);
         }
       catch(error){
-
         console.error('Error fetching Product List');
       }
     },
@@ -198,28 +220,23 @@ export default defineComponent({
         if(indexRemove !=-1)
           this.order.splice(indexRemove, 1);
         else
-          console.log('item not found');
+          console.error('Item not found');
         this.numberItems = 0;
         this.order.forEach(element => {
           this.numberItems+=element.numberProducts;
         }); 
       },
-      // GetCard(){
-      //   let id = parseInt(this.$route.params.id,10);
-      //   if(!Number.isNaN(id))
-      //     {
-      //       console.log(this.order);  
-      //       this.order.forEach(element => {
-      //       console.log(id+' '+element.id)
-      //       if (id==element.id)
-      //         return element;
-      //     });}}
+      GetCard(){
+        let id = (Number) (this.$route.params.id);
+        let index = this.ProductList.findIndex(i=> i.id===id)
+        return this.ProductList[index];
+        }
     
   },
     components:{ NavbarComponent, FooterComponent, OrderComponent }
 })
 </script>
-<style scoped>
+<style>
 .app{
   display: flex;
   flex-direction: column;
@@ -229,6 +246,44 @@ export default defineComponent({
 
   --navbar-height:120px;
   background-color: var(--background-color);
+}
+:root{
+
+--primary-color:#894e3f;    
+--background-color: #f0d7a7;
+--color-a:#f0d7a7;
+--color-b: #894e3f	;
+
+color:var(--primary-color);
+
+}
+@font-face {
+font-family: 'garamond';
+src: url('../src/assets//fonts/CormorantGaramond-Regular.ttf');
+}
+*{
+margin:0;
+padding: 0;
+font-family: inherit;
+color:inherit;
+
+box-sizing: border-box;
+}
+
+.app{
+
+color:var(--primary-font-color);
+box-sizing: border-box;
+font-family: 'garamond', sans-serif;
+}
+.app button{
+border: 0px;
+background-color: transparent;
+cursor: pointer;
+
+}
+ul {
+list-style: none;
 }
 .ghost-navbar{
   width: 100%;
