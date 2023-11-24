@@ -9,7 +9,7 @@
             </div>
             <div class="total-wrapper">
                 <div>{{'Your total price is:'}}</div>
-                <p>{{  total.toFixed(2) + ' £' }}</p>
+                <p>{{ '£ '+ total.toFixed(2)  }}</p>
             </div>
             <div class="bottom-section">
                 <button @click="OrderClosed">Close</button>

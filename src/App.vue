@@ -228,7 +228,7 @@ export default defineComponent({
       },
       GetCard(){
         let id = (Number) (this.$route.params.id);
-        let index = this.ProductList.findIndex(i=> i.id===id)
+        let index = this.ProductList.findIndex( i => i.id === id)
         return this.ProductList[index];
         }
     
