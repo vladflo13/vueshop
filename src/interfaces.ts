@@ -11,6 +11,19 @@ export interface productTagDTO{
     tagId:number,
     tagName:string
 }
+export interface nutritionDTO{
+    productId:number,
+    nutritionId:number,
+
+    calories:number,
+    carbohydrates: number,
+    fiber: number,
+    sugar: number,
+    fat: number,
+    protein: number,
+    sodium: number,
+    allergens: string,
+}
 export interface productTag{
     tagId:number,
     tagName:string,
