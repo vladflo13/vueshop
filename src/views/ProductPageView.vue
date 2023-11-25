@@ -182,6 +182,9 @@ h1, p{
     width: 200px;
     box-shadow: 3px 3px rgba(0,0,0,0.5);
 }
+.information-box > h2{
+    font-size: 1.75rem;
+}
 @media (max-width:768px) {
     .product-wrapper{
         flex-direction: column-reverse;

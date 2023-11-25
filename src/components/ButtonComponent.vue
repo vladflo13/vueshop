@@ -32,6 +32,7 @@ export default defineComponent({
     pointer-events: all;
     margin-bottom: 5px;
     cursor: pointer;
+    color:var(--primary-color)
 }
 .text{
     border-bottom: 2px solid transparent;

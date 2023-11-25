@@ -113,6 +113,7 @@ export default defineComponent({
 .location{
     padding: 10px;
     transition: transform 0.5s ease;
+    color:var(--background-color)
 }
 .location:hover{
     cursor: pointer;

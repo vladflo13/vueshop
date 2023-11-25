@@ -135,6 +135,8 @@ export default defineComponent({
 }
 .order-section > h1{
     margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 .order-list{
     display: grid;
@@ -183,6 +185,8 @@ button:hover{
     padding-right: 10%;
     margin-top: 10px;
     font-size: 2.5rem;
+    font-weight: bold;
+
 }
 .total-wrapper > p{
     margin-left: 10px;
@@ -221,10 +225,9 @@ button:hover{
     }
     .total-wrapper{
         position: absolute;
-        bottom: 80px;
+        bottom: 120px;
         font-size: 1.25rem;
         margin: 0px;
-        margin-bottom: 5px;
     }
 }
 </style>
